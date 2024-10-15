@@ -13,7 +13,7 @@ The idea is to place a Dezibot 4 on a chess board and assign a chess piece to it
 
 ## Repository Structure
 
-Our contribution is placed in [`./example/embedded_chess_figures/`](./example/embedded_chess_figures/).
+Our contribution is placed in [`example/embedded_chess_figures/`](./example/embedded_chess_figures/).
 <!-- TODO: State changes -->
 
 
@@ -29,26 +29,16 @@ Our contribution is placed in [`./example/embedded_chess_figures/`](./example/em
 
 ## Roadmap
 
-- [ ] Recognise colours of the chess board
-- [ ] Find centre of a chess field
-- [ ] Simulate Pawn
-    - [ ] Walk straight a specified number of fields
-    - [ ] Turn in a given direction to simulate diagonal movement
-- [ ] Draw selected figure to the display
-- [ ] Logic on which field the robot is at any given moment (show on the display if shaken)
-- [ ] Wireless connection
-    - [ ] Decide whether to use WLAN or Bluetooth
-    - [ ] Establish connection
-    - [ ] Communicate initial field
-    - [ ] Communicate fields to move
-- [ ] Expand selectable figures
-    - [ ] Tower
-    - [ ] King
-    - [ ] Knight
-    - [ ] Bishop
-    - [ ] Queen
-- [ ] Validate if move is allowed
-    - [ ] Colour LED green or red
+- [ ] Recognise colours of the chess board [#1](/../../issues/1)
+- [ ] Simulate Pawn [#4](/../../issues/4)
+    - [ ] Walk straight a specified number of fields [#2](/../../issues/2)
+    - [ ] Turn in a given direction to simulate diagonal movement [#3](/../../issues/3)
+- [ ] Find centre of a chess field [#5](/../../issues/5)
+- [ ] Draw selected figure to the display [#6](/../../issues/6)
+- [ ] Logic on which field the robot is at any given moment (show on the display if shaken) [#7](/../../issues/7)
+- [ ] Wireless connection for initial field and movements [#8](/../../issues/8)
+- [ ] Expand selectable figures [#9](/../../issues/9)
+- [ ] Validate if move is allowed and colour LED green or red accordingly [#10](/../../issues/10)
 
 
 ## Team
