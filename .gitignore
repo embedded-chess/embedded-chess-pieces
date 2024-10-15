@@ -39,3 +39,6 @@ docs/*
 .history/
 *.vsix
 *.workspace
+
+# MacOS
+.DS_Store
