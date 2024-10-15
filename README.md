@@ -2,6 +2,9 @@
 
 This repository contains our project for the module C999.1 "Software Development for Embedded Systems" lectured by [Prof. Dr. rer. nat. Jens Wagner](https://fim.htwk-leipzig.de/fakultaet/personen/professorinnen-und-professoren/jens-wagner/). We call it *Embedded Chess Figures*.
 
+> [!IMPORTANT]
+> The project is still under development. This note will be removed once the project is submitted.
+
 
 ## Idea
 
