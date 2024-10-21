@@ -1,6 +1,6 @@
-# Embedded Chess Figures
+# Embedded Chess Pieces
 
-This repository contains our project for the module C999.1 "Software Development for Embedded Systems" lectured by [Prof. Dr. rer. nat. Jens Wagner](https://fim.htwk-leipzig.de/fakultaet/personen/professorinnen-und-professoren/jens-wagner/). We call it *Embedded Chess Figures*.
+This repository contains our project for the module C999.1 "Software Development for Embedded Systems" lectured by [Prof. Dr. rer. nat. Jens Wagner](https://fim.htwk-leipzig.de/fakultaet/personen/professorinnen-und-professoren/jens-wagner/). We call it *Embedded Chess Pieces*.
 
 > [!IMPORTANT]
 > The project is still under development. This note will be removed once the project is submitted.
@@ -13,7 +13,7 @@ The idea is to place a Dezibot 4 on a chess board and assign a chess piece to it
 
 ## Repository Structure
 
-Our contribution is placed in [`example/embedded_chess_figures/`](./example/embedded_chess_figures/).
+Our contribution is placed in [`example/embedded_chess_pieces/`](./example/embedded_chess_pieces/).
 <!-- TODO: State changes -->
 
 
@@ -37,7 +37,7 @@ Our contribution is placed in [`example/embedded_chess_figures/`](./example/embe
 - [ ] Draw selected figure to the display [#6](/../../issues/6)
 - [ ] Logic on which field the robot is at any given moment (show on the display if shaken) [#7](/../../issues/7)
 - [ ] Wireless connection for initial field and movements [#8](/../../issues/8)
-- [ ] Expand selectable figures [#9](/../../issues/9)
+- [ ] Expand selectable pieces [#9](/../../issues/9)
 - [ ] Validate if move is allowed and colour LED green or red accordingly [#10](/../../issues/10)
 
 
