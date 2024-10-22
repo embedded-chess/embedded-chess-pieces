@@ -15,14 +15,10 @@ void setup() {
 
   if(!RGBWSensor.begin()) {
     Serial.println("ERROR: couldn't detect the sensor");
-    while(1){}
+    while(1) {}
   }
   RGBWSensor.setConfiguration(VEML6040_IT_320MS + VEML6040_AF_AUTO + VEML6040_SD_ENABLE);
-	
-  delay(1500);
-  Serial.println("CCT: Correlated color temperature in \260K");
-  Serial.println("AL: Ambient light in lux");
-  delay(1500);
+  delay(3000);
 }
 
 void loop() {
@@ -30,10 +26,8 @@ void loop() {
   printValue(RGBWSensor.getGreen(), "G");
   printValue(RGBWSensor.getBlue(), "B");
   printValue(RGBWSensor.getWhite(), "W");
-  Serial.print(" CCT: ");
-  Serial.print(RGBWSensor.getCCT());  
-  Serial.print(" AL: ");
-  Serial.println(RGBWSensor.getAmbientLight()); 
+  printValue(RGBWSensor.getCCT(), "C"); // Correlated color temperature in \260K
+  printValue(RGBWSensor.getAmbientLight(), "A"); // Ambient light in lux
   delay(400);
 
   Serial.println("");
