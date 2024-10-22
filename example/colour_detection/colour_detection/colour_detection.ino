@@ -88,6 +88,7 @@ double getNormalizedColorValue(color color, double ambientLightValue) {
 
 // Calculate brightness value based on **normalized** RGB values.
 double calculateBrightness(double red, double green, double blue) {
+  // see https://www.w3.org/TR/AERT/#color-contrast
   const double RED_FACTOR = 0.299;
   const double GREEN_FACTOR = 0.587;
   const double BLUE_FACTOR = 0.114;
