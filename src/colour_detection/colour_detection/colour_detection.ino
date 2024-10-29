@@ -15,7 +15,7 @@
 
 Dezibot dezibot = Dezibot();
 VEML6040 rgbwSensor;
-
+ 
 const double MAX_COLOR_VALUE = 255.0;
 
 void setup() {

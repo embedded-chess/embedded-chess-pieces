@@ -49,7 +49,7 @@ Our contribution is placed in [`example/embedded_chess_figures/`](./example/embe
     - [`Adafruit NeoPixel`](https://github.com/adafruit/Adafruit_NeoPixel) by Adafruit
     - [`Painless Mesh`](https://gitlab.com/painlessMesh/painlessMesh/-/tree/v1.5.0) by painlessMesh (version 1.5.0) including dependencies
     - [`AsyncTCP`](https://github.com/dvarrel/AsyncTCP/releases/tag/1.1.4) by dvarrel (version 1.1.4)
-    - [`VEML6040`](https://github.com/thewknd/VEML6040/) by thewknd
+    - [`VEML6040`](https://github.com/thewknd/VEML6040/) by thewknd (included as [submodule](./libraries/VEML6040/))
 - In Arduino IDE, open preferences and select the root directory of this repository as your sketchbook location
 
 
