@@ -1,3 +1,7 @@
+# libraries
+libraries/*
+!libraries/dezibot
+
 # automatic gernerated source
 docs/*
 
