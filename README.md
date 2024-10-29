@@ -60,5 +60,5 @@ Our contribution is placed in [`example/embedded_chess_figures/`](./example/embe
 
 ## Licence
 
-This repository is licenced under the GNU General Public License ([GPL-3.0](./LICENSE.txt)).
+This repository is licenced under the GNU General Public License ([GPL-3.0](./LICENSE)).
 <!-- TODO: State changes -->
