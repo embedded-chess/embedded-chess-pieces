@@ -1,6 +1,7 @@
 # libraries
 libraries/*
 !libraries/dezibot
+!libraries/VEML6040
 
 # automatic gernerated source
 docs/*
