@@ -30,6 +30,17 @@ void setup() {
   }
   rgbwSensor.setConfiguration(VEML6040_IT_320MS + VEML6040_AF_AUTO + VEML6040_SD_ENABLE);
   delay(3000);
+  turnOnColorCorrectionLight();
+}
+
+/**
+ * @brief Turn on the LED on the bottom of the Dezibot.
+ * 
+ * The light should help the identification of the field color even in a dimly-lit room.
+ */
+void turnOnColorCorrectionLight() {
+  uint32_t COLOR_CORRECTION_WHITE = dezibot.multiColorLight.color(43, 33, 35);
+  dezibot.multiColorLight.setLed(BOTTOM,COLOR_CORRECTION_WHITE);
 }
 
 void loop() {
@@ -144,6 +155,7 @@ double calculateBrightness(double red, double green, double blue) {
  *        field.
  *
  * Note that the room must be well-lit!
+ * At a normalized ambient light of about 10.0 or lower white field will be interpreted as black.
  * 
  * @param brightness normalized brightness value
  * @return true if surface is white-ish
