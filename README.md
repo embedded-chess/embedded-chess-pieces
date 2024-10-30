@@ -41,13 +41,24 @@ Our contribution is placed in [`example/embedded_chess_figures/`](./example/embe
 - [ ] Validate if move is allowed and colour LED green or red accordingly [#10](/../../issues/10)
 
 
+## Usage
+
+- Install [Arduino IDE 2](https://github.com/arduino/arduino-ide)
+- Add [`esp32`](https://github.com/espressif/arduino-esp32/releases/tag/2.0.15) board manager by Espressif Systems (version 2.0.15)
+- Install the following libraries
+    - [`Adafruit NeoPixel`](https://github.com/adafruit/Adafruit_NeoPixel) by Adafruit
+    - [`Painless Mesh`](https://gitlab.com/painlessMesh/painlessMesh/-/tree/v1.5.0) by painlessMesh (version 1.5.0) including dependencies
+    - [`AsyncTCP`](https://github.com/dvarrel/AsyncTCP/releases/tag/1.1.4) by dvarrel (version 1.1.4)
+    - [`VEML6040`](https://github.com/thewknd/VEML6040/) by thewknd (included as [submodule](./libraries/VEML6040/))
+- In Arduino IDE, open preferences and select the root directory of this repository as your sketchbook location
+
+
 ## Team
 
 - [@irooori](https://github.com/irooori)
 - [@nicosrm](https://github.com/nicosrm)
 
-
 ## Licence
 
-This repository is licenced under the GNU General Public License ([GPL-3.0](./LICENSE.txt)).
+This repository is licenced under the GNU General Public License ([GPL-3.0](./LICENSE)).
 <!-- TODO: State changes -->
