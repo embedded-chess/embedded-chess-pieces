@@ -1,0 +1,3 @@
+[submodule "libraries/VEML6040"]
+	path = libraries/VEML6040
+	url = https://github.com/thewknd/VEML6040.git

@@ -1,6 +1,6 @@
 /**
  * @file Dezibot.h
- * @author Hans Haupt, Jens Wagner, Anina Morgner, Anton Jacker, Saskia Dübener
+ * @author Hans Haupt, Jens Wagner, Anina Morgner, Anton Jacker, Saskia Dübener, Ines Rohrbach, Nico Schramm
  * @brief 
  * @version 0.1
  * @date 2023-11-19
@@ -14,6 +14,7 @@
 #include "motion/Motion.h"
 #include "lightDetection/LightDetection.h"
 #include "colorDetection/ColorDetection.h"
+#include "chessColorDetection/ChessColorDetection.h"
 #include "multiColorLight/MultiColorLight.h"
 #include "motionDetection/MotionDetection.h"
 #include "infraredLight/InfraredLight.h"
@@ -29,6 +30,7 @@ public:
     Motion motion;
     LightDetection lightDetection;
     ColorDetection colorDetection;
+    ChessColorDetection chessColorDetection;
     MultiColorLight multiColorLight;
     InfraredLight infraredLight;
     Communication communication;
