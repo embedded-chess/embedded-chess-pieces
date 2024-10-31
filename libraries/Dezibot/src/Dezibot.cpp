@@ -15,7 +15,7 @@ void Dezibot::begin(void) {
     motion.begin();
     lightDetection.begin();
     colorDetection.begin();
-    chessColorDetection.begin();
+    colorSensor.begin();
     multiColorLight.begin();
     display.begin();
 };

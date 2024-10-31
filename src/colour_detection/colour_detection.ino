@@ -22,7 +22,7 @@ void setup() {
   dezibot.begin();
   Serial.println("Initialised");
 
-  bool hasStartedSuccessfully = dezibot.chessColorDetection.begin();
+  bool hasStartedSuccessfully = dezibot.colorSensor.begin();
   if(!hasStartedSuccessfully) {
     Serial.println("ERROR: couldn't detect the sensor");
     while(1) {}
@@ -33,15 +33,15 @@ void setup() {
 }
 
 void loop() {
-  double ambient = dezibot.chessColorDetection.getNormalizedAmbientValue();
+  double ambient = dezibot.colorSensor.getNormalizedAmbientValue();
 
-  double red = dezibot.chessColorDetection.getNormalizedColorValue(RGBW_RED, ambient);
-  double green = dezibot.chessColorDetection.getNormalizedColorValue(RGBW_GREEN, ambient);
-  double blue = dezibot.chessColorDetection.getNormalizedColorValue(RGBW_BLUE, ambient);
-  double white = dezibot.chessColorDetection.getNormalizedColorValue(RGBW_WHITE, ambient);
-  // double cct = dezibot.chessColorDetection.getCCT();
+  double red = dezibot.colorSensor.getNormalizedColorValue(ColorSensor::RED, ambient);
+  double green = dezibot.colorSensor.getNormalizedColorValue(ColorSensor::GREEN, ambient);
+  double blue = dezibot.colorSensor.getNormalizedColorValue(ColorSensor::BLUE, ambient);
+  double white = dezibot.colorSensor.getNormalizedColorValue(ColorSensor::WHITE, ambient);
+  // double cct = dezibot.colorSensor.getCCT();
 
-  double brightness = dezibot.chessColorDetection.calculateBrightness(red, green, blue);
+  double brightness = dezibot.colorSensor.calculateBrightness(red, green, blue);
   bool isWhite = ecpColorDetection.isWhiteField();
 
   Serial.println("");
