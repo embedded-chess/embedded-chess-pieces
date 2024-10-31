@@ -26,7 +26,6 @@ protected:
     VEML6040 rgbwSensor;
 
     // constants
-    const double IS_WHITE_FIELD_THRESHOLD = 100.0;
     const double MAX_NORMALIZED_COLOR_VALUE = 255.0;
     const double MAX_RAW_AMBIENT_VALUE = 2061.0;
     const double MAX_RGBW_SENSOR_VALUE = 65535.0;
@@ -90,19 +89,6 @@ public:
      * @return double approximation for color value
      */
     double calculateBrightness(double red, double green, double blue);
-
-    /**
-     * @brief Determine if brightness value represents a white or a black chess
-     *        field.
-     *
-     * Note that the room must be well-lit or color correction light is turned on.
-     * At a normalized ambient light of about 10.0 or lower white field will be interpreted as black.
-     * 
-     * @param brightness normalized brightness value
-     * @return true if surface is white-ish
-     * @return false if surface is black-ish
-     */
-    double isWhiteField(double brightness);
 };
 
 #endif // ChessColorDetection_h

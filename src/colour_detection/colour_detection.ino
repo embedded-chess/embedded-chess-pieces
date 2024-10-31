@@ -10,9 +10,11 @@
  */
 
 #include <Dezibot.h>
+#include <EmbeddedChessPieces.h>
 #include <Wire.h>
 
 Dezibot dezibot = Dezibot();
+ECPColorDetection ecpColorDetection(dezibot);
 
 void setup() {
   Serial.begin(9600);
@@ -26,17 +28,8 @@ void setup() {
     while(1) {}
   }
   delay(3000);
-  turnOnColorCorrectionLight();
-}
-
-/**
- * @brief Turn on the LED on the bottom of the Dezibot.
- * 
- * The light should help the identification of the field color even in a dimly-lit room.
- */
-void turnOnColorCorrectionLight() {
-  uint32_t COLOR_CORRECTION_WHITE = dezibot.multiColorLight.color(43, 33, 35);
-  dezibot.multiColorLight.setLed(BOTTOM,COLOR_CORRECTION_WHITE);
+  
+  ecpColorDetection.turnOnColorCorrectionLight();
 }
 
 void loop() {
@@ -49,7 +42,10 @@ void loop() {
   // double cct = dezibot.chessColorDetection.getCCT();
 
   double brightness = dezibot.chessColorDetection.calculateBrightness(red, green, blue);
-  bool isWhite = dezibot.chessColorDetection.isWhiteField(brightness);
+  bool isWhite = ecpColorDetection.isWhiteField();
+
+  Serial.println("");
+  dezibot.display.clear();
 
   printValue(red, "R");
   printValue(green, "G");
@@ -62,8 +58,6 @@ void loop() {
   printIsWhiteField(isWhite);
 
   delay(500);
-  Serial.println("");
-  dezibot.display.clear();
 }
 
 /**

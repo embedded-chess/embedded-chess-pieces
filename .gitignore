@@ -1,6 +1,7 @@
 # libraries
 libraries/*
-!libraries/dezibot
+!libraries/EmbeddedChessPieces
+!libraries/Dezibot
 !libraries/VEML6040
 
 # automatic gernerated source

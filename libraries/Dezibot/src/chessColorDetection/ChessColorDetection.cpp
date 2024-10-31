@@ -52,7 +52,3 @@ double ChessColorDetection::calculateBrightness(double red, double green, double
     double normalizedBrightness = std::min(MAX_NORMALIZED_COLOR_VALUE, brightness);
     return normalizedBrightness;
 };
-
-double ChessColorDetection::isWhiteField(double brightness) {
-    return brightness >= IS_WHITE_FIELD_THRESHOLD;
-};
