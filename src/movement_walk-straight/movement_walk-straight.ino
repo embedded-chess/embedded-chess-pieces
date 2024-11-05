@@ -25,6 +25,7 @@ void loop() {
   bool isOnWhite = isChessFieldColorWhite();
   moveToNextField(isOnWhite);
 
+  dezibot.display.println("Break");
   delay(10000);
 }
 
@@ -34,13 +35,31 @@ void loop() {
  * @param isOnWhite information if the dezibot starts on a white field
 */
 void moveToNextField(bool isOnWhite) {
-  int MOVE_STRAIGHT_TIME_INTERVALL = 10000;
-  bool isWhiteField = isChessFieldColorWhite();
+  int MOVE_STRAIGHT_TIME_INTERVALL = 1000;
+  bool isWhiteField = isChessFieldColorWhite();  
 
   while (isWhiteField == isOnWhite) {
+    dezibot.display.print("Is on ");
+    dezibot.display.println(isWhiteString(isWhiteField));
+    dezibot.display.print("Wants ");
+    dezibot.display.println(isWhiteString(!isOnWhite));
+  
+    dezibot.display.println("Moving...");
     move(MOVE_STRAIGHT_TIME_INTERVALL);
+  
     isWhiteField = isChessFieldColorWhite();
+    dezibot.display.clear();
   }
+}
+
+/**
+ * @brief 
+ *
+ * @param isWhite as bool - true if field is determined as white
+ * @return String - if isWhite is true then "W" else "B"
+*/
+String isWhiteString(bool isWhite) {
+  return isWhite ? "W" : "B" ;
 }
 
 /**
