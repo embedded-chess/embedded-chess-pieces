@@ -13,8 +13,9 @@ The idea is to place a Dezibot 4 on a chess board and assign a chess piece to it
 
 ## Repository Structure
 
-Our contribution is placed in [`example/embedded_chess_pieces/`](./example/embedded_chess_pieces/).
-<!-- TODO: State changes -->
+This repository is structured as follows. All libraries we developed (further) are stored in [`libraries`](./libraries/). This includes changes to the [`Dezibot` library](./libraries/Dezibot/) and the completely newly developed [`EmbeddedChessPieces` library](./libraries/EmbeddedChessPieces/). The latter one includes project specific code that is not generally sensible to add to the Dezibot library.
+
+In `src` you can find example use cases for our project. This includes Arduino sketches we developed to test our library developments as well as the heart of this project – the code to run our project.
 
 
 ## Context
@@ -29,16 +30,17 @@ Our contribution is placed in [`example/embedded_chess_pieces/`](./example/embed
 
 ## Roadmap
 
-- [ ] Recognise colours of the chess board [#1](/../../issues/1)
-- [ ] Simulate Pawn [#4](/../../issues/4)
-    - [ ] Walk straight a specified number of fields [#2](/../../issues/2)
-    - [ ] Turn in a given direction to simulate diagonal movement [#3](/../../issues/3)
-- [ ] Find centre of a chess field [#5](/../../issues/5)
-- [ ] Draw selected figure to the display [#6](/../../issues/6)
-- [ ] Logic on which field the robot is at any given moment (show on the display if shaken) [#7](/../../issues/7)
-- [ ] Wireless connection for initial field and movements [#8](/../../issues/8)
-- [ ] Expand selectable pieces [#9](/../../issues/9)
-- [ ] Validate if move is allowed and colour LED green or red accordingly [#10](/../../issues/10)
+- [x] Recognise colours of the chess board [#1](https://github.com/nicosrm/24-emb-chess/issues/1)
+- [ ] Simulate Pawn [#4](https://github.com/nicosrm/24-emb-chess/issues/4)
+    - [ ] Walk straight a specified number of fields [#2](https://github.com/nicosrm/24-emb-chess/issues/2)
+    - [ ] Turn in a given direction to simulate diagonal movement [#3](https://github.com/nicosrm/24-emb-chess/issues/3)
+- [ ] Find centre of a chess field [#5](https://github.com/nicosrm/24-emb-chess/issues/5)
+- [ ] Draw selected figure to the display [#6](https://github.com/nicosrm/24-emb-chess/issues/6)
+- [ ] Logic on which field the robot is at any given moment (show on the display if shaken) [#7](https://github.com/nicosrm/24-emb-chess/issues/7)
+- [ ] Calibrate black / white threshold [#15](https://github.com/nicosrm/24-emb-chess/issues/15)
+- [ ] Wireless connection for initial field and movements [#8](https://github.com/nicosrm/24-emb-chess/issues/8)
+- [ ] Expand selectable pieces [#9](https://github.com/nicosrm/24-emb-chess/issues/9)
+- [ ] Validate if move is allowed and colour LED green or red accordingly [#10](https://github.com/nicosrm/24-emb-chess/issues/10)
 
 
 ## Usage
@@ -57,6 +59,7 @@ Our contribution is placed in [`example/embedded_chess_pieces/`](./example/embed
 
 - [@irooori](https://github.com/irooori)
 - [@nicosrm](https://github.com/nicosrm)
+
 
 ## Licence
 

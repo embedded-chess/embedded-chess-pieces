@@ -13,8 +13,7 @@
 
 #include "motion/Motion.h"
 #include "lightDetection/LightDetection.h"
-#include "colorDetection/ColorDetection.h"
-#include "chessColorDetection/ChessColorDetection.h"
+#include "colorSensor/ColorSensor.h"
 #include "multiColorLight/MultiColorLight.h"
 #include "motionDetection/MotionDetection.h"
 #include "infraredLight/InfraredLight.h"
@@ -29,8 +28,7 @@ public:
     Dezibot();
     Motion motion;
     LightDetection lightDetection;
-    ColorDetection colorDetection;
-    ChessColorDetection chessColorDetection;
+    ColorSensor colorSensor;
     MultiColorLight multiColorLight;
     InfraredLight infraredLight;
     Communication communication;

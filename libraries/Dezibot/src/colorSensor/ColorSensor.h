@@ -1,9 +1,9 @@
 /**
- * @file ChessColorDetection.h
+ * @file ColorSensor.h
  * @author Ines Rohrbach, Nico Schramm
  * @brief Helper class for VEML6040 color sensor.
  * @version 0.1
- * @date 2024-10-30
+ * @date 2024-10-31
  * 
  * @copyright Copyright (c) 2024
 */
@@ -14,24 +14,26 @@
 #include <algorithm>
 #include <veml6040.h>
 
-enum RGBWColor {
-    RGBW_RED,
-    RGBW_GREEN,
-    RGBW_BLUE,
-    RGBW_WHITE
-};
+#define MAX_NORMALIZED_COLOR_VALUE 255.0
+#define MAX_RAW_AMBIENT_VALUE 2061.0
+#define MAX_RGBW_SENSOR_VALUE 65535.0
 
-class ChessColorDetection {
+/**
+ * @brief Controller for VEML6040 color sensor of the Dezibot.
+ * 
+ */
+class ColorSensor {
 protected:
     VEML6040 rgbwSensor;
-
-    // constants
-    const double IS_WHITE_FIELD_THRESHOLD = 100.0;
-    const double MAX_NORMALIZED_COLOR_VALUE = 255.0;
-    const double MAX_RAW_AMBIENT_VALUE = 2061.0;
-    const double MAX_RGBW_SENSOR_VALUE = 65535.0;
     
 public:
+    enum Color {
+        RED,
+        GREEN,
+        BLUE,
+        WHITE
+    };
+
     /**
      * @brief Initialize VEML6040 color sensor and begin transmission
      * 
@@ -56,7 +58,7 @@ public:
      * @param color color which to get
      * @return double color value
      */
-    double getRawColorValue(RGBWColor color);
+    double getRawColorValue(Color color);
 
     /**
      * @brief Get the normalized value of color sensor on a scale of 0 to 255 based
@@ -68,7 +70,7 @@ public:
      * @param ambientLightValue **normalized** value of ambient light sensor
      * @return double normalized color value
      */
-    double getNormalizedColorValue(RGBWColor color, double normalizedAmbientLight);
+    double getNormalizedColorValue(Color color, double normalizedAmbientLight);
 
     /**
      * @brief Get the sensor's correlated color temperature (CCT) value in Kelvin.
@@ -90,19 +92,6 @@ public:
      * @return double approximation for color value
      */
     double calculateBrightness(double red, double green, double blue);
-
-    /**
-     * @brief Determine if brightness value represents a white or a black chess
-     *        field.
-     *
-     * Note that the room must be well-lit or color correction light is turned on.
-     * At a normalized ambient light of about 10.0 or lower white field will be interpreted as black.
-     * 
-     * @param brightness normalized brightness value
-     * @return true if surface is white-ish
-     * @return false if surface is black-ish
-     */
-    double isWhiteField(double brightness);
 };
 
 #endif // ChessColorDetection_h

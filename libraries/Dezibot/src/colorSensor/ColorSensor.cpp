@@ -1,6 +1,6 @@
-#include "ChessColorDetection.h"
+#include "ColorSensor.h"
 
-bool ChessColorDetection::begin() {
+bool ColorSensor::begin() {
     bool hasStartedSuccessfully = rgbwSensor.begin();
     if (!hasStartedSuccessfully) {
         return false;
@@ -13,37 +13,37 @@ bool ChessColorDetection::begin() {
     return true;
 };
 
-double ChessColorDetection::getNormalizedAmbientValue() {
+double ColorSensor::getNormalizedAmbientValue() {
     double ambient = rgbwSensor.getAmbientLight();  // ambient light in lux
     double normalizedValue = ambient / MAX_RAW_AMBIENT_VALUE * MAX_NORMALIZED_COLOR_VALUE;
     return normalizedValue;
 };
 
-double ChessColorDetection::getRawColorValue(RGBWColor color) {
+double ColorSensor::getRawColorValue(Color color) {
     switch (color) {
-        case RGBW_RED:
+        case RED:
             return rgbwSensor.getRed();
-        case RGBW_GREEN:
+        case GREEN:
             return rgbwSensor.getGreen();
-        case RGBW_BLUE:
+        case BLUE:
             return rgbwSensor.getBlue();
-        case RGBW_WHITE:
+        case WHITE:
             return rgbwSensor.getWhite();
     }
 };
 
-double ChessColorDetection::getNormalizedColorValue(RGBWColor color, double normalizedAmbientLight) {
+double ColorSensor::getNormalizedColorValue(Color color, double normalizedAmbientLight) {
     double colorValue = getRawColorValue(color);
     double normalizedValue = colorValue * normalizedAmbientLight / MAX_RGBW_SENSOR_VALUE * MAX_NORMALIZED_COLOR_VALUE;
     normalizedValue = std::min(MAX_NORMALIZED_COLOR_VALUE, normalizedValue);
     return normalizedValue;
 };
 
-double ChessColorDetection::getCCT() {
+double ColorSensor::getCCT() {
     return rgbwSensor.getCCT() * 1.0;
 };
 
-double ChessColorDetection::calculateBrightness(double red, double green, double blue) {
+double ColorSensor::calculateBrightness(double red, double green, double blue) {
     const double RED_FACTOR = 0.299;
     const double GREEN_FACTOR = 0.587;
     const double BLUE_FACTOR = 0.114;
@@ -51,8 +51,4 @@ double ChessColorDetection::calculateBrightness(double red, double green, double
     double brightness = RED_FACTOR * red + GREEN_FACTOR * green + BLUE_FACTOR * blue;
     double normalizedBrightness = std::min(MAX_NORMALIZED_COLOR_VALUE, brightness);
     return normalizedBrightness;
-};
-
-double ChessColorDetection::isWhiteField(double brightness) {
-    return brightness >= IS_WHITE_FIELD_THRESHOLD;
 };

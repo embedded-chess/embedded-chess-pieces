@@ -10,9 +10,11 @@
  */
 
 #include <Dezibot.h>
+#include <EmbeddedChessPieces.h>
 #include <Wire.h>
 
 Dezibot dezibot = Dezibot();
+ECPColorDetection ecpColorDetection(dezibot);
 
 void setup() {
   Serial.begin(9600);
@@ -20,36 +22,30 @@ void setup() {
   dezibot.begin();
   Serial.println("Initialised");
 
-  bool hasStartedSuccessfully = dezibot.chessColorDetection.begin();
+  bool hasStartedSuccessfully = dezibot.colorSensor.begin();
   if(!hasStartedSuccessfully) {
     Serial.println("ERROR: couldn't detect the sensor");
     while(1) {}
   }
   delay(3000);
-  turnOnColorCorrectionLight();
-}
-
-/**
- * @brief Turn on the LED on the bottom of the Dezibot.
- * 
- * The light should help the identification of the field color even in a dimly-lit room.
- */
-void turnOnColorCorrectionLight() {
-  uint32_t COLOR_CORRECTION_WHITE = dezibot.multiColorLight.color(43, 33, 35);
-  dezibot.multiColorLight.setLed(BOTTOM,COLOR_CORRECTION_WHITE);
+  
+  ecpColorDetection.turnOnColorCorrectionLight();
 }
 
 void loop() {
-  double ambient = dezibot.chessColorDetection.getNormalizedAmbientValue();
+  double ambient = dezibot.colorSensor.getNormalizedAmbientValue();
 
-  double red = dezibot.chessColorDetection.getNormalizedColorValue(RGBW_RED, ambient);
-  double green = dezibot.chessColorDetection.getNormalizedColorValue(RGBW_GREEN, ambient);
-  double blue = dezibot.chessColorDetection.getNormalizedColorValue(RGBW_BLUE, ambient);
-  double white = dezibot.chessColorDetection.getNormalizedColorValue(RGBW_WHITE, ambient);
-  // double cct = dezibot.chessColorDetection.getCCT();
+  double red = dezibot.colorSensor.getNormalizedColorValue(ColorSensor::RED, ambient);
+  double green = dezibot.colorSensor.getNormalizedColorValue(ColorSensor::GREEN, ambient);
+  double blue = dezibot.colorSensor.getNormalizedColorValue(ColorSensor::BLUE, ambient);
+  double white = dezibot.colorSensor.getNormalizedColorValue(ColorSensor::WHITE, ambient);
+  // double cct = dezibot.colorSensor.getCCT();
 
-  double brightness = dezibot.chessColorDetection.calculateBrightness(red, green, blue);
-  bool isWhite = dezibot.chessColorDetection.isWhiteField(brightness);
+  double brightness = dezibot.colorSensor.calculateBrightness(red, green, blue);
+  bool isWhite = ecpColorDetection.isWhiteField();
+
+  Serial.println("");
+  dezibot.display.clear();
 
   printValue(red, "R");
   printValue(green, "G");
@@ -62,8 +58,6 @@ void loop() {
   printIsWhiteField(isWhite);
 
   delay(500);
-  Serial.println("");
-  dezibot.display.clear();
 }
 
 /**
