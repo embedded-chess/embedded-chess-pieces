@@ -21,5 +21,5 @@ void ECPColorDetection::turnOnColorCorrectionLight() {
 };
 
 void ECPColorDetection::turnOffColorCorrectionLight() {
-    dezibot.multiColorLight.setLed(BOTTOM, 0);
+    dezibot.multiColorLight.turnOffLed(BOTTOM);
 };
