@@ -1,6 +1,3 @@
-[submodule "libraries/Adafruit_Neopixel"]
-	path = libraries/Adafruit_Neopixel
-	url = https://github.com/adafruit/Adafruit_NeoPixel.git
 [submodule "libraries/ArduinoJson"]
 	path = libraries/ArduinoJson
 	url = https://github.com/bblanchon/ArduinoJson.git
@@ -16,3 +13,6 @@
 [submodule "libraries/VEML6040"]
 	path = libraries/VEML6040
 	url = https://github.com/thewknd/VEML6040.git
+[submodule "libraries/AdafruitNeopixel"]
+	path = libraries/AdafruitNeopixel
+	url = https://github.com/adafruit/Adafruit_NeoPixel.git
