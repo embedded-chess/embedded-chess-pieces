@@ -1,3 +1,18 @@
+[submodule "libraries/Adafruit_Neopixel"]
+	path = libraries/Adafruit_Neopixel
+	url = https://github.com/adafruit/Adafruit_NeoPixel.git
+[submodule "libraries/ArduinoJson"]
+	path = libraries/ArduinoJson
+	url = https://github.com/bblanchon/ArduinoJson.git
+[submodule "libraries/AsyncTCP"]
+	path = libraries/AsyncTCP
+	url = https://github.com/dvarrel/AsyncTCP.git
+[submodule "libraries/Painless_Mesh"]
+	path = libraries/Painless_Mesh
+	url = https://gitlab.com/painlessMesh/painlessMesh.git
+[submodule "libraries/TaskScheduler"]
+	path = libraries/TaskScheduler
+	url = https://github.com/arkhipenko/TaskScheduler.git
 [submodule "libraries/VEML6040"]
 	path = libraries/VEML6040
 	url = https://github.com/thewknd/VEML6040.git

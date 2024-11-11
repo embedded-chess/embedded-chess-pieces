@@ -64,4 +64,15 @@ In `src` you can find example use cases for our project. This includes Arduino s
 ## Licence
 
 This repository is licenced under the GNU General Public License ([GPL-3.0](./LICENSE)).
-<!-- TODO: State changes -->
+
+We also use the following third-party libraries that are licenced as follows:
+
+| Library                                                              | Version | Author       | Licence      |
+|----------------------------------------------------------------------|---------|--------------|--------------|
+| [`Adafruit NeoPixel`](https://github.com/adafruit/Adafruit_NeoPixel) | 1.12.3  | Adafruit     | LGPL-3.0     |
+| [`ArduinoJson`](https://github.com/bblanchon/ArduinoJson)            | 7.2.0   | bblanchon    | MIT          |
+| [`AsyncTCP`](https://github.com/dvarrel/AsyncTCP)                    | 1.1.4   | dvarrel      | LGPL-3.0     |
+| [`Dezibot`](https://github.com/dezibot/dezibot) (modified)           | -       | dezibot      | GPL-3.0      |
+| [`Painless Mesh`](https://gitlab.com/painlessMesh/painlessMesh)      | 1.5.0   | PainlessMesh | GPL-3.0      |
+| [`TaskScheduler`](https://github.com/arkhipenko/TaskScheduler)       | 3.8.5   | arkhipenko   | BSD-3-Clause |
+| [`VEML6040`](https://github.com/thewknd/VEML6040)                    | 0.3.2   | thewknd      | MIT          |
