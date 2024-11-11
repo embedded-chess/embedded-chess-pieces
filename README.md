@@ -47,11 +47,6 @@ In `src` you can find example use cases for our project. This includes Arduino s
 
 - Install [Arduino IDE 2](https://github.com/arduino/arduino-ide)
 - Add [`esp32`](https://github.com/espressif/arduino-esp32/releases/tag/2.0.15) board manager by Espressif Systems (version 2.0.15)
-- Install the following libraries
-    - [`Adafruit NeoPixel`](https://github.com/adafruit/Adafruit_NeoPixel) by Adafruit
-    - [`Painless Mesh`](https://gitlab.com/painlessMesh/painlessMesh/-/tree/v1.5.0) by painlessMesh (version 1.5.0) including dependencies
-    - [`AsyncTCP`](https://github.com/dvarrel/AsyncTCP/releases/tag/1.1.4) by dvarrel (version 1.1.4)
-    - [`VEML6040`](https://github.com/thewknd/VEML6040/) by thewknd (included as [submodule](./libraries/VEML6040/))
 - In Arduino IDE, open preferences and select the root directory of this repository as your sketchbook location
 
 
