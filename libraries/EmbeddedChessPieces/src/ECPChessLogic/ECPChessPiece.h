@@ -42,13 +42,13 @@ public:
     virtual bool isMoveValid(ECPChessField newField) = 0;
 
     /**
-     * @brief Update current field of chess piece to new field if valid.
+     * @brief Move to new field if valid
      * 
      * @param newField New field on which to move
-     * @return true if move is valid and property was updated
+     * @return true if move is valid
      * @return false otherwise
      */
-    bool move(ECPChessField newField);
+    virtual bool move(ECPChessField newField) = 0;
 
     /**
      * @brief Get the current field

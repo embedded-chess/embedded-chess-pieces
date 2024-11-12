@@ -12,7 +12,7 @@
 #ifndef ECPChessLogic_h
 #define ECPChessLogic_h
 
-#include "ECPChessField.h"
 #include "ECPChessPiece.h"
+#include "ECPChessPieces/ECPChessPieces.h"
 
 #endif // ECPChessLogic_h
