@@ -25,7 +25,7 @@ protected:
     Dezibot &dezibot;
 
 public:
-    ECPColorDetection(Dezibot &d) : dezibot(d) {};
+    ECPColorDetection(Dezibot &d);
 
     /**
      * @brief Determine if brightness value represents a white or a black chess
