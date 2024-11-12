@@ -25,7 +25,7 @@ protected:
     Dezibot &dezibot;
 
 public:
-    ECPColorDetection(Dezibot &d) : dezibot(d) {};
+    ECPColorDetection(Dezibot &d);
 
     /**
      * @brief Determine if brightness value represents a white or a black chess
@@ -35,11 +35,10 @@ public:
      * (see \see turnOnColorCorrectionLight).
      * At a normalized ambient light of about 10.0 or lower white field will be interpreted as black.
      * 
-     * @param brightness normalized brightness value
      * @return true if surface is white-ish
      * @return false if surface is black-ish
      */
-    double isWhiteField();
+    bool isWhiteField();
 
     /**
      * @brief Turn on the LED on the bottom of the Dezibot.
