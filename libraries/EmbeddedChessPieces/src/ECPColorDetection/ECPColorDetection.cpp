@@ -1,6 +1,6 @@
 #include "ECPColorDetection.h"
 
-double ECPColorDetection::isWhiteField() {
+bool ECPColorDetection::isWhiteField() {
     double ambient = dezibot.colorSensor.getNormalizedAmbientValue();
     double red = dezibot.colorSensor.getNormalizedColorValue(ColorSensor::RED, ambient);
     double green = dezibot.colorSensor.getNormalizedColorValue(ColorSensor::GREEN, ambient);
