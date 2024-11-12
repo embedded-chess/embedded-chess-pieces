@@ -5,7 +5,6 @@ double ECPColorDetection::isWhiteField() {
     double red = dezibot.colorSensor.getNormalizedColorValue(ColorSensor::RED, ambient);
     double green = dezibot.colorSensor.getNormalizedColorValue(ColorSensor::GREEN, ambient);
     double blue = dezibot.colorSensor.getNormalizedColorValue(ColorSensor::BLUE, ambient);
-    double white = dezibot.colorSensor.getNormalizedColorValue(ColorSensor::WHITE, ambient);
 
     double brightness = dezibot.colorSensor.calculateBrightness(red, green, blue);
 
