@@ -22,7 +22,7 @@
 
 class ECPColorDetection {
 protected:
-    Dezibot dezibot;
+    Dezibot &dezibot;
 
 public:
     ECPColorDetection(Dezibot &d) : dezibot(d) {};
