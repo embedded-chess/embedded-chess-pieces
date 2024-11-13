@@ -37,15 +37,6 @@ public:
      */
     bool isMoveValid(ECPChessField newField);
 
-    /**
-     * @brief Move to new field if valid
-     * 
-     * @param newField New field on which to move
-     * @return true if move is valid
-     * @return false otherwise
-     */
-    bool move(ECPChessField newField);
-
 private:
     /**
      * @brief Initial row of white pawns

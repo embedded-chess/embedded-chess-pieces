@@ -6,6 +6,17 @@ ECPChessPiece::ECPChessPiece(Dezibot &d, ECPChessField initialField)
     isWhite = initialField.row <= 2;
 };
 
+bool ECPChessPiece::move(ECPChessField newField) {
+    if (!isMoveValid(newField)) {
+        return false;
+    }
+
+    // TODO: #4 implement actual movement on board
+
+    currentField = newField;
+    return true;
+};
+
 ECPChessField ECPChessPiece::getCurrentField() {
     return currentField;
 };

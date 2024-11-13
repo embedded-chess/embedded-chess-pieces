@@ -48,14 +48,3 @@ bool ECPPawn::isMoveValid(ECPChessField newField) {
 
     return false;
 };
-
-bool ECPPawn::move(ECPChessField newField) {
-    if (!isMoveValid(newField)) {
-        return false;
-    }
-
-    // TODO: #4 implement actual movement on board
-
-    currentField = newField;
-    return true;
-};

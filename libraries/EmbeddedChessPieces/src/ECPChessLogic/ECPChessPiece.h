@@ -48,7 +48,7 @@ public:
      * @return true if move is valid
      * @return false otherwise
      */
-    virtual bool move(ECPChessField newField) = 0;
+    bool move(ECPChessField newField);
 
     /**
      * @brief Get the current field
