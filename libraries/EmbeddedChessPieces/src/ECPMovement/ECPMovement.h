@@ -26,19 +26,19 @@ public:
     /**
      * @brief Construct a new movement object.
      * 
-     * @param d dezibot to move
-     * @param mc base value to calibrate the dezibot's movement
+     * @param d Dezibot to move
+     * @param mc Base value to calibrate the dezibot's movement
      */
-    ECPMovement(Dezibot &d, uint mc = 3900) : dezibot(d), ecpColorDetection(d) {
-        movementCalibration = mc;
-    };
+    ECPMovement(Dezibot &d, uint mc);
 
     /**
      * @brief Move chess piece to given field.
      * 
-     * @attention Not yet implemented - Placeholder
+     * @attention Placeholder
+     * 
+     * @param numberOfFields Number of fields the dezibot should move forward
      */
-    void move();
+    void move(uint numberOfFields);
 
 protected:
     Dezibot &dezibot;
@@ -66,7 +66,7 @@ private:
     /**
      * @brief Move straight to the next field.
      * 
-     * @param isOnWhite information if the dezibot starts on a white field
+     * @param isOnWhite Information if the dezibot starts on a white field
      */
     void moveToNextField(bool isOnWhite);
 };

@@ -15,18 +15,21 @@
 
 Dezibot dezibot = Dezibot();
 ECPMovement ecpMovement(dezibot, 4050);
+ECPColorDetection ecpColorDetection(dezibot);
 
 void setup() {
   Serial.begin(9600);
   Serial.println("Started");
   dezibot.begin();
   Serial.println("Initialised");
+  ecpColorDetection.turnOnColorCorrectionLight();
 }
 
 void loop() {
-  dezibot.display.println("Moving");
+  uint numberOfFields = 2;
+  dezibot.display.println("Moving 2 Fields");
   dezibot.display.println("...");
-  ecpMovement.move();
+  ecpMovement.move(numberOfFields);
 
   dezibot.display.println("");
   dezibot.display.println("Taking a break");
