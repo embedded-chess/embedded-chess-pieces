@@ -29,6 +29,10 @@ enum ECPBoardColumn {
 struct ECPChessField {
     ECPBoardColumn column;
     unsigned int row;
+
+    bool operator==(const ECPChessField& rhs) const {
+        return column == rhs.column && row == rhs.row;
+    }
 };
 
 #endif // ECPChessField_h
