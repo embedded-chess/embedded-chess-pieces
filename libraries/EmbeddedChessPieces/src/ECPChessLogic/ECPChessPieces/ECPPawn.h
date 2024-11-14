@@ -21,8 +21,9 @@ public:
      * 
      * @param d Dezibot that simulates the piece
      * @param initialField Initial field of chess piece on board, i.e. B1 white pawn
+     * @param isWhite True if piece is white, false if black
      */
-    ECPPawn(Dezibot &d, ECPChessField initialField);
+    ECPPawn(Dezibot &d, ECPChessField initialField, bool isWhite);
 
     /**
      * @brief Determine if move from current field to passed new field is valid

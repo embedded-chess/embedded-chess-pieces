@@ -29,7 +29,7 @@ public:
      * @param d Dezibot that simulates the piece
      * @param initialField Initial field of chess piece on board, i.e. A1 white tower
      */
-    ECPChessPiece(Dezibot &d, ECPChessField initialField);
+    ECPChessPiece(Dezibot &d, ECPChessField initialField, bool isWhite);
 
     /**
      * @brief Determine if move from current field to passed new field is valid
@@ -56,6 +56,14 @@ public:
      * @return ECPChessField current field
      */
     ECPChessField getCurrentField();
+
+    /**
+     * @brief Get if chess piece is white.
+     * 
+     * @return true if white
+     * @return false if black
+     */
+    bool getIsWhite();
 
 protected:
     /**
