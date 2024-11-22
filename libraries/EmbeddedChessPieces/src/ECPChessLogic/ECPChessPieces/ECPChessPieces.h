@@ -13,5 +13,6 @@
 #define ECPChessPieces_h
 
 #include "ECPPawn.h"
+#include "ECPRook.h"
 
 #endif // ECPChessPieces_h
