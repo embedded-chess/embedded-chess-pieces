@@ -17,7 +17,3 @@ bool ECPChessPiece::move(ECPChessField newField) {
 ECPChessField ECPChessPiece::getCurrentField() {
     return currentField;
 };
-
-bool ECPChessPiece::getIsWhite() {
-    return isWhite;
-}

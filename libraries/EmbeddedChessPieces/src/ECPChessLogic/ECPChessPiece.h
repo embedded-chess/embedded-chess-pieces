@@ -21,7 +21,7 @@
  */
 class ECPChessPiece {
 public:
-    Dezibot& dezibot;
+    const Dezibot& dezibot;
 
     /**
      * @brief Construct a new chess piece object
@@ -58,12 +58,10 @@ public:
     ECPChessField getCurrentField();
 
     /**
-     * @brief Get if chess piece is white.
+     * @brief True if chess piece is white, false if black
      * 
-     * @return true if white
-     * @return false if black
      */
-    bool getIsWhite();
+    const bool isWhite;
 
 protected:
     /**
@@ -71,12 +69,6 @@ protected:
      * 
      */
     ECPChessField currentField;
-
-    /**
-     * @brief True if chess piece is white, false if black
-     * 
-     */
-    bool isWhite;
 };
 
 #endif // ECPChessPiece_h
