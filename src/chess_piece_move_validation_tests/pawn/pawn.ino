@@ -20,17 +20,25 @@ Dezibot dezibot = Dezibot();
 void setup() {
     Serial.begin(BAUD_RATE);
     dezibot.begin();
-    delay(1000);
-
-    testWhitePawn();
-    Serial.println();
-    testBlackPawn();
+    delay(500);
 }
 
-void loop() { }
+void loop() {
+    Serial.println("\n=== STARTING TEST ===\n");
+
+    Serial.println("Testing white pawn...");
+    testWhitePawn();
+    Serial.println("\nTesting black pawn...");
+    testBlackPawn();
+
+    Serial.println("\n=== TEST DONE ===");
+    Serial.println("Sleeping for 10 seconds...\n");
+
+    delay(10000);
+}
 
 void testWhitePawn() {
-    ECPChessField initialField = { A, 2 };
+    const ECPChessField initialField = { A, 2 };
     ECPPawn pawn = ECPPawn(dezibot, initialField, true);
 
     // valid moves
@@ -41,6 +49,7 @@ void testWhitePawn() {
     test(pawn.isMoveValid({ B, 3 }), true, "B3");
     
     // invalid moves
+    test(pawn.isMoveValid(initialField), false, "A2");
     test(pawn.isMoveValid({ A, 1 }), false, "A1");
     test(pawn.isMoveValid({ A, 5 }), false, "A4");
     test(pawn.isMoveValid({ B, 2 }), false, "B2");
@@ -48,7 +57,7 @@ void testWhitePawn() {
 }
 
 void testBlackPawn() {
-    ECPChessField initialField = { C, 7 };
+    const ECPChessField initialField = { C, 7 };
     ECPPawn pawn = ECPPawn(dezibot, initialField, false);
 
     // valid moves
@@ -59,6 +68,7 @@ void testBlackPawn() {
     test(pawn.isMoveValid({ D, 6 }), true, "D6");
     
     // invalid moves
+    test(pawn.isMoveValid(initialField), false, "C7");
     test(pawn.isMoveValid({ C, 1 }), false, "C1");
     test(pawn.isMoveValid({ C, 4 }), false, "C4");
     test(pawn.isMoveValid({ B, 7 }), false, "B7");
@@ -67,11 +77,11 @@ void testBlackPawn() {
 
 void test(bool actual, bool expected, String field) {
     if (actual == expected) {
-        Serial.print("Correct for ");
-        Serial.println(field);
+        Serial.print(field);
+        Serial.println(": Test passed");
     } else {
-        Serial.print("Wrong for ");
-        Serial.println(field);
+        Serial.print(field);
+        Serial.println(": Test failed");
     }
-    delay(500);
+    // delay(5);
 }
