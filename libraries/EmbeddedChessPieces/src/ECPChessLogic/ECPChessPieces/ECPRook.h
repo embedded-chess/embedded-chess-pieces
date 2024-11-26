@@ -17,10 +17,10 @@
 class ECPRook : public ECPChessPiece {
 public:
     /**
-     * @brief Construct a new chess piece object
+     * @brief Construct a new Rook chess piece object
      * 
      * @param d Dezibot that simulates the piece
-     * @param initialField Initial field of chess piece on board, i.e. B1 white pawn
+     * @param initialField Initial field of chess piece on board
      * @param isWhite True if piece is white, false if black
      */
     ECPRook(Dezibot &d, ECPChessField initialField, bool isWhite);
