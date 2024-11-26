@@ -42,16 +42,18 @@ void testRookOnInitialField() {
     ECPRook rook = ECPRook(dezibot, initialField, true);
 
     // valid moves
-    test(rook.isMoveValid({ A, 2 }), true, "A2");
-    test(rook.isMoveValid({ A, 8 }), true, "A8");
-    test(rook.isMoveValid({ B, 1 }), true, "B1");
-    test(rook.isMoveValid({ H, 1 }), true, "H1");
+    Serial.println("\nTesting valid moves...");
+    ECPChessField validFields[] = {{ A, 2 }, { A, 8 }, { B, 1 }, { H, 1 }};
+    for (ECPChessField field : validFields) {
+        test(rook, field, true);
+    }
 
     // invalid moves
-    test(rook.isMoveValid(initialField), false, "A1");
-    test(rook.isMoveValid({ B, 4 }), false, "B2");
-    test(rook.isMoveValid({ B, 8 }), false, "B8");
-    test(rook.isMoveValid({ H, 8 }), false, "H8");
+    Serial.println("\nTesting invalid moves...");
+    ECPChessField invalidFields[] = {initialField, { B, 4 }, { B, 8 }, { H, 8 }};
+    for (ECPChessField field : invalidFields) {
+        test(rook, field, false);
+    }
 }
 
 void testRookInBoardCenter() {
@@ -59,37 +61,37 @@ void testRookInBoardCenter() {
     ECPRook rook = ECPRook(dezibot, initialField, false);
 
     // valid moves - horizontally
-    test(rook.isMoveValid({ A, 5 }), true, "A5");
-    test(rook.isMoveValid({ B, 5 }), true, "B5");
-    test(rook.isMoveValid({ C, 5 }), true, "C5");
-    test(rook.isMoveValid({ E, 5 }), true, "E5");
-    test(rook.isMoveValid({ F, 5 }), true, "F5");
-    test(rook.isMoveValid({ G, 5 }), true, "G5");
-    test(rook.isMoveValid({ H, 5 }), true, "H5");
+    Serial.println("\nTesting valid horizontal moves...");
+    ECPChessField validHorizontalFields[] = {{ A, 5 }, { B, 5 }, { C, 5 },
+        { E, 5 }, { F, 5 }, { G, 5 }, { H, 5 }};
+    for (ECPChessField field : validHorizontalFields) {
+        test(rook, field, true);
+    }
 
     // valid moves - vertically
-    test(rook.isMoveValid({ D, 1 }), true, "D1");
-    test(rook.isMoveValid({ D, 2 }), true, "D2");
-    test(rook.isMoveValid({ D, 3 }), true, "D3");
-    test(rook.isMoveValid({ D, 4 }), true, "D4");
-    test(rook.isMoveValid({ D, 6 }), true, "D6");
-    test(rook.isMoveValid({ D, 7 }), true, "D7");
-    test(rook.isMoveValid({ D, 8 }), true, "D8");
+    Serial.println("\nTesting valid vertical moves...");
+    ECPChessField validVerticalFields[] = {{ D, 1 }, { D, 2 }, { D, 3 },
+        { D, 4 }, { D, 6 }, { D, 7 }, { D, 8 }};
+    for (ECPChessField field : validVerticalFields) {
+        test(rook, field, true);
+    }
 
     // invalid moves
-    test(rook.isMoveValid({ D, 5 }), false, "D5");
-    test(rook.isMoveValid({ C, 4 }), false, "C4");
-    test(rook.isMoveValid({ C, 6 }), false, "C6");
-    test(rook.isMoveValid({ E, 6 }), false, "E6");
-    test(rook.isMoveValid({ E, 4 }), false, "E4");
+    Serial.println("\nTesting invalid moves...");
+    ECPChessField invalidFields[] = {initialField, { D, 5 }, { C, 4 }, { C, 6 },
+        { E, 6 }, { E, 4 }};
+    for (ECPChessField field : invalidFields) {
+        test(rook, field, false);
+    }
 }
 
-void test(bool actual, bool expected, String field) {
+void test(ECPChessPiece& piece, ECPChessField field, bool expected) {
+    bool actual = piece.isMoveValid(field);
+
+    Serial.print(field.toString() + ": ");
     if (actual == expected) {
-        Serial.print(field);
-        Serial.println(": Test passed");
+        Serial.println("Test passed");
     } else {
-        Serial.print(field);
-        Serial.println(": Test failed");
+        Serial.println("Test failed");
     }
 }

@@ -42,18 +42,20 @@ void testWhitePawn() {
     ECPPawn pawn = ECPPawn(dezibot, initialField, true);
 
     // valid moves
-    test(pawn.isMoveValid({ A, 3 }), true, "A3");
-    test(pawn.isMoveValid({ A, 4 }), true, "A4");
-
-    // valid move assuming that there is an opponent to capture
-    test(pawn.isMoveValid({ B, 3 }), true, "B3");
+    Serial.println("Testing valid moves...");
+    ECPChessField validFields[] = {
+        { A, 3}, { A, 4 },
+        { B, 3 }};  // assuming that there is an opponent to capture
+    for (ECPChessField field : validFields) {
+        test(pawn, field, true);
+    }
     
     // invalid moves
-    test(pawn.isMoveValid(initialField), false, "A2");
-    test(pawn.isMoveValid({ A, 1 }), false, "A1");
-    test(pawn.isMoveValid({ A, 5 }), false, "A4");
-    test(pawn.isMoveValid({ B, 2 }), false, "B2");
-    test(pawn.isMoveValid({ B, 1 }), false, "B1");
+    Serial.println("\nTesting invalid moves...");
+    ECPChessField invalidFields[] = {initialField, { A, 1 }, { A, 5 }, { B, 2 }, { B, 1}};
+    for (ECPChessField field : invalidFields) {
+        test(pawn, field, false);
+    }
 }
 
 void testBlackPawn() {
@@ -61,27 +63,29 @@ void testBlackPawn() {
     ECPPawn pawn = ECPPawn(dezibot, initialField, false);
 
     // valid moves
-    test(pawn.isMoveValid({ C, 6 }), true, "C6");
-    test(pawn.isMoveValid({ C, 5 }), true, "C5");
+    Serial.println("Testing valid moves...");
+    ECPChessField validFields[] = {
+        { C, 6}, { C, 5 },
+        { D, 6 }};  // assuming that there is an opponent to capture
+    for (ECPChessField field : validFields) {
+        test(pawn, field, true);
+    }
 
-    // valid move assuming that there is an opponent to capture
-    test(pawn.isMoveValid({ D, 6 }), true, "D6");
-    
     // invalid moves
-    test(pawn.isMoveValid(initialField), false, "C7");
-    test(pawn.isMoveValid({ C, 1 }), false, "C1");
-    test(pawn.isMoveValid({ C, 4 }), false, "C4");
-    test(pawn.isMoveValid({ B, 7 }), false, "B7");
-    test(pawn.isMoveValid({ D, 8 }), false, "D8");
+    Serial.println("\nTesting invalid moves...");
+    ECPChessField invalidFields[] = {initialField, { C, 1 }, { C, 4 }, { B, 7 }, { D, 8 }};
+    for (ECPChessField field : invalidFields) {
+        test(pawn, field, false);
+    }
 }
 
-void test(bool actual, bool expected, String field) {
+void test(ECPChessPiece& piece, ECPChessField field, bool expected) {
+    bool actual = piece.isMoveValid(field);
+
+    Serial.print(field.toString() + ": ");
     if (actual == expected) {
-        Serial.print(field);
-        Serial.println(": Test passed");
+        Serial.println("Test passed");
     } else {
-        Serial.print(field);
-        Serial.println(": Test failed");
+        Serial.println("Test failed");
     }
-    // delay(5);
 }
