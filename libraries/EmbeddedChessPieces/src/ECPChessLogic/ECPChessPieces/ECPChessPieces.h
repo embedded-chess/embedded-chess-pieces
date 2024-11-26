@@ -13,6 +13,7 @@
 #define ECPChessPieces_h
 
 #include "ECPKing.h"
+#include "ECPKnight.h"
 #include "ECPPawn.h"
 #include "ECPRook.h"
 
