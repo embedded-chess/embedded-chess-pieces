@@ -12,6 +12,8 @@
 #ifndef ECPChessField_h
 #define ECPChessField_h
 
+#include <Arduino.h>
+
 /**
  * @brief Enumeration for column of chess board
  * 
@@ -29,6 +31,12 @@ enum ECPBoardColumn {
 struct ECPChessField {
     ECPBoardColumn column;
     unsigned int row;
+
+    String toString() const {
+        char columnChar = 'A' + column;
+        String result = String(columnChar) + String(row);
+        return result;
+    }
 
     bool operator==(const ECPChessField& rhs) const {
         return column == rhs.column && row == rhs.row;
