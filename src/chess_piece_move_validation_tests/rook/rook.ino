@@ -1,5 +1,5 @@
 /**
- * @file pawn_move_validation_test.ino
+ * @file rook.ino
  * @author Ines Rohrbach, Nico Schramm
  * @brief Test for ECPRook isMoveValid method.
  * @version 0.1
