@@ -12,6 +12,7 @@
 #ifndef ECPChessPieces_h
 #define ECPChessPieces_h
 
+#include "ECPKing.h"
 #include "ECPPawn.h"
 #include "ECPRook.h"
 
