@@ -30,7 +30,7 @@ public:
      *        for this chess piece.
      * 
      * @attention Note that if it is always assumed, that leaping over other
-     *            pieces is not required.
+     *            pieces is not required. Also, castling is not implemented.
      * 
      * @param newField New field on which to move
      * @return true if move is valid
