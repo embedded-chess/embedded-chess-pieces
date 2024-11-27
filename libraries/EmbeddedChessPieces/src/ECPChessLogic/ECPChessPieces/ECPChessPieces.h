@@ -12,6 +12,7 @@
 #ifndef ECPChessPieces_h
 #define ECPChessPieces_h
 
+#include "ECPBishop.h"
 #include "ECPKing.h"
 #include "ECPKnight.h"
 #include "ECPPawn.h"
