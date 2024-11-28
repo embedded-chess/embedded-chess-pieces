@@ -14,7 +14,7 @@
 #include <Wire.h>
 
 Dezibot dezibot = Dezibot();
-ECPMovement ecpMovement(dezibot, 4050);
+ECPMovement ecpMovement(dezibot, 4100);
 ECPColorDetection ecpColorDetection(dezibot);
 
 void setup() {
@@ -22,17 +22,22 @@ void setup() {
   Serial.println("Started");
   dezibot.begin();
   Serial.println("Initialised");
+
+  // initial delay to mitigate faulty color sensor readings
+  delay(1000);
   ecpColorDetection.turnOnColorCorrectionLight();
 }
 
 void loop() {
-  uint numberOfFields = 2;
-  dezibot.display.println("Moving 2 Fields");
-  dezibot.display.println("...");
-  ecpMovement.move(numberOfFields);
+  for (size_t numberOfFields = 1; numberOfFields < 5; numberOfFields++) {
+    dezibot.display.print("Moving ");
+    dezibot.display.print(numberOfFields);
+    dezibot.display.println(" Fields");
+    ecpMovement.move(numberOfFields);
 
-  dezibot.display.println("");
-  dezibot.display.println("Taking a break");
-  delay(10000);
-  dezibot.display.clear();
+    dezibot.display.println("");
+    dezibot.display.println("Done");
+    delay(10000);
+    dezibot.display.clear();
+  }
 }

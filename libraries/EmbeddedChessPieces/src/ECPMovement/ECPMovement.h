@@ -18,8 +18,6 @@
 #define FORWARD_TIME 750
 #define MOVEMENT_BREAK 375
 
-#define CALIBRATION_STRAIGHT 4050
-
 
 class ECPMovement {
 public:
@@ -32,9 +30,7 @@ public:
     ECPMovement(Dezibot &d, uint mc);
 
     /**
-     * @brief Move chess piece to given field.
-     * 
-     * @attention Placeholder
+     * @brief Move chess piece given number of fields forward.
      * 
      * @param numberOfFields Number of fields the dezibot should move forward
      */
@@ -65,10 +61,8 @@ private:
 
     /**
      * @brief Move straight to the next field.
-     * 
-     * @param isOnWhite Information if the dezibot starts on a white field
      */
-    void moveToNextField(bool isOnWhite);
+    void moveToNextField();
 };
 
 #endif // ECPMovement_h

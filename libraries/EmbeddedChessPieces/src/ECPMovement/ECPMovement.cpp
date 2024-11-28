@@ -1,32 +1,26 @@
 #include "ECPMovement.h"
 
-ECPMovement::ECPMovement(Dezibot &d, uint mc = 3900) : dezibot(d), ecpColorDetection(d) {
-    movementCalibration = mc;
-};
+ECPMovement::ECPMovement(Dezibot &d, uint mc = 3900) : dezibot(d), ecpColorDetection(ECPColorDetection(d)), movementCalibration(mc) {};
 
 void ECPMovement::moveForward(int timeMovement, int timeBreak) {
-    dezibot.motion.move(0, CALIBRATION_STRAIGHT);
+    dezibot.motion.move(0, movementCalibration);
     delay(timeMovement);
     dezibot.motion.stop();
     delay(timeBreak);
 };
 
-void ECPMovement::moveToNextField(bool isOnWhite) {
-    bool isWhiteField = isOnWhite;
+void ECPMovement::moveToNextField() {
+    bool startedOnWhite = ecpColorDetection.isWhiteField();
+    bool currentlyOnWhite = startedOnWhite;
 
-    while (isWhiteField == isOnWhite) {
+    while (currentlyOnWhite == startedOnWhite) {
         moveForward(FORWARD_TIME, MOVEMENT_BREAK);
-
-        isWhiteField = ecpColorDetection.isWhiteField();
+        currentlyOnWhite = ecpColorDetection.isWhiteField();
     }
 };
 
 void ECPMovement::move(uint numberOfFields) {
-    // Placeholder
-    bool isOnWhite = false;
-    while (numberOfFields > 0) {
-        isOnWhite = ecpColorDetection.isWhiteField();
-        moveToNextField(isOnWhite);
-        numberOfFields--;
+    for (size_t i = 0; i < numberOfFields; i++) {
+        moveToNextField();
     }
 };
