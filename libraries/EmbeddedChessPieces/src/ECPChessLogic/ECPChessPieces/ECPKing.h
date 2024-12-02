@@ -33,7 +33,7 @@ public:
      * @return true if move is valid
      * @return false otherwise
      */
-    bool isMoveValid(ECPChessField newField);
+    bool isMoveValid(ECPChessField newField) override;
 };
 
 #endif // ECPKing_h
