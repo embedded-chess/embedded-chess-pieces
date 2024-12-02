@@ -39,7 +39,7 @@ In `src` you can find example use cases for our project. This includes Arduino s
 - [ ] Logic on which field the robot is at any given moment (show on the display if shaken) [#7](https://github.com/nicosrm/24-emb-chess/issues/7)
 - [ ] Calibrate black / white threshold [#15](https://github.com/nicosrm/24-emb-chess/issues/15)
 - [ ] Wireless connection for initial field and movements [#8](https://github.com/nicosrm/24-emb-chess/issues/8)
-- [ ] Expand selectable pieces [#9](https://github.com/nicosrm/24-emb-chess/issues/9)
+- [x] Expand selectable pieces [#9](https://github.com/nicosrm/24-emb-chess/issues/9)
 - [ ] Validate if move is allowed and colour LED green or red accordingly [#10](https://github.com/nicosrm/24-emb-chess/issues/10)
 
 
