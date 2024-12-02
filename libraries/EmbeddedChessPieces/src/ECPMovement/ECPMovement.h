@@ -18,6 +18,7 @@
 #define FORWARD_TIME 750
 #define MOVEMENT_BREAK 375
 
+#define DEFAULT_MOVEMENT_CALIBRATION 3900
 
 class ECPMovement {
 public:
@@ -25,7 +26,7 @@ public:
      * @brief Construct a new movement object.
      * 
      * @param d Dezibot to move
-     * @param mc Base value to calibrate the dezibot's movement
+     * @param mc Base value to calibrate the dezibot's movement (default 3900)
      */
     ECPMovement(Dezibot &d, uint mc);
 

@@ -1,6 +1,9 @@
 #include "ECPMovement.h"
 
-ECPMovement::ECPMovement(Dezibot &d, uint mc = 3900) : dezibot(d), ecpColorDetection(ECPColorDetection(d)), movementCalibration(mc) {};
+ECPMovement::ECPMovement(Dezibot &d, uint mc = DEFAULT_MOVEMENT_CALIBRATION)
+    : dezibot(d),
+      ecpColorDetection(ECPColorDetection(d)),
+      movementCalibration(mc) {};
 
 void ECPMovement::moveForward(int timeMovement, int timeBreak) {
     dezibot.motion.move(0, movementCalibration);

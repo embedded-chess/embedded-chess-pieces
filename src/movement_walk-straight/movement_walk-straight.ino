@@ -13,8 +13,11 @@
 #include <EmbeddedChessPieces.h>
 #include <Wire.h>
 
+// change for a calibration fitting the specific dezibot
+#define MOVEMENT_CALIBRATION 3900
+
 Dezibot dezibot = Dezibot();
-ECPMovement ecpMovement(dezibot, 4100);
+ECPMovement ecpMovement(dezibot, MOVEMENT_CALIBRATION);
 ECPColorDetection ecpColorDetection(dezibot);
 
 void setup() {
