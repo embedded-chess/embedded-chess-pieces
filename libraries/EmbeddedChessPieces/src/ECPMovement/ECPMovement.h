@@ -44,7 +44,6 @@ protected:
     /**
      * @brief Value to calibrate movement.
      * 
-     * Defaults to 3900.
      * If the Dezibot is not moving forward at all increasing the value may help.
      * If the robot is just jumping up and down but not forward, try a lower value.
      */
@@ -56,12 +55,16 @@ private:
      * 
      * To minimize drift, a break is implemented after each movement.
      * 
-     * @param time in ms - how long the dezibot should move.
+     * @param timeMovement in ms - how long the dezibot should move.
+     * @param timeBreak in ms - how long the dezibot should pause.
      */
     void moveForward(int timeMovement, int timeBreak);
 
     /**
      * @brief Move straight to the next field.
+     * 
+     * Default interval of movement before checking the field color
+     * is defined in MOVEMENT_TIME and MOVEMENT_BREAK.
      */
     void moveToNextField();
 };
