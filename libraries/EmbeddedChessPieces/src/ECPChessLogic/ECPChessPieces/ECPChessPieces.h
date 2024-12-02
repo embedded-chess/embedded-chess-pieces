@@ -16,6 +16,7 @@
 #include "ECPKing.h"
 #include "ECPKnight.h"
 #include "ECPPawn.h"
+#include "ECPQueen.h"
 #include "ECPRook.h"
 
 #endif // ECPChessPieces_h
