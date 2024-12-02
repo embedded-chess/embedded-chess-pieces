@@ -32,7 +32,7 @@ In `src` you can find example use cases for our project. This includes Arduino s
 
 - [x] Recognise colours of the chess board [#1](https://github.com/nicosrm/24-emb-chess/issues/1)
 - [ ] Simulate Pawn [#4](https://github.com/nicosrm/24-emb-chess/issues/4)
-    - [ ] Walk straight a specified number of fields [#2](https://github.com/nicosrm/24-emb-chess/issues/2)
+    - [x] Walk straight a specified number of fields [#2](https://github.com/nicosrm/24-emb-chess/issues/2)
     - [ ] Turn in a given direction to simulate diagonal movement [#3](https://github.com/nicosrm/24-emb-chess/issues/3)
 - [ ] Find centre of a chess field [#5](https://github.com/nicosrm/24-emb-chess/issues/5)
 - [ ] Draw selected figure to the display [#6](https://github.com/nicosrm/24-emb-chess/issues/6)

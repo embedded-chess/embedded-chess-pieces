@@ -13,5 +13,6 @@
 #define EmbeddedChessPieces_h
 
 #include "ECPColorDetection/ECPColorDetection.h"
+#include "ECPMovement/ECPMovement.h"
 
 #endif // EmbeddedChessPieces_h
