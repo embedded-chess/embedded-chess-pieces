@@ -38,8 +38,7 @@ void loop() {
     dezibot.display.println(" Fields");
     ecpMovement.move(numberOfFields);
 
-    dezibot.display.println("");
-    dezibot.display.println("Done");
+    dezibot.display.println("\nDone");
     delay(10000);
     dezibot.display.clear();
   }

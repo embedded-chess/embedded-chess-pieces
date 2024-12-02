@@ -47,7 +47,7 @@ protected:
      * If the Dezibot is not moving forward at all increasing the value may help.
      * If the robot is just jumping up and down but not forward, try a lower value.
      */
-    uint movementCalibration; 
+    const uint movementCalibration;
 
 private:
     /**
