@@ -30,17 +30,7 @@ In `src` you can find example use cases for our project. This includes Arduino s
 
 ## Roadmap
 
-- [x] Recognise colours of the chess board [#1](https://github.com/nicosrm/24-emb-chess/issues/1)
-- [ ] Simulate Pawn [#4](https://github.com/nicosrm/24-emb-chess/issues/4)
-    - [x] Walk straight a specified number of fields [#2](https://github.com/nicosrm/24-emb-chess/issues/2)
-    - [ ] Turn in a given direction to simulate diagonal movement [#3](https://github.com/nicosrm/24-emb-chess/issues/3)
-- [ ] Find centre of a chess field [#5](https://github.com/nicosrm/24-emb-chess/issues/5)
-- [ ] Draw selected figure to the display [#6](https://github.com/nicosrm/24-emb-chess/issues/6)
-- [ ] Logic on which field the robot is at any given moment (show on the display if shaken) [#7](https://github.com/nicosrm/24-emb-chess/issues/7)
-- [ ] Calibrate black / white threshold [#15](https://github.com/nicosrm/24-emb-chess/issues/15)
-- [ ] Wireless connection for initial field and movements [#8](https://github.com/nicosrm/24-emb-chess/issues/8)
-- [x] Expand selectable pieces [#9](https://github.com/nicosrm/24-emb-chess/issues/9)
-- [ ] Validate if move is allowed and colour LED green or red accordingly [#10](https://github.com/nicosrm/24-emb-chess/issues/10)
+see [project board](https://github.com/users/nicosrm/projects/2/)
 
 
 ## Usage
