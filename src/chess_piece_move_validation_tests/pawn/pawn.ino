@@ -120,7 +120,7 @@ void testPawnInBoardCenterCanOnlyMoveOneFieldForward() {
     ECPChessField invalidFields[] = { initialField,
         { D, 7 }    // not allowed to move two fields if not on initial row
         // D6 is valid
-        /* fig */};
+        /* fig */ };
     for (ECPChessField field : invalidFields) {
         test(pawn, field, false);
     }

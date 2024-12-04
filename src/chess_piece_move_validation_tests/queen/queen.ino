@@ -49,8 +49,7 @@ void testQueen() {
         { A, 4 }, { B, 4 }, { C, 4 }, /* fig */ { E, 4 }, { F, 4 }, { G, 4 }, { H, 4 },
                             { C, 3 }, { D, 3 }, { E, 3 },
                   { B, 2 },           { D, 2 },           { F, 2 },          
-        { A, 1 },                     { D, 1 },                     { G, 1 }
-    };
+        { A, 1 },                     { D, 1 },                     { G, 1 }};
     for (ECPChessField field : validFields) {
         test(queen, field, true);
     }
@@ -66,8 +65,7 @@ void testQueen() {
                                       /* fig */
         { A, 3 }, { B, 3 },                               { F, 3 }, { G, 3 }, { H, 3 },
         { A, 2 },           { C, 2 },           { E, 2 },           { G, 2 }, { H, 2 },
-                  { B, 1 }, { C, 1 },           { E, 1 }, { F, 1 },           { H, 1 }
-    };
+                  { B, 1 }, { C, 1 },           { E, 1 }, { F, 1 },           { H, 1 }};
     for (ECPChessField field : invalidFields) {
         test(queen, field, false);
     }

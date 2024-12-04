@@ -44,8 +44,7 @@ void testKing() {
     ECPChessField validFields[] = {
         { E, 6 }, { F, 6 }, { G, 6 },
         { E, 5 }, /* fig */ { G, 5 },
-        { E, 4 }, { F, 4 }, { G, 4 },
-    };
+        { E, 4 }, { F, 4 }, { G, 4 }};
     for (ECPChessField field : validFields) {
         test(king, field, true);
     }
@@ -61,8 +60,7 @@ void testKing() {
         { A, 4 }, { B, 4 }, { C, 4 }, { D, 4 },                               { H, 4 },
         { A, 3 }, { B, 3 }, { C, 3 }, { D, 3 }, { E, 3 }, { F, 3 }, { G, 3 }, { H, 3 },
         { A, 2 }, { B, 2 }, { C, 2 }, { D, 2 }, { E, 2 }, { F, 2 }, { G, 2 }, { H, 2 },
-        { A, 1 }, { B, 1 }, { C, 1 }, { D, 1 }, { E, 1 }, { F, 1 }, { G, 1 }, { H, 1 }
-    };
+        { A, 1 }, { B, 1 }, { C, 1 }, { D, 1 }, { E, 1 }, { F, 1 }, { G, 1 }, { H, 1 }};
     for (ECPChessField field : invalidFields) {
         test(king, field, false);
     }
