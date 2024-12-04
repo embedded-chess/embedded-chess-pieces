@@ -15,7 +15,7 @@
 #include <Arduino.h>
 
 /**
- * @brief Enumeration for column of chess board
+ * @brief Enumeration for column of chess board.
  * 
  * Convertible to int reaching from 0 to 7, i.e. A == 0, B == 1, etc.
  * 
@@ -29,18 +29,27 @@ enum ECPBoardColumn {
  * 
  */
 struct ECPChessField {
+
+    /**
+     * @brief Column of the field, i.e. "B" in field "B1".
+     * 
+     */
     ECPBoardColumn column;
+
+    /**
+     * @brief Row of the field, i.e. "1" in "B1".
+     * 
+     * @attention Must be between 1 and 8. Otherwise, a runtime exception will
+     *            be thrown.
+     * 
+     */
     unsigned int row;
 
-    String toString() const {
-        char columnChar = 'A' + column;
-        String result = String(columnChar) + String(row);
-        return result;
-    }
+    ECPChessField(ECPBoardColumn column, unsigned int row);
 
-    bool operator==(const ECPChessField& rhs) const {
-        return column == rhs.column && row == rhs.row;
-    }
+    String toString() const;
+
+    bool operator==(const ECPChessField& rhs) const;
 };
 
 #endif // ECPChessField_h
