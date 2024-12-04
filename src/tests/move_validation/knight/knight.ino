@@ -17,6 +17,9 @@
 
 Dezibot dezibot = Dezibot();
 
+int totalTestCases = 0;
+int successfulTestCases = 0;
+
 void setup() {
     Serial.begin(BAUD_RATE);
     dezibot.begin();
@@ -24,13 +27,27 @@ void setup() {
 }
 
 void loop() {
-    Serial.println("\n=== STARTING TEST ===\n");
+    // reset global variables
+    totalTestCases = 0;
+    successfulTestCases = 0;
 
+    Serial.println("\n\n=== STARTING TEST ===\n");
+    dezibot.display.clear();
+    dezibot.display.println("Testing...");
     Serial.println("Testing knight...");
+    
     testKnight();
 
-    Serial.println("\n=== TEST DONE ===");
-    Serial.println("Sleeping for 10 seconds...\n");
+    Serial.println("\n=== TEST DONE ===\n");
+
+    const String results = String(successfulTestCases) + "/"
+        + String(totalTestCases) + " passed\n";
+    Serial.println("==> " + results);
+    dezibot.display.println(results);
+
+    const String sleepingString = "Sleeping for 10s...";
+    Serial.println(sleepingString);
+    dezibot.display.println(sleepingString);
 
     delay(10000);
 }
@@ -41,19 +58,25 @@ void testKnight() {
 
     // valid moves
     Serial.println("Testing valid moves...");
-    ECPChessField validFields[] = {
+    const ECPChessField validFields[] = {
                   { C, 7 },           { E, 7 },
         { B, 6 },                               { F, 6 },
                             /* fig */
         { B, 4 },                               { F, 4 },
                   { C, 3 },           { E, 3 }};
-    for (ECPChessField field : validFields) {
-        test(knight, field, true);
+
+    totalTestCases += sizeof(validFields) / sizeof(validFields[0]);
+
+    for (const ECPChessField field : validFields) {
+        const bool isSuccess = test(knight, field, true);
+        if (isSuccess) {
+            successfulTestCases++;
+        }
     }
 
     // invalid moves
     Serial.println("\nTesting invalid moves...");
-    ECPChessField invalidFields[] = {
+    const ECPChessField invalidFields[] = {
         initialField,
         { A, 8 }, { B, 8 }, { C, 8 }, { D, 8 }, { E, 8 }, { F, 8 }, { G, 8 }, { H, 8 },
         { A, 7 }, { B, 7 },           { D, 7 },           { F, 7 }, { G, 7 }, { H, 7 },
@@ -63,18 +86,27 @@ void testKnight() {
         { A, 3 }, { B, 3 },           { D, 3 },           { F, 3 }, { G, 3 }, { H, 3 },
         { A, 2 }, { B, 2 }, { C, 2 }, { D, 2 }, { E, 2 }, { F, 2 }, { G, 2 }, { H, 2 },
         { A, 1 }, { B, 1 }, { C, 1 }, { D, 1 }, { E, 1 }, { F, 1 }, { G, 1 }, { H, 1 }};
-    for (ECPChessField field : invalidFields) {
-        test(knight, field, false);
+    
+    totalTestCases += sizeof(invalidFields) / sizeof(invalidFields[0]);
+
+    for (const ECPChessField field : invalidFields) {
+        const bool isSuccess = test(knight, field, false);
+        if (isSuccess) {
+            successfulTestCases++;
+        }
     }
 }
 
-void test(ECPChessPiece& piece, ECPChessField field, bool expected) {
-    bool actual = piece.isMoveValid(field);
+bool test(ECPChessPiece& piece, ECPChessField field, bool expected) {
+    const bool actual = piece.isMoveValid(field);
+    const bool didTestPass = (actual == expected);
 
     Serial.print(field.toString() + ": ");
-    if (actual == expected) {
+    if (didTestPass) {
         Serial.println("Test passed");
     } else {
         Serial.println("Test failed");
     }
+
+    return didTestPass;
 }
