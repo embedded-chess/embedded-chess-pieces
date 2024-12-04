@@ -109,15 +109,15 @@ void testPawnInBoardCenterCanOnlyMoveOneFieldForward() {
     Serial.println("Testing valid moves...");
     ECPChessField validFields[] = {
         { D, 6 },
-        /* fig */
-    };
+        /* fig */ };
     for (ECPChessField field : validFields) {
         test(pawn, field, true);
     }
 
     // invalid moves
     Serial.println("\nTesting invalid moves...");
-    ECPChessField invalidFields[] = { initialField,
+    ECPChessField invalidFields[] = {
+        initialField,
         { D, 7 }    // not allowed to move two fields if not on initial row
         // D6 is valid
         /* fig */ };
