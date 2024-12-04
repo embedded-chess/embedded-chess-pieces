@@ -47,7 +47,7 @@ void testBishop() {
                   { B, 6 },                               { F, 6 },
                             { C, 5 },           { E, 5 },
                                       /* fig */
-                  { B, 3 }, { C, 3 },           { E, 3 },
+                            { C, 3 },           { E, 3 },
                   { B, 2 },                               { F, 2 },
         { A, 1 },                                                   { G, 1 }};
     for (ECPChessField field : validFields) {
