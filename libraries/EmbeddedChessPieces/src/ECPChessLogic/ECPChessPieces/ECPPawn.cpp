@@ -4,6 +4,11 @@ ECPPawn::ECPPawn(Dezibot &d, ECPChessField initialField, bool isWhite)
     : ECPChessPiece(d, initialField, isWhite) {};
 
 bool ECPPawn::isMoveValid(ECPChessField newField) {
+    if (newField == currentField) {
+        // pawn must move
+        return false;
+    }
+
     const bool doesNotChangeColumn = currentField.column == newField.column;
     const int rowDiff = newField.row - currentField.row;
     const bool isMoveOneHorizontally = abs(currentField.column - newField.column) == 1;
