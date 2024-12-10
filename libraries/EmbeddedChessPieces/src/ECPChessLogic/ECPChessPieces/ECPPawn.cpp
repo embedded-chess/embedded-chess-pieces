@@ -22,7 +22,7 @@ bool ECPPawn::isMoveValid(ECPChessField newField) {
         }
 
         const bool isOnInitialRow = currentField.row == INITIAL_ROW_WHITE;
-        const int isNewRowTwoBeforeInitial = newField.row == INITIAL_ROW_WHITE + 2;
+        const bool isNewRowTwoBeforeInitial = newField.row == INITIAL_ROW_WHITE + 2;
 
         if (doesNotChangeColumn && isOnInitialRow && isNewRowTwoBeforeInitial) {
             // pawn did not move yet, enters with two field move forward
@@ -41,7 +41,7 @@ bool ECPPawn::isMoveValid(ECPChessField newField) {
         }
 
         const bool isOnInitialRow = currentField.row == INITIAL_ROW_BLACK;
-        const int isNewRowTwoBeforeInitial = newField.row == INITIAL_ROW_BLACK - 2;
+        const bool isNewRowTwoBeforeInitial = newField.row == INITIAL_ROW_BLACK - 2;
 
         if (doesNotChangeColumn && isOnInitialRow && isNewRowTwoBeforeInitial) {
             // pawn did not move yet, enters with two field move forward
