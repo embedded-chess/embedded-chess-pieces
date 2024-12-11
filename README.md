@@ -38,7 +38,7 @@ In [`example/EmbeddedChessPieces/examples`](./example/EmbeddedChessPieces/exampl
 ```sh
 $ cd /path/to/Arduino/library
 $ ln -s /path/to/24-emb-chess Dezibot
-$ ln -s /path/to/24-emb-chess/example/EmbeddedChessPieces/src EmbeddedChessPieces
+$ ln -s /path/to/24-emb-chess/example/EmbeddedChessPieces EmbeddedChessPieces
 ```
 
 
