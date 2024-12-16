@@ -37,6 +37,18 @@ public:
      */
     void move(uint numberOfFields);
 
+    /**
+     * @brief Turn 90 degrees left.
+     * 
+     */
+    void turnLeft();
+
+    /**
+     * @brief Turn 90 degrees right.
+     * 
+     */
+    void turnRight();
+
 protected:
     Dezibot &dezibot;
     ECPColorDetection ecpColorDetection;

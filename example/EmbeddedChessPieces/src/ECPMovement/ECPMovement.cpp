@@ -27,3 +27,11 @@ void ECPMovement::move(uint numberOfFields) {
         moveToNextField();
     }
 };
+
+void ECPMovement::turnLeft() {
+    // TODO: #3
+};
+
+void ECPMovement::turnRight() {
+    // TODO: #3
+};
