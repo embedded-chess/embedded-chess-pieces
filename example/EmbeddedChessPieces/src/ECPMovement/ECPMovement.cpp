@@ -29,9 +29,15 @@ void ECPMovement::move(uint numberOfFields) {
 };
 
 void ECPMovement::turnLeft() {
-    // TODO: #3
+    dezibot.motion.right.setSpeed(ROTATION_SPEED);
+    delay(ROTATION_TIME_LEFT);
+    dezibot.motion.right.setSpeed(0);
+    delay(MOVEMENT_BREAK);
 };
 
 void ECPMovement::turnRight() {
-    // TODO: #3
+    dezibot.motion.left.setSpeed(ROTATION_SPEED);
+    delay(ROTATION_TIME_RIGHT);
+    dezibot.motion.left.setSpeed(0);
+    delay(MOVEMENT_BREAK);
 };

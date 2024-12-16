@@ -1,5 +1,5 @@
 /**
- * @file movement_walk-straight.ino
+ * @file walk_straight.ino
  * @author Ines Rohrbach, Nico Schramm
  * @brief Example to test the straight movement of the Dezibot
  * @version 0.1
