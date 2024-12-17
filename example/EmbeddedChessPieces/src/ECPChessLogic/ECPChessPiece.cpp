@@ -24,3 +24,23 @@ bool ECPChessPiece::move(ECPChessField newField) {
 ECPChessField ECPChessPiece::getCurrentField() {
     return currentField;
 };
+
+void ECPChessPiece::setRedLight(bool shouldEnable) {
+    if (shouldEnable) {
+        // TODO: select nicer colour
+        const uint32_t red = dezibot.multiColorLight.color(100, 0, 0);
+        dezibot.multiColorLight.setLed(BOTTOM, red);
+    } else {
+        dezibot.multiColorLight.turnOffLed(BOTTOM);
+    }
+};
+
+void ECPChessPiece::setGreenLight(bool shouldEnable) {
+    if (shouldEnable) {
+        // TODO: select nicer colour
+        const uint32_t green = dezibot.multiColorLight.color(0, 100, 0);
+        dezibot.multiColorLight.setLed(BOTTOM, green);
+    } else {
+        dezibot.multiColorLight.turnOffLed(BOTTOM);
+    }
+};

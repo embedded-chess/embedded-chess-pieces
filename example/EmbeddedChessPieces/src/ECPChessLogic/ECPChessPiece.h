@@ -80,6 +80,21 @@ protected:
     ECPChessField currentField;
 
     ECPMovement& ecpMovement;
+
+private:
+    /**
+     * @brief Turn the red light of the dezibot on or off.
+     * 
+     * @param shouldEnable if true turn on, otherwise turn off
+     */
+    void setRedLight(bool shouldEnable);
+
+    /**
+     * @brief Turn the green light of the dezibot on or off.
+     * 
+     * @param shouldEnable if true turn on, otherwise turn off
+     */
+    void setGreenLight(bool shouldEnable);
 };
 
 #endif // ECPChessPiece_h
