@@ -34,7 +34,12 @@ public:
      * @param rtl Time needed for a 90 degree rotation anticlockwise (default 2650)
      * @param rtr Time needed for a 90 degree rotation clockwise (default 2875)
      */
-    ECPMovement(Dezibot &d, uint mc, uint rtl, uint rtr);
+    ECPMovement(
+        Dezibot &d, 
+        uint mc = DEFAULT_MOVEMENT_CALIBRATION, 
+        uint rtl = DEFAULT_ROTATION_TIME_LEFT, 
+        uint rtr = DEFAULT_ROTATION_TIME_RIGHT
+    );
 
     /**
      * @brief Move chess piece given number of fields forward.
