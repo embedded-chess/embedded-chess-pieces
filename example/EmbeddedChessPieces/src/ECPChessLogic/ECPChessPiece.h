@@ -17,6 +17,9 @@
 #include "ECPChessField.h"
 #include "ECPMovement/ECPMovement.h"
 
+
+#define COLOR_DELAY 1000
+
 /**
  * @brief Abstract class for chess piece, e.g. pawn, tower etc.
  * 
@@ -51,7 +54,10 @@ public:
     virtual bool isMoveValid(ECPChessField newField) = 0;
 
     /**
-     * @brief Move to new field if valid
+     * @brief Move to new field if valid.
+     * 
+     * Dezibot will always face forward *before* and *after* moving, i.e. black
+     * pieces will always face south and white pieces will always face north.
      * 
      * @param newField New field on which to move
      * @return true if move is valid
@@ -82,6 +88,22 @@ protected:
     ECPMovement& ecpMovement;
 
 private:
+    /**
+     * @brief Move dezibot horizontally for the passed number of fields.
+     * 
+     * @param fieldsToMove number of fields the dezibot needs to move
+     * @param mustTurnLeft true if dezibot needs to turn left, turn right otherwise
+     */
+    void moveHorizontally(uint fieldsToMove, bool mustTurnLeft);
+
+    /**
+     * @brief Move dezibot vertically for the passed number of fields.
+     * 
+     * @param fieldsToMove number of fields the dezibot needs to move.
+     * @param mustTurn true if dezibot needs to turn 180°, will not turn otherwise
+     */
+    void moveVertically(uint fieldsToMove, bool mustTurn);
+
     /**
      * @brief Turn the red light of the dezibot on or off.
      * 

@@ -12,17 +12,71 @@ ECPChessPiece::ECPChessPiece(
 
 bool ECPChessPiece::move(ECPChessField newField) {
     if (!isMoveValid(newField)) {
+        setRedLight(true);
+        delay(COLOR_DELAY);
+        setRedLight(false);
         return false;
     }
 
-    // TODO: #4 implement actual movement on board
+    const int colDiff = currentField.column - newField.column;
+    const int rowDiff = currentField.row - newField.row;
+
+    // move horizontally
+    if (rowDiff != 0) {
+        const int fieldsToMove = abs(rowDiff);
+        const bool mustTurnLeft = isWhite ? rowDiff < 0 : rowDiff > 0;
+
+        moveHorizontally(fieldsToMove, mustTurnLeft);
+    }
+
+    // move vertically
+    if (colDiff != 0) {
+        const int fieldsToMove = abs(colDiff);
+        const bool mustTurnLeft = isWhite ? colDiff > 0 : colDiff < 0;
+
+        moveHorizontally(fieldsToMove, mustTurnLeft);
+    }
 
     currentField = newField;
+
+    // show green validation light
+    setGreenLight(true);
+    delay(COLOR_DELAY);
+    setGreenLight(false);
+
     return true;
 };
 
 ECPChessField ECPChessPiece::getCurrentField() {
     return currentField;
+};
+
+void ECPChessPiece::moveHorizontally(uint fieldsToMove, bool mustTurnLeft) {
+    // turn in the right direction
+    mustTurnLeft ? ecpMovement.turnLeft() : ecpMovement.turnRight();
+
+    // move dezibot on the chess board
+    ecpMovement.move(fieldsToMove);
+
+    // turn back
+    mustTurnLeft ? ecpMovement.turnRight() : ecpMovement.turnLeft();
+};
+
+void ECPChessPiece::moveVertically(uint fieldsToMove, bool mustTurn) {
+    // turn dezibot if necessary
+    if (mustTurn) {
+        ecpMovement.turnLeft();
+        ecpMovement.turnLeft();
+    }
+
+    // move dezibot on the chess board
+    ecpMovement.move(fieldsToMove);
+
+    // turn back to initial direction
+    if (mustTurn) {
+        ecpMovement.turnLeft();
+        ecpMovement.turnLeft();
+    }
 };
 
 void ECPChessPiece::setRedLight(bool shouldEnable) {
