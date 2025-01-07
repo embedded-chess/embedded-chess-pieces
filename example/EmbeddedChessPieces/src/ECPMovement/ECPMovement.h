@@ -13,7 +13,7 @@
 #define ECPMovement_h
 
 #include <Dezibot.h>
-#include <EmbeddedChessPieces.h>
+#include <ECPColorDetection/ECPColorDetection.h>
 
 #define FORWARD_TIME 750
 #define MOVEMENT_BREAK 375

@@ -13,7 +13,9 @@
 #define ECPChessPiece_h
 
 #include <Dezibot.h>
+
 #include "ECPChessField.h"
+#include "ECPMovement/ECPMovement.h"
 
 /**
  * @brief Abstract class for chess piece, e.g. pawn, tower etc.
@@ -21,15 +23,22 @@
  */
 class ECPChessPiece {
 public:
-    const Dezibot& dezibot;
+    Dezibot& dezibot;
 
     /**
      * @brief Construct a new chess piece object
      * 
      * @param d Dezibot that simulates the piece
+     * @param ecpMovement Movement object of dezibot
      * @param initialField Initial field of chess piece on board, i.e. A1 white tower
+     * @param isWhite True if piece is white, false if black
      */
-    ECPChessPiece(Dezibot &d, ECPChessField initialField, bool isWhite);
+    ECPChessPiece(
+        Dezibot &d,
+        ECPMovement &ecpMovement,
+        ECPChessField initialField,
+        bool isWhite
+    );
 
     /**
      * @brief Determine if move from current field to passed new field is valid
@@ -69,6 +78,8 @@ protected:
      * 
      */
     ECPChessField currentField;
+
+    ECPMovement& ecpMovement;
 };
 
 #endif // ECPChessPiece_h

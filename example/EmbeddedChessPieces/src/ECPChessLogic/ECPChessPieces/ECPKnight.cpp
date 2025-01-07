@@ -1,7 +1,11 @@
 #include "ECPKnight.h"
 
-ECPKnight::ECPKnight(Dezibot &d, ECPChessField initialField, bool isWhite)
-    : ECPChessPiece(d, initialField, isWhite) {};
+ECPKnight::ECPKnight(
+    Dezibot &d,
+    ECPMovement &ecpMovement,
+    ECPChessField initialField,
+    bool isWhite
+) : ECPChessPiece(d, ecpMovement, initialField, isWhite) {};
 
 bool ECPKnight::isMoveValid(ECPChessField newField) {
     if (newField == currentField) {

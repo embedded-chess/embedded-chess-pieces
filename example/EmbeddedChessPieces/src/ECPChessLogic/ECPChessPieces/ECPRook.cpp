@@ -1,7 +1,11 @@
 #include "ECPRook.h"
 
-ECPRook::ECPRook(Dezibot &d, ECPChessField initialField, bool isWhite)
-    : ECPChessPiece(d, initialField, isWhite) {};
+ECPRook::ECPRook(
+    Dezibot &d,
+    ECPMovement &ecpMovement,
+    ECPChessField initialField,
+    bool isWhite
+) : ECPChessPiece(d, ecpMovement, initialField, isWhite) {};
 
 bool ECPRook::isMoveValid(ECPChessField newField) {
     if (newField == currentField) {

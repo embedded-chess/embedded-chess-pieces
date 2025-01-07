@@ -1,7 +1,14 @@
 #include "ECPChessPiece.h"
 
-ECPChessPiece::ECPChessPiece(Dezibot &d, ECPChessField initialField, bool isWhite)
-    : dezibot(d), currentField(initialField), isWhite(isWhite) {};
+ECPChessPiece::ECPChessPiece(
+    Dezibot &d,
+    ECPMovement &ecpMovement,
+    ECPChessField initialField,
+    bool isWhite
+) : dezibot(d),
+    ecpMovement(ecpMovement),
+    currentField(initialField),
+    isWhite(isWhite) {};
 
 bool ECPChessPiece::move(ECPChessField newField) {
     if (!isMoveValid(newField)) {

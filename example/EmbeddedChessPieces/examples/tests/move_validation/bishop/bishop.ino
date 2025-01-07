@@ -16,6 +16,7 @@
 #define BAUD_RATE 9600
 
 Dezibot dezibot = Dezibot();
+ECPMovement ecpMovement = ECPMovement(dezibot);
 
 int totalTestCases = 0;
 int successfulTestCases = 0;
@@ -54,7 +55,7 @@ void loop() {
 
 void testBishop() {
     const ECPChessField initialField = { D, 4 };
-    ECPBishop bishop = ECPBishop(dezibot, initialField, false);
+    ECPBishop bishop = ECPBishop(dezibot, ecpMovement, initialField, false);
 
     // valid moves
     Serial.println("\nTesting valid moves...");

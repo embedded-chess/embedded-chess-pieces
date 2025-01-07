@@ -20,10 +20,16 @@ public:
      * @brief Construct a new King chess piece object
      * 
      * @param d Dezibot that simulates the piece
-     * @param initialField Initial field of chess piece on board
+     * @param ecpMovement Movement object of dezibot
+     * @param initialField Initial field of chess piece on board, i.e. A1 white tower
      * @param isWhite True if piece is white, false if black
      */
-    ECPKing(Dezibot &d, ECPChessField initialField, bool isWhite);
+    ECPKing(
+        Dezibot &d,
+        ECPMovement &ecpMovement,
+        ECPChessField initialField,
+        bool isWhite
+    );
 
     /**
      * @brief Determine if move from current field to passed new field is valid

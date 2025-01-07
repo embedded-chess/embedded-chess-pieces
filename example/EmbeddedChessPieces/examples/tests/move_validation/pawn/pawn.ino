@@ -16,6 +16,7 @@
 #define BAUD_RATE 9600
 
 Dezibot dezibot = Dezibot();
+ECPMovement ecpMovement = ECPMovement(dezibot);
 
 int totalTestCases = 0;
 int successfulTestCases = 0;
@@ -60,7 +61,7 @@ void loop() {
 
 void testWhitePawn() {
     const ECPChessField initialField = { A, 2 };
-    ECPPawn pawn = ECPPawn(dezibot, initialField, true);
+    ECPPawn pawn = ECPPawn(dezibot, ecpMovement, initialField, true);
 
     // valid moves
     Serial.println("Testing valid moves...");
@@ -105,7 +106,7 @@ void testWhitePawn() {
 
 void testBlackPawn() {
     const ECPChessField initialField = { C, 7 };
-    ECPPawn pawn = ECPPawn(dezibot, initialField, false);
+    ECPPawn pawn = ECPPawn(dezibot, ecpMovement, initialField, false);
 
     // valid moves
     Serial.println("Testing valid moves...");
@@ -148,7 +149,7 @@ void testBlackPawn() {
 
 void testPawnInBoardCenterCanOnlyMoveOneFieldForward() {
     const ECPChessField initialField = { D, 5 };
-    ECPPawn pawn = ECPPawn(dezibot, initialField, true);
+    ECPPawn pawn = ECPPawn(dezibot, ecpMovement, initialField, true);
 
     // valid moves
     Serial.println("Testing valid moves...");

@@ -1,7 +1,11 @@
 #include "ECPKing.h"
 
-ECPKing::ECPKing(Dezibot &d, ECPChessField initialField, bool isWhite)
-    : ECPChessPiece(d, initialField, isWhite) {};
+ECPKing::ECPKing(
+    Dezibot &d,
+    ECPMovement &ecpMovement,
+    ECPChessField initialField,
+    bool isWhite
+) : ECPChessPiece(d, ecpMovement, initialField, isWhite) {};
 
 bool ECPKing::isMoveValid(ECPChessField newField) {
     if (newField == currentField) {
