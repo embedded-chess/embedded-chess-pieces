@@ -1,9 +1,15 @@
 #include "ECPMovement.h"
 
-ECPMovement::ECPMovement(Dezibot &d, uint mc = DEFAULT_MOVEMENT_CALIBRATION)
-    : dezibot(d),
-      ecpColorDetection(ECPColorDetection(d)),
-      movementCalibration(mc) {};
+ECPMovement::ECPMovement(
+  Dezibot &dezibot,
+  uint movementCalibration,
+  uint rotationTimeLeft,
+  uint rotationTimeRight
+) : dezibot(dezibot),
+    ecpColorDetection(ECPColorDetection(dezibot)),
+    movementCalibration(movementCalibration),
+    rotationTimeLeft(rotationTimeLeft),
+    rotationTimeRight(rotationTimeRight) {};
 
 void ECPMovement::moveForward(int timeMovement, int timeBreak) {
     dezibot.motion.move(0, movementCalibration);
@@ -29,9 +35,15 @@ void ECPMovement::move(uint numberOfFields) {
 };
 
 void ECPMovement::turnLeft() {
-    // TODO: #3
+    dezibot.motion.right.setSpeed(ROTATION_SPEED);
+    delay(rotationTimeLeft);
+    dezibot.motion.right.setSpeed(0);
+    delay(MOVEMENT_BREAK);
 };
 
 void ECPMovement::turnRight() {
-    // TODO: #3
+    dezibot.motion.left.setSpeed(ROTATION_SPEED);
+    delay(rotationTimeRight);
+    dezibot.motion.left.setSpeed(0);
+    delay(MOVEMENT_BREAK);
 };
