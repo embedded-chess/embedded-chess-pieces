@@ -1,11 +1,15 @@
 #include "ECPMovement.h"
 
-ECPMovement::ECPMovement(Dezibot &d, uint mc, uint rtl, uint rtr) 
-    : dezibot(d),
-      ecpColorDetection(ECPColorDetection(d)),
-      movementCalibration(mc),
-      rotationTimeLeft(rtl),
-      rotationTimeRight(rtr) {};
+ECPMovement::ECPMovement(
+  Dezibot &dezibot,
+  uint movementCalibration,
+  uint rotationTimeLeft,
+  uint rotationTimeRight
+) : dezibot(dezibot),
+    ecpColorDetection(ECPColorDetection(dezibot)),
+    movementCalibration(movementCalibration),
+    rotationTimeLeft(rotationTimeLeft),
+    rotationTimeRight(rotationTimeRight) {};
 
 void ECPMovement::moveForward(int timeMovement, int timeBreak) {
     dezibot.motion.move(0, movementCalibration);

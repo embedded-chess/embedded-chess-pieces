@@ -36,9 +36,9 @@ public:
      */
     ECPMovement(
         Dezibot &d, 
-        uint mc = DEFAULT_MOVEMENT_CALIBRATION, 
-        uint rtl = DEFAULT_ROTATION_TIME_LEFT, 
-        uint rtr = DEFAULT_ROTATION_TIME_RIGHT
+        uint movementCalibration = DEFAULT_MOVEMENT_CALIBRATION, 
+        uint rotationTimeLeft = DEFAULT_ROTATION_TIME_LEFT, 
+        uint rotationTimeRight = DEFAULT_ROTATION_TIME_RIGHT
     );
 
     /**

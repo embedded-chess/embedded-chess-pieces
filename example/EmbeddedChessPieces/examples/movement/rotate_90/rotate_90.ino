@@ -25,7 +25,6 @@ ECPMovement ecpMovement(
   ROTATION_TIME_LEFT, 
   ROTATION_TIME_RIGHT
 );
-ECPColorDetection ecpColorDetection(dezibot);
 
 void setup() {
   Serial.begin(9600);
