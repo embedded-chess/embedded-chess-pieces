@@ -29,13 +29,13 @@ public:
     /**
      * @brief Construct a new movement object.
      * 
-     * @param d Dezibot to move
-     * @param mc Base value to calibrate the dezibot's movement (default 3900)
-     * @param rtl Time needed for a 90 degree rotation anticlockwise (default 2650)
-     * @param rtr Time needed for a 90 degree rotation clockwise (default 2875)
+     * @param dezibot Dezibot to move
+     * @param movementCalibration Base value to calibrate the dezibot's movement (default 3900)
+     * @param rotationTimeLeft Time needed for a 90 degree rotation anticlockwise (default 2650)
+     * @param rotationTimeRight Time needed for a 90 degree rotation clockwise (default 2875)
      */
     ECPMovement(
-        Dezibot &d, 
+        Dezibot &dezibot, 
         uint movementCalibration = DEFAULT_MOVEMENT_CALIBRATION, 
         uint rotationTimeLeft = DEFAULT_ROTATION_TIME_LEFT, 
         uint rotationTimeRight = DEFAULT_ROTATION_TIME_RIGHT
