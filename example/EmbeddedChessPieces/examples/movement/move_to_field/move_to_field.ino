@@ -37,7 +37,7 @@ void iteration(bool isWhite) {
 
     const String prefix = isWhite ? "White" : "Black";
     dezibot.display.println(prefix + " queen...");
-    moveQueen(true);
+    moveQueen(isWhite);
 }
 
 void moveQueen(bool isWhite) {
@@ -49,7 +49,7 @@ void moveQueen(bool isWhite) {
         7
         6   X
         5   ↑↘
-        4   X←X
+        4   I←X
         3
     */
     const ECPChessField fields[] = {
