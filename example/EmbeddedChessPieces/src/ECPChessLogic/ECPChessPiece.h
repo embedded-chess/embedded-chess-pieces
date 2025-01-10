@@ -116,17 +116,22 @@ private:
      * @brief Move dezibot horizontally for the passed number of fields.
      * 
      * @param fieldsToMove number of fields the dezibot needs to move
-     * @param mustTurnLeft true if dezibot needs to turn left, turn right otherwise
      */
-    void moveHorizontally(uint fieldsToMove, bool mustTurnLeft);
+    void moveHorizontally(int fieldsToMove);
 
     /**
      * @brief Move dezibot vertically for the passed number of fields.
      * 
      * @param fieldsToMove number of fields the dezibot needs to move.
-     * @param mustTurn true if dezibot needs to turn 180°, will not turn otherwise
      */
-    void moveVertically(uint fieldsToMove, bool mustTurn);
+    void moveVertically(int fieldsToMove);
+
+    /**
+     * @brief Restore direction in which dezibot should face before or after a
+     *        movement, i.e. black pieces turn south and white pieces north.
+     * 
+     */
+    void turnBackToInitialDirection();
 
     /**
      * @brief Turn the red light of the dezibot on or off.

@@ -8,44 +8,35 @@ ECPChessPiece::ECPChessPiece(
 ) : dezibot(d),
     ecpMovement(ecpMovement),
     currentField(initialField),
-    isWhite(isWhite)
-{
-    currentDirection = isWhite ? NORTH : SOUTH;
-};
+    isWhite(isWhite),
+    currentDirection(isWhite ? NORTH : SOUTH) {};
 
 bool ECPChessPiece::move(ECPChessField newField) {
-    if (!isMoveValid(newField)) {
+    // show light depending on validity of requested movement
+    if (isMoveValid(newField)) {
+        setGreenLight(true);
+        delay(COLOR_DELAY);
+        setGreenLight(false);
+    } else {
         setRedLight(true);
         delay(COLOR_DELAY);
         setRedLight(false);
         return false;
     }
 
-    const int colDiff = currentField.column - newField.column;
-    const int rowDiff = currentField.row - newField.row;
+    const int colDiff = (int) currentField.column - (int) newField.column;
+    const int rowDiff = (int) currentField.row - (int) newField.row;
 
-    // move horizontally
     if (colDiff != 0) {
-        const int fieldsToMove = abs(colDiff);
-        const bool mustTurnLeft = isWhite ? colDiff > 0 : colDiff < 0;
-
-        moveHorizontally(fieldsToMove, mustTurnLeft);
+        moveHorizontally(colDiff);
     }
 
-    // move vertically
     if (rowDiff != 0) {
-        const int fieldsToMove = abs(rowDiff);
-        const bool mustTurn = isWhite ? rowDiff > 0 : rowDiff > 0;
-
-        moveVertically(fieldsToMove, mustTurn);
+        moveVertically(rowDiff);
     }
 
     currentField = newField;
-
-    // show green validation light
-    setGreenLight(true);
-    delay(COLOR_DELAY);
-    setGreenLight(false);
+    turnBackToInitialDirection();
 
     return true;
 };
@@ -54,32 +45,89 @@ ECPChessField ECPChessPiece::getCurrentField() {
     return currentField;
 };
 
-void ECPChessPiece::moveHorizontally(uint fieldsToMove, bool mustTurnLeft) {
-    // turn in the right direction
-    mustTurnLeft ? ecpMovement.turnLeft() : ecpMovement.turnRight();
+void ECPChessPiece::moveHorizontally(int fieldsToMove) {
+    const Direction newDirection = fieldsToMove > 0 ? WEST : EAST;
 
-    // move dezibot on the chess board
-    ecpMovement.move(fieldsToMove);
+    // turn in the right direction if necessary
+    switch (currentDirection) {
+        case NORTH:
+            newDirection == WEST ? ecpMovement.turnLeft() : ecpMovement.turnRight();
+            break;
+        case EAST:
+            if (newDirection == WEST) {
+                ecpMovement.turnLeft();
+                ecpMovement.turnLeft();
+            }
+            break;
+        case SOUTH:
+            newDirection == WEST ? ecpMovement.turnRight() : ecpMovement.turnLeft();
+            break;
+        case WEST:
+            if (newDirection == EAST) {
+                // turn around
+                ecpMovement.turnLeft();
+                ecpMovement.turnLeft();
+            }
+    }
 
-    // turn back
-    mustTurnLeft ? ecpMovement.turnRight() : ecpMovement.turnLeft();
+    currentDirection = newDirection;
+    ecpMovement.move(abs(fieldsToMove));
 };
 
-void ECPChessPiece::moveVertically(uint fieldsToMove, bool mustTurn) {
-    // turn dezibot if necessary
-    if (mustTurn) {
-        ecpMovement.turnLeft();
-        ecpMovement.turnLeft();
+void ECPChessPiece::moveVertically(int fieldsToMove) {
+    const Direction newDirection = fieldsToMove > 0 ? SOUTH : NORTH;
+
+    // turn in the right direction if necessary
+    switch (currentDirection) {
+        case NORTH:
+            if (newDirection == SOUTH) {
+                ecpMovement.turnLeft();
+                ecpMovement.turnLeft();
+            }
+            break;
+        case EAST:
+            newDirection == SOUTH ?  ecpMovement.turnRight() : ecpMovement.turnLeft();
+            break;
+        case SOUTH:
+            if (newDirection != SOUTH) {
+                ecpMovement.turnLeft();
+                ecpMovement.turnLeft();
+            }
+            break;
+        case WEST:
+            newDirection == SOUTH ? ecpMovement.turnLeft() : ecpMovement.turnRight();
     }
 
-    // move dezibot on the chess board
-    ecpMovement.move(fieldsToMove);
+    currentDirection = newDirection;
+    ecpMovement.move(abs(fieldsToMove));
+};
 
-    // turn back to initial direction
-    if (mustTurn) {
-        ecpMovement.turnLeft();
-        ecpMovement.turnLeft();
+void ECPChessPiece::turnBackToInitialDirection() {
+    switch (currentDirection) {
+        case NORTH:
+            if (isWhite) {
+                // already facing in correct direction
+            } else {
+                ecpMovement.turnLeft();
+                ecpMovement.turnLeft();
+            }
+            break;
+        case EAST:
+            isWhite ? ecpMovement.turnLeft() : ecpMovement.turnRight();
+            break;
+        case SOUTH:
+            if (isWhite) {
+                ecpMovement.turnLeft();
+                ecpMovement.turnLeft();
+            } else {
+                // already facing in correct direction
+            }
+            break;
+        case WEST:
+            isWhite ? ecpMovement.turnRight() : ecpMovement.turnLeft();
     }
+
+    currentDirection = isWhite ? NORTH : SOUTH;
 };
 
 void ECPChessPiece::setRedLight(bool shouldEnable) {
