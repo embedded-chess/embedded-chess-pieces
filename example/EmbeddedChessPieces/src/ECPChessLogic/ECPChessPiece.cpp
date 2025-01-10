@@ -22,19 +22,19 @@ bool ECPChessPiece::move(ECPChessField newField) {
     const int rowDiff = currentField.row - newField.row;
 
     // move horizontally
-    if (rowDiff != 0) {
-        const int fieldsToMove = abs(rowDiff);
-        const bool mustTurnLeft = isWhite ? rowDiff < 0 : rowDiff > 0;
-
-        moveHorizontally(fieldsToMove, mustTurnLeft);
-    }
-
-    // move vertically
     if (colDiff != 0) {
         const int fieldsToMove = abs(colDiff);
         const bool mustTurnLeft = isWhite ? colDiff > 0 : colDiff < 0;
 
         moveHorizontally(fieldsToMove, mustTurnLeft);
+    }
+
+    // move vertically
+    if (rowDiff != 0) {
+        const int fieldsToMove = abs(rowDiff);
+        const bool mustTurn = isWhite ? rowDiff > 0 : rowDiff > 0;
+
+        moveVertically(fieldsToMove, mustTurn);
     }
 
     currentField = newField;

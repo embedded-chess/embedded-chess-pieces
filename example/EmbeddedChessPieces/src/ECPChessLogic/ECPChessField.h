@@ -50,6 +50,7 @@ struct ECPChessField {
     String toString() const;
 
     bool operator==(const ECPChessField& rhs) const;
+    bool operator!=(const ECPChessField& rhs) const;
 };
 
 #endif // ECPChessField_h

@@ -18,7 +18,7 @@
 #include "ECPMovement/ECPMovement.h"
 
 
-#define COLOR_DELAY 1000
+#define COLOR_DELAY 2000
 
 /**
  * @brief Abstract class for chess piece, e.g. pawn, tower etc.
