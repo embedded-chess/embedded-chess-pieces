@@ -44,6 +44,23 @@ public:
     );
 
     /**
+     * @brief Relative direction in which the chess piece is facing.
+     * 
+     * - North means that the Dezibot is facing in the direction of increasing
+     *   row numbers, i.e. 1,2,3,...
+     * - East means that the Dezibot is facing in the direction of increasing
+     *   column numbers, i.e. A,B,C,...
+     * - South means that the Dezibot is facing in the direction of decreasing
+     *   row numbers, i.e. 8,7,6,...
+     * - West means that the Dezibot is facing in the direction of decreasing
+     *   column numbers, i.e. H,G,F,...
+     * 
+     */
+    enum Direction {
+        NORTH, EAST, SOUTH, WEST
+    };
+
+    /**
      * @brief Determine if move from current field to passed new field is valid
      *        for this chess piece.
      * 
@@ -88,6 +105,13 @@ protected:
     ECPMovement& ecpMovement;
 
 private:
+    /**
+     * @brief Direction in which the Dezibot representing this chess piece
+     *        is facing now relative to the board.
+     * 
+     */
+    Direction currentDirection;
+
     /**
      * @brief Move dezibot horizontally for the passed number of fields.
      * 

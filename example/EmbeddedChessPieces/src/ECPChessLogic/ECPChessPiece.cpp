@@ -8,7 +8,10 @@ ECPChessPiece::ECPChessPiece(
 ) : dezibot(d),
     ecpMovement(ecpMovement),
     currentField(initialField),
-    isWhite(isWhite) {};
+    isWhite(isWhite)
+{
+    currentDirection = isWhite ? NORTH : SOUTH;
+};
 
 bool ECPChessPiece::move(ECPChessField newField) {
     if (!isMoveValid(newField)) {
