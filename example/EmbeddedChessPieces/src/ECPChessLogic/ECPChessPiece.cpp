@@ -63,7 +63,7 @@ void ECPChessPiece::moveHorizontally(int fieldsToMove) {
             newDirection == WEST ? ecpMovement.turnRight() : ecpMovement.turnLeft();
             break;
         case WEST:
-            if (newDirection != WEST) {
+            if (newDirection == EAST) {
                 // turn around
                 ecpMovement.turnLeft();
                 ecpMovement.turnLeft();
@@ -89,7 +89,7 @@ void ECPChessPiece::moveVertically(int fieldsToMove) {
             newDirection == SOUTH ?  ecpMovement.turnRight() : ecpMovement.turnLeft();
             break;
         case SOUTH:
-            if (newDirection != SOUTH) {
+            if (newDirection == NORTH) {
                 ecpMovement.turnLeft();
                 ecpMovement.turnLeft();
             }
@@ -105,9 +105,7 @@ void ECPChessPiece::moveVertically(int fieldsToMove) {
 void ECPChessPiece::turnBackToInitialDirection() {
     switch (currentDirection) {
         case NORTH:
-            if (isWhite) {
-                // already facing in correct direction
-            } else {
+            if (!isWhite) {
                 ecpMovement.turnLeft();
                 ecpMovement.turnLeft();
             }
@@ -119,8 +117,6 @@ void ECPChessPiece::turnBackToInitialDirection() {
             if (isWhite) {
                 ecpMovement.turnLeft();
                 ecpMovement.turnLeft();
-            } else {
-                // already facing in correct direction
             }
             break;
         case WEST:
