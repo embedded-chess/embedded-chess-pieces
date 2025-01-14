@@ -33,6 +33,7 @@ void loop() {
   drawRook();
   delay(10000);
   dezibot.display.clear();
+  dezibot.display.invertColor();
 }
 
 void drawKing() {
