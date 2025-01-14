@@ -63,7 +63,7 @@ void ECPChessPiece::moveHorizontally(int fieldsToMove) {
             newDirection == WEST ? ecpMovement.turnRight() : ecpMovement.turnLeft();
             break;
         case WEST:
-            if (newDirection == EAST) {
+            if (newDirection != WEST) {
                 // turn around
                 ecpMovement.turnLeft();
                 ecpMovement.turnLeft();
