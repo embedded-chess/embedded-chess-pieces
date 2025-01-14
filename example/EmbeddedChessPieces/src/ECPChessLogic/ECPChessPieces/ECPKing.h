@@ -21,7 +21,7 @@ public:
      * 
      * @param d Dezibot that simulates the piece
      * @param ecpMovement Movement object of dezibot
-     * @param initialField Initial field of chess piece on board, i.e. A1 white tower
+     * @param initialField Initial field of chess piece on board
      * @param isWhite True if piece is white, false if black
      */
     ECPKing(
