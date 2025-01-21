@@ -40,6 +40,12 @@ public:
      * @return false otherwise
      */
     bool isMoveValid(ECPChessField newField) override;
+    
+    /**
+     * @brief Prints chess piece display-representation to the display
+     * 
+     */
+    void drawFigureToDisplay() override;
 };
 
 #endif // ECPBishop_h

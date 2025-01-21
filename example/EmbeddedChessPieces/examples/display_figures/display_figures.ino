@@ -11,6 +11,7 @@
  */
 
 #include <Dezibot.h>
+#include <EmbeddedChessPieces.h>
 #include <Wire.h>
 
 Dezibot dezibot = Dezibot();
@@ -25,46 +26,29 @@ void setup() {
 
 void loop() {
   drawKing();
-  delay(10000);
-  dezibot.display.clear();
-  drawQueen();
-  delay(10000);
-  dezibot.display.clear();
-  drawRook();
-  delay(10000);
-  dezibot.display.clear();
+  delay(5000);
+
+  // reset color from white king
   dezibot.display.invertColor();
+
+  drawQueen();
+  delay(5000);
+
+  drawRook();
+  delay(5000);
 }
 
 void drawKing() {
-  dezibot.display.println(" __        __   ");
-  dezibot.display.println("|  n____  /  \\  ");
-  dezibot.display.println("|  |    |#   /  ");
-  dezibot.display.println("|  |    |#   \\  ");
-  dezibot.display.println("|  |    |#    )+");
-  dezibot.display.println("|  |    |#   /  ");
-  dezibot.display.println("|  |____|#   \\  ");
-  dezibot.display.println("|__u      \\__/  ");
+  ECPKing kingW = ECPKing(dezibot, {A,1}, true);
+  kingW.drawFigureToDisplay();
 }
 
 void drawQueen() {
-  dezibot.display.println(" __        __   ");
-  dezibot.display.println("|  n____  /  >o ");
-  dezibot.display.println("|  |    |#  <   ");
-  dezibot.display.println("|  |    |#   >o ");
-  dezibot.display.println("|  |    |#  <   ");
-  dezibot.display.println("|  |    |#   >o ");
-  dezibot.display.println("|  |____|#  <   ");
-  dezibot.display.println("|__u      \\__>o ");
+  ECPQueen queenB = ECPQueen(dezibot, {A,1}, false);
+  queenB.drawFigureToDisplay();
 }
 
 void drawRook() {
-  dezibot.display.println(" __        ___  ");
-  dezibot.display.println("|  n____ _/   | ");
-  dezibot.display.println("|  |    #   |=  ");
-  dezibot.display.println("|  |    #     | ");
-  dezibot.display.println("|  |    #   |=  ");
-  dezibot.display.println("|  |    #     | ");
-  dezibot.display.println("|  |____#_  |=  ");
-  dezibot.display.println("|__u      \\___| ");
+  ECPRook rookB = ECPRook(dezibot, {A,1}, false);
+  rookB.drawFigureToDisplay();
 }

@@ -29,3 +29,11 @@ bool ECPKnight::isMoveValid(ECPChessField newField) {
     
     return false;
 };
+
+void ECPKnight::drawFigureToDisplay() {
+    dezibot.display.clear();
+    
+    dezibot.display.println("                ");
+    dezibot.display.println("                ");
+    dezibot.display.println("Not designed yet");
+}

@@ -31,6 +31,8 @@ public:
     /**
      * @brief Construct a new chess piece object
      * 
+     * Invert the color of the display if chess piece is white
+     * 
      * @param d Dezibot that simulates the piece
      * @param ecpMovement Movement object of dezibot
      * @param initialField Initial field of chess piece on board
@@ -96,12 +98,10 @@ public:
     const bool isWhite;
 
     /**
-     * @brief Prints displayRepresentation to the display
-     * 
-     * Inverts the colors of the display if chess piece is white
+     * @brief Prints chess piece display-representation to the display
      * 
      */
-    void drawFigureToDisplay();
+    virtual void drawFigureToDisplay() = 0;
 
 protected:
     /**
@@ -110,51 +110,7 @@ protected:
      */
     ECPChessField currentField;
 
-    ECPMovement& ecpMovement;
-
 private:
-    /**
-     * @brief Direction in which the Dezibot representing this chess piece
-     *        is facing now relative to the board.
-     * 
-     */
-    Direction currentDirection;
-
-    /**
-     * @brief Move dezibot horizontally for the passed number of fields.
-     * 
-     * @param fieldsToMove number of fields the dezibot needs to move
-     */
-    void moveHorizontally(int fieldsToMove);
-
-    /**
-     * @brief Move dezibot vertically for the passed number of fields.
-     * 
-     * @param fieldsToMove number of fields the dezibot needs to move.
-     */
-    void moveVertically(int fieldsToMove);
-
-    /**
-     * @brief Restore direction in which dezibot should face before or after a
-     *        movement, i.e. black pieces turn south and white pieces north.
-     * 
-     */
-    void turnBackToInitialDirection();
-
-    /**
-     * @brief Turn the red light of the dezibot on or off.
-     * 
-     * @param shouldEnable if true turn on, otherwise turn off
-     */
-    void setRedLight(bool shouldEnable);
-
-    /**
-     * @brief Turn the green light of the dezibot on or off.
-     * 
-     * @param shouldEnable if true turn on, otherwise turn off
-     */
-    void setGreenLight(bool shouldEnable);
-
     /**
      * @brief Strings to draw the chess piece
      *  

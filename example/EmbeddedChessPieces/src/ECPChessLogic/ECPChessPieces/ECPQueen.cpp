@@ -28,3 +28,16 @@ bool ECPQueen::isMoveValid(ECPChessField newField) {
 
     return false;
 };
+
+void ECPQueen::drawFigureToDisplay() {
+    dezibot.display.clear();
+    
+    dezibot.display.println(" __        __   ");
+    dezibot.display.println("|  n____  /  >o ");
+    dezibot.display.println("|  |    |#  <   ");
+    dezibot.display.println("|  |    |#   >o ");
+    dezibot.display.println("|  |    |#  <   ");
+    dezibot.display.println("|  |    |#   >o ");
+    dezibot.display.println("|  |____|#  <   ");
+    dezibot.display.println("|__u      \\__>o ");
+}

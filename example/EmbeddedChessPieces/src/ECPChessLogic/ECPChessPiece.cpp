@@ -9,7 +9,11 @@ ECPChessPiece::ECPChessPiece(
     ecpMovement(ecpMovement),
     currentField(initialField),
     isWhite(isWhite),
-    currentDirection(isWhite ? NORTH : SOUTH) {};
+    currentDirection(isWhite ? NORTH : SOUTH) {
+        if (isWhite) {
+            d.display.invertColor();
+        }
+    };
 
 bool ECPChessPiece::move(ECPChessField newField) {
     // show light depending on validity of requested movement
