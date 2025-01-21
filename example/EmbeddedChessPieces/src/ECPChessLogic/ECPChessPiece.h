@@ -95,6 +95,14 @@ public:
      */
     const bool isWhite;
 
+    /**
+     * @brief Prints displayRepresentation to the display
+     * 
+     * Inverts the colors of the display if chess piece is white
+     * 
+     */
+    void drawFigureToDisplay();
+
 protected:
     /**
      * @brief Current field of chess piece
@@ -146,6 +154,13 @@ private:
      * @param shouldEnable if true turn on, otherwise turn off
      */
     void setGreenLight(bool shouldEnable);
+
+    /**
+     * @brief Strings to draw the chess piece
+     *  
+     */
+    const String[] displayRepresentation;
+
 };
 
 #endif // ECPChessPiece_h
