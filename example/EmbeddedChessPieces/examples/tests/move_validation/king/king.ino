@@ -16,6 +16,7 @@
 #define BAUD_RATE 9600
 
 Dezibot dezibot = Dezibot();
+ECPMovement ecpMovement = ECPMovement(dezibot);
 
 int totalTestCases = 0;
 int successfulTestCases = 0;
@@ -54,7 +55,7 @@ void loop() {
 
 void testKing() {
     const ECPChessField initialField = { F, 5 };
-    ECPKing king = ECPKing(dezibot, initialField, true);
+    ECPKing king = ECPKing(dezibot, ecpMovement, initialField, true);
 
     // valid moves
     Serial.println("Testing valid moves...");

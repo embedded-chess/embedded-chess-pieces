@@ -16,3 +16,7 @@ String ECPChessField::toString() const {
 bool ECPChessField::operator==(const ECPChessField& rhs) const {
     return column == rhs.column && row == rhs.row;
 };
+
+bool ECPChessField::operator!=(const ECPChessField& rhs) const {
+    return column != rhs.column && row != rhs.row;
+};

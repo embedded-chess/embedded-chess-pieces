@@ -13,7 +13,12 @@
 #define ECPChessPiece_h
 
 #include <Dezibot.h>
+
 #include "ECPChessField.h"
+#include "ECPMovement/ECPMovement.h"
+
+
+#define COLOR_DELAY 2000
 
 /**
  * @brief Abstract class for chess piece, e.g. pawn, tower etc.
@@ -21,15 +26,39 @@
  */
 class ECPChessPiece {
 public:
-    const Dezibot& dezibot;
+    Dezibot& dezibot;
 
     /**
      * @brief Construct a new chess piece object
      * 
      * @param d Dezibot that simulates the piece
-     * @param initialField Initial field of chess piece on board, i.e. A1 white tower
+     * @param ecpMovement Movement object of dezibot
+     * @param initialField Initial field of chess piece on board
+     * @param isWhite True if piece is white, false if black
      */
-    ECPChessPiece(Dezibot &d, ECPChessField initialField, bool isWhite);
+    ECPChessPiece(
+        Dezibot &d,
+        ECPMovement &ecpMovement,
+        ECPChessField initialField,
+        bool isWhite
+    );
+
+    /**
+     * @brief Relative direction in which the chess piece is facing.
+     * 
+     * - North means that the Dezibot is facing in the direction of increasing
+     *   row numbers, i.e. 1,2,3,...
+     * - East means that the Dezibot is facing in the direction of increasing
+     *   column numbers, i.e. A,B,C,...
+     * - South means that the Dezibot is facing in the direction of decreasing
+     *   row numbers, i.e. 8,7,6,...
+     * - West means that the Dezibot is facing in the direction of decreasing
+     *   column numbers, i.e. H,G,F,...
+     * 
+     */
+    enum Direction {
+        NORTH, EAST, SOUTH, WEST
+    };
 
     /**
      * @brief Determine if move from current field to passed new field is valid
@@ -42,7 +71,10 @@ public:
     virtual bool isMoveValid(ECPChessField newField) = 0;
 
     /**
-     * @brief Move to new field if valid
+     * @brief Move to new field if valid.
+     * 
+     * Dezibot will always face forward *before* and *after* moving, i.e. black
+     * pieces will always face south and white pieces will always face north.
      * 
      * @param newField New field on which to move
      * @return true if move is valid
@@ -69,6 +101,51 @@ protected:
      * 
      */
     ECPChessField currentField;
+
+    ECPMovement& ecpMovement;
+
+private:
+    /**
+     * @brief Direction in which the Dezibot representing this chess piece
+     *        is facing now relative to the board.
+     * 
+     */
+    Direction currentDirection;
+
+    /**
+     * @brief Move dezibot horizontally for the passed number of fields.
+     * 
+     * @param fieldsToMove number of fields the dezibot needs to move
+     */
+    void moveHorizontally(int fieldsToMove);
+
+    /**
+     * @brief Move dezibot vertically for the passed number of fields.
+     * 
+     * @param fieldsToMove number of fields the dezibot needs to move.
+     */
+    void moveVertically(int fieldsToMove);
+
+    /**
+     * @brief Restore direction in which dezibot should face before or after a
+     *        movement, i.e. black pieces turn south and white pieces north.
+     * 
+     */
+    void turnBackToInitialDirection();
+
+    /**
+     * @brief Turn the red light of the dezibot on or off.
+     * 
+     * @param shouldEnable if true turn on, otherwise turn off
+     */
+    void setRedLight(bool shouldEnable);
+
+    /**
+     * @brief Turn the green light of the dezibot on or off.
+     * 
+     * @param shouldEnable if true turn on, otherwise turn off
+     */
+    void setGreenLight(bool shouldEnable);
 };
 
 #endif // ECPChessPiece_h

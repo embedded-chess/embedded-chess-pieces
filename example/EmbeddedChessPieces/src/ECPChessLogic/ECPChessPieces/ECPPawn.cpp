@@ -1,7 +1,11 @@
 #include "ECPPawn.h"
 
-ECPPawn::ECPPawn(Dezibot &d, ECPChessField initialField, bool isWhite)
-    : ECPChessPiece(d, initialField, isWhite) {};
+ECPPawn::ECPPawn(
+    Dezibot &d,
+    ECPMovement &ecpMovement,
+    ECPChessField initialField,
+    bool isWhite
+) : ECPChessPiece(d, ecpMovement, initialField, isWhite) {};
 
 bool ECPPawn::isMoveValid(ECPChessField newField) {
     if (newField == currentField) {

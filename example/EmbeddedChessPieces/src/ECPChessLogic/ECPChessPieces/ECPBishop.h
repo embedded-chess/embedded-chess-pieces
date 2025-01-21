@@ -20,10 +20,16 @@ public:
      * @brief Construct a new Bishop chess piece object
      * 
      * @param d Dezibot that simulates the piece
+     * @param ecpMovement Movement object of dezibot
      * @param initialField Initial field of chess piece on board
      * @param isWhite True if piece is white, false if black
      */
-    ECPBishop(Dezibot &d, ECPChessField initialField, bool isWhite);
+    ECPBishop(
+        Dezibot &d,
+        ECPMovement &ecpMovement,
+        ECPChessField initialField,
+        bool isWhite
+    );
 
     /**
      * @brief Determine if move from current field to passed new field is valid

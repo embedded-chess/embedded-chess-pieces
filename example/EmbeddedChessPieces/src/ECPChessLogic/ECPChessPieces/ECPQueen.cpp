@@ -1,7 +1,11 @@
 #include "ECPQueen.h"
 
-ECPQueen::ECPQueen(Dezibot &d, ECPChessField initialField, bool isWhite)
-    : ECPChessPiece(d, initialField, isWhite) {};
+ECPQueen::ECPQueen(
+    Dezibot &d,
+    ECPMovement &ecpMovement,
+    ECPChessField initialField,
+    bool isWhite
+) : ECPChessPiece(d, ecpMovement, initialField, isWhite) {};
 
 bool ECPQueen::isMoveValid(ECPChessField newField) {
     if (newField == currentField) {
