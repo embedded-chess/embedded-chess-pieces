@@ -63,6 +63,10 @@ uint32_t LightDetection::getAverageValue(photoTransistors sensor, uint32_t measu
     return cumulatedResult/measurements;
 };
 
+float LightDetection::normalizeValue(uint32_t sensorValue, uint32_t maxValue) {
+    return ((float) sensorValue) / ((float) maxValue);
+}
+
 void LightDetection::beginInfrared(void){
     digitalWrite(IR_PT_ENABLE,true);
     pinMode(IR_PT_ENABLE, OUTPUT);

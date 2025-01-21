@@ -76,6 +76,15 @@ public:
      */
     static uint32_t getAverageValue(photoTransistors sensor, uint32_t measurements, uint32_t timeBetween);
 
+    /**
+     * @brief Get percentage of sensor value.
+     * 
+     * @param sensorValue raw value read by `getValue` or `getAverageValue`
+     * @param maxValue maximum value that can be reached; either configured or default (4095).
+     * @return float percentage of sensor value (0.0f to 1.0f)
+     */
+    static float normalizeValue(uint32_t sensorValue, uint32_t maxValue = MAX_SENSOR_VALUE);
+
 protected: 
     static const uint8_t IR_PT_FRONT_ADC = 3;
     static const uint8_t IR_PT_LEFT_ADC = 4;
@@ -87,6 +96,8 @@ protected:
 
     static const uint8_t DL_PT_ENABLE = 41;
     static const uint8_t IR_PT_ENABLE = 40;
+
+    static const uint16_t MAX_SENSOR_VALUE = 4095;
 
     
     static void beginInfrared(void);

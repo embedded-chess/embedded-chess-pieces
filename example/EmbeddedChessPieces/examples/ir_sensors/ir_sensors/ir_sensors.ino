@@ -35,18 +35,19 @@ void loop() {
             MEAS_COUNT,
             TIME_BETWEEN_MEAS
         );
-        printValue(irValue, sensor);
+        const float normalizedValue = dezibot.lightDetection.normalizeValue(irValue);
+        printValue(normalizedValue, sensor);
     }
 
     delay(500);
 }
 
-void printValue(uint16_t irValue, photoTransistors sensor) {
+void printValue(float irValue, photoTransistors sensor) {
     const String s = ptString(sensor);
     dezibot.display.print(s + " ");
     Serial.print(s);
 
-    dezibot.display.println(irValue);
+    dezibot.display.println(String(irValue));
     Serial.println(irValue);
 }
 
