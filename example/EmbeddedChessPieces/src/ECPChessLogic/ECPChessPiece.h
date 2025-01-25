@@ -98,7 +98,7 @@ public:
     const bool isWhite;
 
     /**
-     * @brief Prints chess piece display-representation to the display
+     * @brief Print chess piece display-representation to the display
      * 
      */
     virtual void drawFigureToDisplay() = 0;

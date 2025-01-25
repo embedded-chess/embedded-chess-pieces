@@ -33,7 +33,12 @@ bool ECPKnight::isMoveValid(ECPChessField newField) {
 void ECPKnight::drawFigureToDisplay() {
     dezibot.display.clear();
     
-    dezibot.display.println("                ");
-    dezibot.display.println("                ");
-    dezibot.display.println("Not designed yet");
+    dezibot.display.println(" _   \\\\\\\\\\\\\\    ");
+    dezibot.display.println("| n___\\\\\\\\\\\\\\   ");
+    dezibot.display.println("| |     \\\\\\\\\\>  ");
+    dezibot.display.println("| |          |> ");
+    dezibot.display.println("| |_____|  @ |  ");
+    dezibot.display.println("|_u     )   /   ");
+    dezibot.display.println("       (   /    ");
+    dezibot.display.println("       `__/     ");
 }

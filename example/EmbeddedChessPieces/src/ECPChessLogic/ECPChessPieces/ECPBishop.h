@@ -42,7 +42,7 @@ public:
     bool isMoveValid(ECPChessField newField) override;
     
     /**
-     * @brief Prints chess piece display-representation to the display
+     * @brief Print chess piece display-representation to the display
      * 
      */
     void drawFigureToDisplay() override;
