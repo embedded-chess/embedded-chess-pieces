@@ -34,16 +34,41 @@ void ECPMovement::move(uint numberOfFields) {
     }
 };
 
-void ECPMovement::turnLeft() {
+void ECPMovement::turnLeft(String currentField, String intendedDirection) {
+    const bool hasStartedOnWhite = ecpColorDetection.isWhiteField();
+
     dezibot.motion.right.setSpeed(ROTATION_SPEED);
     delay(rotationTimeLeft);
     dezibot.motion.right.setSpeed(0);
     delay(MOVEMENT_BREAK);
+    
+    bool isCurrentlyOnWhite = ecpColorDetection.isWhiteField();
+    if (isCurrentlyOnWhite != hasStartedOnWhite) {
+        displayRotionCorrectionRequest(currentField, intendedDirection);
+    }
 };
 
-void ECPMovement::turnRight() {
+void ECPMovement::turnRight(String currentField, String intendedDirection) {
+    const bool hasStartedOnWhite = ecpColorDetection.isWhiteField();
+
     dezibot.motion.left.setSpeed(ROTATION_SPEED);
     delay(rotationTimeRight);
     dezibot.motion.left.setSpeed(0);
     delay(MOVEMENT_BREAK);
+
+    bool isCurrentlyOnWhite = ecpColorDetection.isWhiteField();
+    if (isCurrentlyOnWhite != hasStartedOnWhite) {
+        displayRotionCorrectionRequest(currentField, intendedDirection);
+    }
 };
+
+void ECPMovement::displayRotionCorrectionRequest(
+    String currentField, 
+    String intendedDirection
+) {
+    String request = "Faulty rotation\nPlease correct\nmy position to\nField:" + currentField + "\nDirection:" + intendedDirection + "\n Thank you!";
+    dezibot.display.clear();
+    dezibot.display.print(request);
+    delay(10000);
+    dezibot.display.clear();
+}

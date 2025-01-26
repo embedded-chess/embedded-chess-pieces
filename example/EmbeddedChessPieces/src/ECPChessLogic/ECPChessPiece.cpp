@@ -55,22 +55,22 @@ void ECPChessPiece::moveHorizontally(int fieldsToMove) {
     // turn in the right direction if necessary
     switch (currentDirection) {
         case NORTH:
-            newDirection == WEST ? ecpMovement.turnLeft() : ecpMovement.turnRight();
+            newDirection == WEST ? ecpMovement.turnLeft(currentField.toString(), "WEST") : ecpMovement.turnRight(currentField.toString(), "EAST");
             break;
         case EAST:
             if (newDirection == WEST) {
-                ecpMovement.turnLeft();
-                ecpMovement.turnLeft();
+                ecpMovement.turnLeft(currentField.toString(), "NORTH");
+                ecpMovement.turnLeft(currentField.toString(), "WEST");
             }
             break;
         case SOUTH:
-            newDirection == WEST ? ecpMovement.turnRight() : ecpMovement.turnLeft();
+            newDirection == WEST ? ecpMovement.turnRight(currentField.toString(), "WEST") : ecpMovement.turnLeft(currentField.toString(), "EAST");
             break;
         case WEST:
             if (newDirection == EAST) {
                 // turn around
-                ecpMovement.turnLeft();
-                ecpMovement.turnLeft();
+                ecpMovement.turnLeft(currentField.toString(), "SOUTH");
+                ecpMovement.turnLeft(currentField.toString(), "EAST");
             }
     }
 
@@ -85,21 +85,21 @@ void ECPChessPiece::moveVertically(int fieldsToMove) {
     switch (currentDirection) {
         case NORTH:
             if (newDirection == SOUTH) {
-                ecpMovement.turnLeft();
-                ecpMovement.turnLeft();
+                ecpMovement.turnLeft(currentField.toString(), "WEST");
+                ecpMovement.turnLeft(currentField.toString(), "SOUTH");
             }
             break;
         case EAST:
-            newDirection == SOUTH ?  ecpMovement.turnRight() : ecpMovement.turnLeft();
+            newDirection == SOUTH ?  ecpMovement.turnRight(currentField.toString(), "SOUTH") : ecpMovement.turnLeft(currentField.toString(), "NORTH");
             break;
         case SOUTH:
             if (newDirection == NORTH) {
-                ecpMovement.turnLeft();
-                ecpMovement.turnLeft();
+                ecpMovement.turnLeft(currentField.toString(), "EAST");
+                ecpMovement.turnLeft(currentField.toString(), "NORTH");
             }
             break;
         case WEST:
-            newDirection == SOUTH ? ecpMovement.turnLeft() : ecpMovement.turnRight();
+            newDirection == SOUTH ? ecpMovement.turnLeft(currentField.toString(), "SOUTH") : ecpMovement.turnRight(currentField.toString(), "NORTH");
     }
 
     currentDirection = newDirection;
@@ -110,21 +110,21 @@ void ECPChessPiece::turnBackToInitialDirection() {
     switch (currentDirection) {
         case NORTH:
             if (!isWhite) {
-                ecpMovement.turnLeft();
-                ecpMovement.turnLeft();
+                ecpMovement.turnLeft(currentField.toString(), "WEST");
+                ecpMovement.turnLeft(currentField.toString(), "SOUTH");
             }
             break;
         case EAST:
-            isWhite ? ecpMovement.turnLeft() : ecpMovement.turnRight();
+            isWhite ? ecpMovement.turnLeft(currentField.toString(), "NORTH") : ecpMovement.turnRight(currentField.toString(), "SOUTH");
             break;
         case SOUTH:
             if (isWhite) {
-                ecpMovement.turnLeft();
-                ecpMovement.turnLeft();
+                ecpMovement.turnLeft(currentField.toString(), "EAST");
+                ecpMovement.turnLeft(currentField.toString(), "NORTH");
             }
             break;
         case WEST:
-            isWhite ? ecpMovement.turnRight() : ecpMovement.turnLeft();
+            isWhite ? ecpMovement.turnRight(currentField.toString(), "NORTH") : ecpMovement.turnLeft(currentField.toString(), "SOUTH");
     }
 
     currentDirection = isWhite ? NORTH : SOUTH;

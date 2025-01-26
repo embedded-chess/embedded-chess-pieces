@@ -51,14 +51,18 @@ public:
     /**
      * @brief Turn 90 degrees left.
      * 
+     * @param currentField Field of the dezibot as string
+     * @param intendedDirection Direction the dezibot should look at after rotation as string
      */
-    void turnLeft();
+    void turnLeft(String currentField, String intendedDirection);
 
     /**
      * @brief Turn 90 degrees right.
      * 
+     * @param currentField Field of the dezibot as string
+     * @param intendedDirection Direction the dezibot should look at after rotation as string
      */
-    void turnRight();
+    void turnRight(String currentField, String intendedDirection);
 
 protected:
     Dezibot &dezibot;
@@ -102,6 +106,16 @@ private:
      * is defined in MOVEMENT_TIME and MOVEMENT_BREAK.
      */
     void moveToNextField();
+
+    /**
+     * Print request to correct dezibot on the board after faulty rotation
+     * 
+     * The user has 10 seconds to correct the position and direction of the dezibot
+     * 
+     * @param currentField Field of the dezibot as string
+     * @param intendedDirection Direction the dezibot should look at after rotation as string
+     */
+    void displayRotionCorrectionRequest(String currentField, String intendedDirection);
 };
 
 #endif // ECPMovement_h
