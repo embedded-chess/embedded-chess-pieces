@@ -110,13 +110,50 @@ protected:
      */
     ECPChessField currentField;
 
+    ECPMovement& ecpMovement;
+
 private:
     /**
-     * @brief Strings to draw the chess piece
-     *  
+     * @brief Direction in which the Dezibot representing this chess piece
+     *        is facing now relative to the board.
+     * 
      */
-    const String[] displayRepresentation;
+    Direction currentDirection;
 
+    /**
+     * @brief Move dezibot horizontally for the passed number of fields.
+     * 
+     * @param fieldsToMove number of fields the dezibot needs to move
+     */
+    void moveHorizontally(int fieldsToMove);
+
+    /**
+     * @brief Move dezibot vertically for the passed number of fields.
+     * 
+     * @param fieldsToMove number of fields the dezibot needs to move.
+     */
+    void moveVertically(int fieldsToMove);
+
+    /**
+     * @brief Restore direction in which dezibot should face before or after a
+     *        movement, i.e. black pieces turn south and white pieces north.
+     * 
+     */
+    void turnBackToInitialDirection();
+
+    /**
+     * @brief Turn the red light of the dezibot on or off.
+     * 
+     * @param shouldEnable if true turn on, otherwise turn off
+     */
+    void setRedLight(bool shouldEnable);
+
+    /**
+     * @brief Turn the green light of the dezibot on or off.
+     * 
+     * @param shouldEnable if true turn on, otherwise turn off
+     */
+    void setGreenLight(bool shouldEnable);
 };
 
 #endif // ECPChessPiece_h
