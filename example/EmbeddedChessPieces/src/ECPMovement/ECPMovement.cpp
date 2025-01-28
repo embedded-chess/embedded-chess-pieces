@@ -66,7 +66,7 @@ void ECPMovement::displayRotionCorrectionRequest(
     String currentField, 
     String intendedDirection
 ) {
-    String request = "Faulty rotation\nPlease correct\nmy position to\nField:" + currentField + "\nDirection:" + intendedDirection + "\n Thank you!";
+    String request = "Faulty rotation\nPlease correct\nmy position in\n10 seconds to\n\n> " + currentField + " " + intendedDirection + "\n\n Thank you!";
     dezibot.display.clear();
     dezibot.display.print(request);
     delay(10000);
