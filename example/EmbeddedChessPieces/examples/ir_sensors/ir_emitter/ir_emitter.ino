@@ -21,12 +21,4 @@ void setup() {
     dezibot.display.println("IR turned on");
 }
 
-void loop() {
-    // dezibot.infraredLight.front.turnOn();
-    // dezibot.display.println("IR turned on");
-    // delay(10000);
-
-    // dezibot.infraredLight.front.turnOff();
-    // dezibot.display.println("IR turned off");
-    // delay(10000);
-}
+void loop() {}
