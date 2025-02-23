@@ -3,7 +3,7 @@
 ECPSignalDetection::ECPSignalDetection(Dezibot &dezibot)
     : dezibot(dezibot) {};
 
-float ECPSignalDetection::measureSignalAngle() {
+int ECPSignalDetection::measureSignalAngle() {
     const photoTransistors sensors[] = { IR_FRONT, IR_RIGHT, IR_BACK, IR_LEFT };
     float values[4] = {};
 
@@ -44,5 +44,5 @@ float ECPSignalDetection::measureSignalAngle() {
         angle += 360.0f;
     }
 
-    return angle;
+    return std::round(angle);
 };

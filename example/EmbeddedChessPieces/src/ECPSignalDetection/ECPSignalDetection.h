@@ -26,10 +26,10 @@ public:
     /**
      * @brief Measure infrared signal angle where 0° is equivalent to north.
      * 
-     * @return float Angle in degrees, i.e. [0, 360].
-     *               Returns -1 if no signal was detected or was too weak.
+     * @return int Angle in degrees, i.e. [0, 360].
+     *             Returns -1 if no signal was detected or was too weak.
      */
-    float measureSignalAngle();
+    int measureSignalAngle();
 
 private:
     static const int MEASUREMENT_COUNT = 3;
