@@ -48,7 +48,7 @@ public:
      * @brief Print chess piece display-representation to the display
      * 
      */
-    void drawFigureToDisplay() override;
+    void drawFigureToDisplay() const override;
 
 private:
     /**

@@ -23,7 +23,7 @@ bool ECPKing::isMoveValid(ECPChessField newField) {
     return false;
 };
 
-void ECPKing::drawFigureToDisplay() {
+void ECPKing::drawFigureToDisplay() const {
     dezibot.display.clear();
     
     dezibot.display.println(" __        __   ");

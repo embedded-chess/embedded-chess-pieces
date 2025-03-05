@@ -30,7 +30,7 @@ bool ECPKnight::isMoveValid(ECPChessField newField) {
     return false;
 };
 
-void ECPKnight::drawFigureToDisplay() {
+void ECPKnight::drawFigureToDisplay() const {
     dezibot.display.clear();
     
     dezibot.display.println(" _   \\\\\\\\\\\\\\    ");

@@ -29,7 +29,7 @@ bool ECPQueen::isMoveValid(ECPChessField newField) {
     return false;
 };
 
-void ECPQueen::drawFigureToDisplay() {
+void ECPQueen::drawFigureToDisplay() const {
     dezibot.display.clear();
     
     dezibot.display.println(" __        __   ");

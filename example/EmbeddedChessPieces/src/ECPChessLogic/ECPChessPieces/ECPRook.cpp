@@ -24,7 +24,7 @@ bool ECPRook::isMoveValid(ECPChessField newField) {
     return false;
 };
 
-void ECPRook::drawFigureToDisplay() {
+void ECPRook::drawFigureToDisplay() const {
     dezibot.display.clear();
     
     dezibot.display.println(" __        ___  ");

@@ -101,7 +101,7 @@ public:
      * @brief Print chess piece display-representation to the display
      * 
      */
-    virtual void drawFigureToDisplay() = 0;
+    virtual void drawFigureToDisplay() const = 0;
 
 protected:
     /**

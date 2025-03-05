@@ -60,7 +60,7 @@ bool ECPPawn::isMoveValid(ECPChessField newField) {
     return false;
 };
 
-void ECPPawn::drawFigureToDisplay() {
+void ECPPawn::drawFigureToDisplay() const {
     dezibot.display.clear();
     
     dezibot.display.println("                ");
