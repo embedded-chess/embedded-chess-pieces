@@ -36,12 +36,12 @@ void setup() {
 
 void loop() {
   dezibot.display.println("Turning left...");
-  ecpMovement.turnLeft();
+  ecpMovement.turnLeft({A, 1}, NORTH);
   dezibot.display.println("Done");
   delay(2000);
 
   dezibot.display.println("Turning right...");
-  ecpMovement.turnRight();
+  ecpMovement.turnRight({A, 1}, NORTH);
   dezibot.display.println("Done");
   
   dezibot.display.println("\nSleeping for 10s...");
