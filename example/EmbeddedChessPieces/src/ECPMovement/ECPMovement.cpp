@@ -80,4 +80,4 @@ void ECPMovement::displayRotionCorrectionRequest(
     dezibot.display.print(request);
     delay(ROTATION_CORRECTION_TIME);
     dezibot.display.clear();
-}
+};

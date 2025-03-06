@@ -28,4 +28,4 @@ String directionToString(ECPDirection direction) {
         case SOUTH: return "SOUTH";
         case WEST: return "WEST";
     }
-}
+};
