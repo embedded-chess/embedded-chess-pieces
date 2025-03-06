@@ -1,6 +1,6 @@
 /**
  * @file InfraredLight.h
- * @author Hans Haupt (hans.haupt@dezibot.de)
+ * @author Hans Haupt (hans.haupt@dezibot.de), Ines Rohrbach, Nico Schramm
  * @brief Adds the ability to print to the display of the robot.
  * @version 0.1
  * @date 2024-05-24
@@ -121,6 +121,13 @@ class Display{
          * 
          */
         void invertColor(void);
+
+        /**
+         * @brief returns value of the colorInverted flag
+         * 
+         * @return colorInverted flag
+         */
+        bool getColorInvertedFlag(void);
 };
 
 

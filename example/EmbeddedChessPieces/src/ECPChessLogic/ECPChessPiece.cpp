@@ -10,8 +10,16 @@ ECPChessPiece::ECPChessPiece(
     currentField(initialField),
     isWhite(isWhite),
     currentDirection(isWhite ? NORTH : SOUTH) {
-        if (isWhite) {
-            d.display.invertColor();
+        switch (d.display.getColorInvertedFlag()) {
+            case false:
+                if (isWhite) {
+                    d.display.invertColor();
+                }
+                break;
+            case true:
+                if (!isWhite) {
+                    d.display.invertColor();
+                }
         }
     };
 
