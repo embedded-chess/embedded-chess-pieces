@@ -32,6 +32,7 @@ FieldColor ECPColorDetection::getFieldColor() {
 
 void ECPColorDetection::setShouldTurnOnColorCorrectionLight(bool turnOn) {
     shouldTurnOnColorCorrectionLight = turnOn;
+    turnOn ? turnOnColorCorrectionLight() : turnOffColorCorrectionLight();
 }
 
 bool ECPColorDetection::getShouldTurnOnColorCorrectionLight() {

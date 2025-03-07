@@ -48,6 +48,9 @@ public:
     /**
      * @brief Set value for shouldTurnOnColorCorrectionLight flag
      * 
+     * Turn on color correction light if parameter turnOn is true and
+     * turn off color correction light if parameter is false
+     * 
      * @param turnOn true if correction light should be turned on else false 
      */
     void setShouldTurnOnColorCorrectionLight(bool turnOn);

@@ -22,6 +22,8 @@ void setup() {
     Serial.begin(BAUD_RATE);
     dezibot.begin();
     delay(500);
+    ecpMovement.getECPColorDetection()->setShouldTurnOnColorCorrectionLight(true);
+    ecpMovement.getECPColorDetection()->calibrateFieldColor();
 }
 
 void loop() {

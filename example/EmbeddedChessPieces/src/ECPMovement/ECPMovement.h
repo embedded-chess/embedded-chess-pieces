@@ -69,6 +69,13 @@ public:
      */
     void turnRight(ECPChessField currentField, ECPDirection intendedDirection);
 
+    /**
+     * @brief Return pointer to ECPColorDetection instance
+     * 
+     * @return ecpColorDetection
+     */
+    ECPColorDetection* getECPColorDetection();
+
 protected:
     Dezibot &dezibot;
     ECPColorDetection ecpColorDetection;
