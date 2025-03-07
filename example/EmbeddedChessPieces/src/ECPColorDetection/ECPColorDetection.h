@@ -46,6 +46,20 @@ public:
     FieldColor getFieldColor();
 
     /**
+     * @brief Set value for shouldTurnOnColorCorrectionLight flag
+     * 
+     * @param turnOn true if correction light should be turned on else false 
+     */
+    void setShouldTurnOnColorCorrectionLight(bool turnOn);
+
+    /**
+     * @brief Return value of shouldTurnOnColorCorrectionLight flag
+     * 
+     * @return @see shouldTurnOnColorCorrectionLight
+     */
+    bool getShouldTurnOnColorCorrectionLight();
+
+    /**
      * @brief Turn on the LED on the bottom of the Dezibot.
      * 
      * The light should help the identification of the field color even in a dimly-lit room.
@@ -78,6 +92,12 @@ protected:
      * 
      */
     double isBlackFieldThreshold;
+
+    /**
+     * @brief Flag for setting of color correction light
+     * 
+     */
+    bool shouldTurnOnColorCorrectionLight = false;
 
 private:
     /**

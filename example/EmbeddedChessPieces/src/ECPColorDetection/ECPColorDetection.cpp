@@ -30,6 +30,14 @@ FieldColor ECPColorDetection::getFieldColor() {
     return UNAMBIGUOUS_FIELD;
 };
 
+void ECPColorDetection::setShouldTurnOnColorCorrectionLight(bool turnOn) {
+    shouldTurnOnColorCorrectionLight = turnOn;
+}
+
+bool ECPColorDetection::getShouldTurnOnColorCorrectionLight() {
+    return shouldTurnOnColorCorrectionLight;
+}
+
 void ECPColorDetection::turnOnColorCorrectionLight() {
     uint32_t colorCorrectionWhite = dezibot.multiColorLight.color(
         COLOR_CORRECTION_LIGHT_R,
