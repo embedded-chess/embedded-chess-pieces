@@ -38,7 +38,7 @@ void loop() {
   // double cct = dezibot.colorSensor.getCCT();
 
   double brightness = dezibot.colorSensor.calculateBrightness(red, green, blue);
-  bool isWhite = ecpColorDetection.isWhiteField();
+  FieldColor color = ecpColorDetection.getFieldColor();
 
   Serial.println("");
   dezibot.display.clear();
@@ -51,7 +51,7 @@ void loop() {
   // printValue(cct, "C");
   printValue(ambient, "A");
   printValue(brightness, "H");
-  printIsWhiteField(isWhite);
+  printFieldColor(color);
 
   delay(500);
 }
@@ -75,7 +75,7 @@ void printValue(double colorValue, char* prefix) {
 }
 
 /**
- * @brief Print formatted info for isWhiteField.
+ * @brief Print formatted info for field color.
  * 
  * \code{.cpp}
  * printIsWhiteField(true)
@@ -85,12 +85,23 @@ void printValue(double colorValue, char* prefix) {
  * \endcode
  * ```
  * 
- * @param isWhiteField true if is white, false otherwise
+ * @param fieldColor Determined FieldColor
  */
-void printIsWhiteField(bool isWhiteField) {
+void printFieldColor(FieldColor fieldColor) {
   dezibot.display.print("F ");
   Serial.print("F ");
-  String field = isWhiteField ? "W" : "B";
+  String field = "";
+  switch(fieldColor) {
+    case WHITE_FIELD:
+      field = "white";
+      break;
+    case BLACK_FIELD:
+      field = "black";
+      break;
+    case UNAMBIGUOUS_FIELD:
+      field = "unambiguous";
+      break;
+  }
   dezibot.display.println(field);
   Serial.println(field);
 }

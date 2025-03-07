@@ -67,12 +67,13 @@ void ECPMovement::moveForward(int timeMovement, int timeBreak) {
 };
 
 void ECPMovement::moveToNextField() {
-    const bool hasStartedOnWhite = ecpColorDetection.isWhiteField();
-    bool isCurrentlyOnWhite = hasStartedOnWhite;
+    const int startColor = ecpColorDetection.getFieldColor();
+    const int wantedColor = startColor == 1 ? startColor + 1 : startColor -1;
+    int currentColor = startColor;
 
-    while (isCurrentlyOnWhite == hasStartedOnWhite) {
+    while (currentColor != wantedColor) {
         moveForward(FORWARD_TIME, MOVEMENT_BREAK);
-        isCurrentlyOnWhite = ecpColorDetection.isWhiteField();
+        currentColor = ecpColorDetection.getFieldColor();
     }
 };
 

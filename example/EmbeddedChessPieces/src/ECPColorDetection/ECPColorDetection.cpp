@@ -7,21 +7,27 @@ void ECPColorDetection::calibrateFieldColor() {
     double blackBrightness = calibrateColor(false);
 
     double diff = whiteBrightness - blackBrightness;
-    double offset = diff * 0.8; // placeholder
+    double offset = diff * 0.3; // placeholder
 
     isWhiteFieldThreshold = whiteBrightness - offset;
     isBlackFieldThreshold = blackBrightness + offset;
 };
 
-bool ECPColorDetection::isWhiteField() {
-    double ambient = dezibot.colorSensor.getNormalizedAmbientValue();
+FieldColor ECPColorDetection::getFieldColor() {
+    const double ambient = dezibot.colorSensor.getNormalizedAmbientValue();
     double red = dezibot.colorSensor.getNormalizedColorValue(ColorSensor::RED, ambient);
     double green = dezibot.colorSensor.getNormalizedColorValue(ColorSensor::GREEN, ambient);
     double blue = dezibot.colorSensor.getNormalizedColorValue(ColorSensor::BLUE, ambient);
 
-    double brightness = dezibot.colorSensor.calculateBrightness(red, green, blue);
+    const double brightness = dezibot.colorSensor.calculateBrightness(red, green, blue);
 
-    return brightness >= isWhiteFieldThreshold;
+    if (brightness >= isWhiteFieldThreshold) {
+        return WHITE_FIELD;
+    }
+    if (brightness <= isBlackFieldThreshold) {
+        return BLACK_FIELD;
+    }
+    return UNAMBIGUOUS_FIELD;
 };
 
 void ECPColorDetection::turnOnColorCorrectionLight() {

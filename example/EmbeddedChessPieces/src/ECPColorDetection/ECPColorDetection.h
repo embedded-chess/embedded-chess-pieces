@@ -20,22 +20,30 @@
 
 #define CALIBRATION_TIME 5000
 
+/**
+ * @brief Color of field the dezibot is standing on.
+ * 
+ * Convertible to int, i.e. UNAMBIGUOUS == 0, BLACK == 1, WHITE == 2
+ * 
+ */
+enum FieldColor {
+    UNAMBIGUOUS_FIELD, BLACK_FIELD, WHITE_FIELD
+};
+
 class ECPColorDetection {
 public:
     ECPColorDetection(Dezibot &d);
 
     /**
-     * @brief Determine if brightness value represents a white or a black chess
+     * @brief Determine if brightness value clearly represents a white or a black chess
      *        field.
      *
-     * Note that the room must be well-lit or color correction light is turned on
-     * (see \see turnOnColorCorrectionLight).
-     * At a normalized ambient light of about 10.0 or lower white field will be interpreted as black.
+     * Note that the field color detection should be calibrated.
+     * @see calibrateFieldColor() 
      * 
-     * @return true if surface is white-ish
-     * @return false if surface is black-ish
+     * @return Determined field color
      */
-    bool isWhiteField();
+    FieldColor getFieldColor();
 
     /**
      * @brief Turn on the LED on the bottom of the Dezibot.
