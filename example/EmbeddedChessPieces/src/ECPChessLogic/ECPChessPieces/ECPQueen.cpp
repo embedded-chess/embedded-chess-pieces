@@ -5,7 +5,9 @@ ECPQueen::ECPQueen(
     ECPMovement &ecpMovement,
     ECPChessField initialField,
     bool isWhite
-) : ECPChessPiece(d, ecpMovement, initialField, isWhite) {};
+) : ECPChessPiece(d, ecpMovement, initialField, isWhite) {
+    drawFigureToDisplay();
+};
 
 bool ECPQueen::isMoveValid(ECPChessField newField) {
     if (newField == currentField) {
@@ -28,3 +30,16 @@ bool ECPQueen::isMoveValid(ECPChessField newField) {
 
     return false;
 };
+
+void ECPQueen::drawFigureToDisplay() const {
+    dezibot.display.clear();
+    
+    dezibot.display.println(" __        __   ");
+    dezibot.display.println("|  n____  /  >o ");
+    dezibot.display.println("|  |    |#  <   ");
+    dezibot.display.println("|  |    |#   >o ");
+    dezibot.display.println("|  |    |#  <   ");
+    dezibot.display.println("|  |    |#   >o ");
+    dezibot.display.println("|  |____|#  <   ");
+    dezibot.display.println("|__u      \\__>o ");
+}

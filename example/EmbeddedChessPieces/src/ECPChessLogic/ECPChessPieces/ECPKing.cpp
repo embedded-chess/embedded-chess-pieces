@@ -5,7 +5,9 @@ ECPKing::ECPKing(
     ECPMovement &ecpMovement,
     ECPChessField initialField,
     bool isWhite
-) : ECPChessPiece(d, ecpMovement, initialField, isWhite) {};
+) : ECPChessPiece(d, ecpMovement, initialField, isWhite) {
+    drawFigureToDisplay();
+};
 
 bool ECPKing::isMoveValid(ECPChessField newField) {
     if (newField == currentField) {
@@ -22,3 +24,16 @@ bool ECPKing::isMoveValid(ECPChessField newField) {
     
     return false;
 };
+
+void ECPKing::drawFigureToDisplay() const {
+    dezibot.display.clear();
+    
+    dezibot.display.println(" __        __   ");
+    dezibot.display.println("|  n____  /  \\  ");
+    dezibot.display.println("|  |    |#   /  ");
+    dezibot.display.println("|  |    |#   \\  ");
+    dezibot.display.println("|  |    |#    )+");
+    dezibot.display.println("|  |    |#   /  ");
+    dezibot.display.println("|  |____|#   \\  ");
+    dezibot.display.println("|__u      \\__/  ");
+}

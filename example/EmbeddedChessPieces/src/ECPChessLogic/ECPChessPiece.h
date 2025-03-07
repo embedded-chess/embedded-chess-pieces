@@ -31,6 +31,9 @@ public:
     /**
      * @brief Construct a new chess piece object
      * 
+     * Invert the color of the display if chess piece is white
+     * Print figure on display, @see drawFigureToDisplay()
+     * 
      * @param d Dezibot that simulates the piece
      * @param ecpMovement Movement object of dezibot
      * @param initialField Initial field of chess piece on board
@@ -94,6 +97,12 @@ public:
      * 
      */
     const bool isWhite;
+
+    /**
+     * @brief Print chess piece display-representation to the display
+     * 
+     */
+    virtual void drawFigureToDisplay() const = 0;
 
 protected:
     /**
