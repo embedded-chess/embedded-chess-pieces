@@ -174,6 +174,6 @@ void Display::invertColor(void){
     this->colorInverted = !this->colorInverted;
 };
 
-bool Display::getColorInvertedFlag(void){
+bool Display::getColorInverted(void){
     return colorInverted;
 };

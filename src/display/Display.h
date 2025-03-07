@@ -123,11 +123,11 @@ class Display{
         void invertColor(void);
 
         /**
-         * @brief returns value of the colorInverted flag
+         * @brief return value of the colorInverted flag
          * 
-         * @return colorInverted flag
+         * @return @see colorInverted
          */
-        bool getColorInvertedFlag(void);
+        bool getColorInverted(void);
 };
 
 
