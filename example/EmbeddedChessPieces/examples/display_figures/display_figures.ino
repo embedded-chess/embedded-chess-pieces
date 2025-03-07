@@ -51,7 +51,6 @@ void drawKing() {
   ECPKing kingW = ECPKing(dezibot, ecpMovement, {A,1}, true);
   kingW.drawFigureToDisplay();
   delay(DISPLAY_TIME);
-  dezibot.display.invertColor(); // reset color from white figure
   ECPKing kingB = ECPKing(dezibot, ecpMovement, {A,1}, false);
   kingB.drawFigureToDisplay();
 }
@@ -60,7 +59,6 @@ void drawQueen() {
   ECPQueen queenW = ECPQueen(dezibot, ecpMovement, {A,1}, true);
   queenW.drawFigureToDisplay();
   delay(DISPLAY_TIME);
-  dezibot.display.invertColor(); // reset color from white figure
   ECPQueen queenB = ECPQueen(dezibot, ecpMovement, {A,1}, false);
   queenB.drawFigureToDisplay();
 }
@@ -69,7 +67,6 @@ void drawRook() {
   ECPRook rookW = ECPRook(dezibot, ecpMovement, {A,1}, true);
   rookW.drawFigureToDisplay();
   delay(DISPLAY_TIME);
-  dezibot.display.invertColor(); // reset color from white figure
   ECPRook rookB = ECPRook(dezibot, ecpMovement, {A,1}, false);
   rookB.drawFigureToDisplay();
 }
@@ -78,7 +75,6 @@ void drawKnight() {
   ECPKnight knightW = ECPKnight(dezibot, ecpMovement, {A,1}, true);
   knightW.drawFigureToDisplay();
   delay(DISPLAY_TIME);
-  dezibot.display.invertColor(); // reset color from white figure
   ECPKnight knightB = ECPKnight(dezibot, ecpMovement, {A,1}, false);
   knightB.drawFigureToDisplay();
 }
@@ -87,7 +83,6 @@ void drawBishop() {
   ECPBishop bishopW = ECPBishop(dezibot, ecpMovement, {A,1}, true);
   bishopW.drawFigureToDisplay();
   delay(DISPLAY_TIME);
-  dezibot.display.invertColor(); // reset color from white figure
   ECPBishop bishopB = ECPBishop(dezibot, ecpMovement, {A,1}, false);
   bishopB.drawFigureToDisplay();
 }
@@ -96,7 +91,6 @@ void drawPawn() {
   ECPPawn pawnW = ECPPawn(dezibot, ecpMovement, {A,1}, true);
   pawnW.drawFigureToDisplay();
   delay(DISPLAY_TIME);
-  dezibot.display.invertColor(); // reset color from white figure
   ECPPawn pawnB = ECPPawn(dezibot, ecpMovement, {A,1}, false);
   pawnB.drawFigureToDisplay();
 }
