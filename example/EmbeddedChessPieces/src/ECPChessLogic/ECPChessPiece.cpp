@@ -57,28 +57,36 @@ void ECPChessPiece::moveHorizontally(int fieldsToMove) {
         case NORTH:
             if (newDirection == WEST) {
                 ecpMovement.turnLeft(currentField, WEST);
+                drawFigureToDisplay();
             } else {
                 ecpMovement.turnRight(currentField, EAST);
+                drawFigureToDisplay();
             }
             break;
         case EAST:
             if (newDirection == WEST) {
                 ecpMovement.turnLeft(currentField, NORTH);
+                drawFigureToDisplay();
                 ecpMovement.turnLeft(currentField, WEST);
+                drawFigureToDisplay();
             }
             break;
         case SOUTH:
             if (newDirection == WEST) {
                 ecpMovement.turnRight(currentField, WEST);
+                drawFigureToDisplay();
             } else {
                 ecpMovement.turnLeft(currentField, EAST);
+                drawFigureToDisplay();
             }
             break;
         case WEST:
             if (newDirection == EAST) {
                 // turn around
                 ecpMovement.turnLeft(currentField, SOUTH);
+                drawFigureToDisplay();
                 ecpMovement.turnLeft(currentField, EAST);
+                drawFigureToDisplay();
             }
     }
 
@@ -94,27 +102,35 @@ void ECPChessPiece::moveVertically(int fieldsToMove) {
         case NORTH:
             if (newDirection == SOUTH) {
                 ecpMovement.turnLeft(currentField, WEST);
+                drawFigureToDisplay();
                 ecpMovement.turnLeft(currentField, SOUTH);
+                drawFigureToDisplay();
             }
             break;
         case EAST:
             if (newDirection == SOUTH) {
                 ecpMovement.turnRight(currentField, SOUTH);
+                drawFigureToDisplay();
             } else {
                 ecpMovement.turnLeft(currentField, NORTH);
+                drawFigureToDisplay();
             }
             break;
         case SOUTH:
             if (newDirection == NORTH) {
                 ecpMovement.turnLeft(currentField, EAST);
+                drawFigureToDisplay();
                 ecpMovement.turnLeft(currentField, NORTH);
+                drawFigureToDisplay();
             }
             break;
         case WEST:
             if (newDirection == SOUTH) {
                 ecpMovement.turnLeft(currentField, SOUTH);
+                drawFigureToDisplay();
             } else {
                 ecpMovement.turnRight(currentField, NORTH);
+                drawFigureToDisplay();
             }
     }
 
@@ -127,27 +143,35 @@ void ECPChessPiece::turnBackToInitialDirection() {
         case NORTH:
             if (!isWhite) {
                 ecpMovement.turnLeft(currentField, WEST);
+                drawFigureToDisplay();
                 ecpMovement.turnLeft(currentField, SOUTH);
+                drawFigureToDisplay();
             }
             break;
         case EAST:
             if (isWhite) {
                 ecpMovement.turnLeft(currentField, NORTH);
+                drawFigureToDisplay();
             } else {
                 ecpMovement.turnRight(currentField, SOUTH);
+                drawFigureToDisplay();
             }
             break;
         case SOUTH:
             if (isWhite) {
                 ecpMovement.turnLeft(currentField, EAST);
+                drawFigureToDisplay();
                 ecpMovement.turnLeft(currentField, NORTH);
+                drawFigureToDisplay();
             }
             break;
         case WEST:
             if (isWhite) {
                 ecpMovement.turnRight(currentField, NORTH);
+                drawFigureToDisplay();
             } else {
                 ecpMovement.turnLeft(currentField, SOUTH);
+                drawFigureToDisplay();
             }
     }
 
