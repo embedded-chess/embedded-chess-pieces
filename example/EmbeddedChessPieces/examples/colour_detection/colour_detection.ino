@@ -21,15 +21,11 @@ void setup() {
   Serial.println("Started");
   dezibot.begin();
   Serial.println("Initialised");
-
-  bool hasStartedSuccessfully = dezibot.colorSensor.begin();
-  if(!hasStartedSuccessfully) {
-    Serial.println("ERROR: couldn't detect the sensor");
-    while(1) {}
-  }
-  delay(3000);
   
-  ecpColorDetection.turnOnColorCorrectionLight();
+  // ecpColorDetection.turnOnColorCorrectionLight();
+
+  delay(3000);
+  ecpColorDetection.calibrateFieldColor();
 }
 
 void loop() {

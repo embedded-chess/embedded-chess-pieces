@@ -14,16 +14,13 @@
 
 #include <Dezibot.h>
 
-#define IS_WHITE_FIELD_THRESHOLD 100.0
-
 #define COLOR_CORRECTION_LIGHT_R 43
 #define COLOR_CORRECTION_LIGHT_G 33
 #define COLOR_CORRECTION_LIGHT_B 35
 
-class ECPColorDetection {
-protected:
-    Dezibot &dezibot;
+#define CALIBRATION_TIME 5000
 
+class ECPColorDetection {
 public:
     ECPColorDetection(Dezibot &d);
 
@@ -52,6 +49,36 @@ public:
      * 
      */
     void turnOffColorCorrectionLight();
+
+    /**
+     * @brief Calibrate threshold for white and black field
+     * 
+     */
+    void calibrateFieldColor();
+
+protected:
+    Dezibot &dezibot;
+
+    /**
+     * @brief Threshold for color to be recognised as white field
+     * 
+     */
+    double isWhiteFieldThreshold;
+
+    /**
+     * @brief Threshold for color to be recognised as black field
+     * 
+     */
+    double isBlackFieldThreshold;
+
+private:
+    /**
+     * @brief Calibrate on white or black field
+     * 
+     * @param isWhite True if color to calibrate is white, false if black
+     * @return brightness as double 
+     */
+    double calibrateColor(bool isWhite);
 };
 
 #endif // ECPColorDetection_h
