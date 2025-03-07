@@ -32,6 +32,7 @@ public:
      * @brief Construct a new chess piece object
      * 
      * Invert the color of the display if chess piece is white
+     * Print figure on display, @see drawFigureToDisplay()
      * 
      * @param d Dezibot that simulates the piece
      * @param ecpMovement Movement object of dezibot
