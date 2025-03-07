@@ -5,7 +5,9 @@ ECPBishop::ECPBishop(
     ECPMovement &ecpMovement,
     ECPChessField initialField,
     bool isWhite
-) : ECPChessPiece(d, ecpMovement, initialField, isWhite) {};
+) : ECPChessPiece(d, ecpMovement, initialField, isWhite) {
+    drawFigureToDisplay();
+};
 
 bool ECPBishop::isMoveValid(ECPChessField newField) {
     if (newField == currentField) {

@@ -5,7 +5,9 @@ ECPKing::ECPKing(
     ECPMovement &ecpMovement,
     ECPChessField initialField,
     bool isWhite
-) : ECPChessPiece(d, ecpMovement, initialField, isWhite) {};
+) : ECPChessPiece(d, ecpMovement, initialField, isWhite) {
+    drawFigureToDisplay();
+};
 
 bool ECPKing::isMoveValid(ECPChessField newField) {
     if (newField == currentField) {
