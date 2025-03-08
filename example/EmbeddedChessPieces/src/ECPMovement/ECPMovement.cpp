@@ -73,8 +73,13 @@ void ECPMovement::moveForward(int timeMovement, int timeBreak) {
 void ECPMovement::moveToNextField() {
     const int startColor = ecpColorDetection.getFieldColor();
     const int wantedColor = startColor == 1 ? startColor + 1 : startColor -1;
+    const int stopoverColor = wantedColor + 2;
     int currentColor = startColor;
 
+    while (currentColor != stopoverColor) {
+        moveForward(FORWARD_TIME, MOVEMENT_BREAK);
+        currentColor = ecpColorDetection.getFieldColor();
+    }
     while (currentColor != wantedColor) {
         moveForward(FORWARD_TIME, MOVEMENT_BREAK);
         currentColor = ecpColorDetection.getFieldColor();

@@ -7,10 +7,21 @@ void ECPColorDetection::calibrateFieldColor() {
     double blackBrightness = calibrateColor(false);
 
     double diff = whiteBrightness - blackBrightness;
-    double offset = diff * 0.3; // placeholder
+    double offset = diff * 0.025; // placeholder
 
-    isWhiteFieldThreshold = whiteBrightness - offset;
-    isBlackFieldThreshold = blackBrightness + offset;
+    isWhiteFieldTopThreshold = whiteBrightness + offset;
+    isWhiteFieldBottomThreshold = whiteBrightness - offset;
+    isBlackFieldTopThreshold = blackBrightness + offset;
+    isBlackFieldBottomThreshold = blackBrightness - offset;
+    //debug
+    dezibot.display.clear();
+    dezibot.display.println(isWhiteFieldTopThreshold);
+    dezibot.display.println(whiteBrightness);
+    dezibot.display.println(isWhiteFieldBottomThreshold);
+    dezibot.display.println(isBlackFieldTopThreshold);
+    dezibot.display.println(blackBrightness);
+    dezibot.display.println(isBlackFieldBottomThreshold);
+    delay(7500);
 };
 
 FieldColor ECPColorDetection::getFieldColor() {
@@ -21,13 +32,19 @@ FieldColor ECPColorDetection::getFieldColor() {
 
     const double brightness = dezibot.colorSensor.calculateBrightness(red, green, blue);
 
-    if (brightness >= isWhiteFieldThreshold) {
+    if (isWhiteFieldTopThreshold <= brightness) {
+        return UNAMBIGUOUS_BLACK_TO_WHITE;
+    }
+    if ((isWhiteFieldBottomThreshold <= brightness) && ((brightness < isWhiteFieldTopThreshold))) {
         return WHITE_FIELD;
     }
-    if (brightness <= isBlackFieldThreshold) {
+    if ((isBlackFieldBottomThreshold < brightness) && ((brightness <= isBlackFieldTopThreshold))) {
         return BLACK_FIELD;
     }
-    return UNAMBIGUOUS_FIELD;
+    if (brightness <= isBlackFieldBottomThreshold) {
+        return UNAMBIGUOUS_WHITE_TO_BLACK;
+    }
+    return UNAMBIGUOUS;
 };
 
 void ECPColorDetection::setShouldTurnOnColorCorrectionLight(bool turnOn) {

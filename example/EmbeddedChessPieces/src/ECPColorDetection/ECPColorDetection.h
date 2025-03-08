@@ -19,15 +19,23 @@
 #define COLOR_CORRECTION_LIGHT_B 35
 
 #define CALIBRATION_TIME 5000
+#define DEFAULT_TOP_WHITE_THRESHOLD 248.0
+#define DEFAULT_BOTTOM_WHITE_THRESHOLD 245.0
+#define DEFAULT_TOP_BLACK_THRESHOLD 48.0
+#define DEFAULT_BOTTOM_BLACK_THRESHOLD 42.0
 
 /**
  * @brief Color of field the dezibot is standing on.
  * 
- * Convertible to int, i.e. UNAMBIGUOUS == 0, BLACK == 1, WHITE == 2
+ * Convertible to int, i.e. BLACK_FIELD == 0, WHITE_FIELD == 2
  * 
  */
 enum FieldColor {
-    UNAMBIGUOUS_FIELD, BLACK_FIELD, WHITE_FIELD
+    BLACK_FIELD, 
+    WHITE_FIELD,
+    UNAMBIGUOUS_WHITE_TO_BLACK, 
+    UNAMBIGUOUS_BLACK_TO_WHITE,
+    UNAMBIGUOUS
 };
 
 class ECPColorDetection {
@@ -85,16 +93,28 @@ protected:
     Dezibot &dezibot;
 
     /**
-     * @brief Threshold for color to be recognised as white field
+     * @brief Highest value for color to be recognised as white field
      * 
      */
-    double isWhiteFieldThreshold;
+    double isWhiteFieldTopThreshold = DEFAULT_TOP_WHITE_THRESHOLD;
 
     /**
-     * @brief Threshold for color to be recognised as black field
+     * @brief Lowest value for color to be recognised as white field
      * 
      */
-    double isBlackFieldThreshold;
+    double isWhiteFieldBottomThreshold = DEFAULT_BOTTOM_WHITE_THRESHOLD;
+
+    /**
+     * @brief Highest value for color to be recognised as black field
+     * 
+     */
+    double isBlackFieldTopThreshold = DEFAULT_TOP_BLACK_THRESHOLD;
+
+    /**
+     * @brief Lowest value for color to be recognised as black field
+     * 
+     */
+    double isBlackFieldBottomThreshold = DEFAULT_BOTTOM_BLACK_THRESHOLD;
 
     /**
      * @brief Flag for setting of color correction light

@@ -93,13 +93,19 @@ void printFieldColor(FieldColor fieldColor) {
   String field = "";
   switch(fieldColor) {
     case WHITE_FIELD:
-      field = "white";
+      field = "w";
       break;
     case BLACK_FIELD:
-      field = "black";
+      field = "b";
       break;
-    case UNAMBIGUOUS_FIELD:
-      field = "unambiguous";
+    case UNAMBIGUOUS:
+      field = "u";
+      break;
+    case UNAMBIGUOUS_BLACK_TO_WHITE:
+      field = "bw";
+      break;
+    case UNAMBIGUOUS_WHITE_TO_BLACK:
+      field = "wb";
       break;
   }
   dezibot.display.println(field);
