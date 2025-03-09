@@ -33,9 +33,28 @@ public:
      *          signal could be detected! Make sure to place a dezibot running
      *          <tt>examples/ir_emitter.ino</tt> within reach.
      * 
+     * @attention This function measures the angle from which the <b>signal</b>
+     *            is coming from, <b>not</b> where the dezibot is facing. For,
+     *            refer to \p measureDezibotAngle.
+     * 
      * @return int Angle in degrees, i.e. [0, 360], if signal was detected.
      */
     int measureSignalAngle();
+
+    /**
+     * @brief Measure angle the dezibot is facing based on infrared signal.
+     * 
+     * @details Uses \p measureSignalAngle to get signal measurement.
+     * 
+     * @warning This function may <b>loop and never return</b> if no infrared
+     *          signal could be detected! Make sure to place a dezibot running
+     *          <tt>examples/ir_emitter.ino</tt> within reach.
+     * 
+     * @return int angle in which dezibot is facing.
+     * 
+     * @see measureSignalAngle for details on how IR signal is measured
+     */
+    int measureDezibotAngle();
 
 private:
     static const int MEASUREMENT_COUNT = 3;

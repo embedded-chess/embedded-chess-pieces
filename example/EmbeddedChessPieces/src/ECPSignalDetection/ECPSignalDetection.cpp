@@ -48,10 +48,15 @@ int ECPSignalDetection::measureSignalAngle() {
     int roundedAngle = std::round(angle);
 
     // normalize angle to [0, 360]
+    roundedAngle = roundedAngle % 360;
     if (roundedAngle < 0) {
         roundedAngle += 360;
     }
-    roundedAngle = (roundedAngle + 180) % 360;
 
     return roundedAngle;
 };
+
+int ECPSignalDetection::measureDezibotAngle() {
+    int signalAngle = measureSignalAngle();
+    return (360 - signalAngle) % 360;
+}

@@ -17,14 +17,18 @@ ECPSignalDetection ecpSignalDetection = ECPSignalDetection(dezibot);
 
 void setup() {
     dezibot.begin();
+    dezibot.display.flipOrientation();
     delay(100);
 }
 
 void loop() {
     dezibot.display.clear();
 
-    int angle = ecpSignalDetection.measureSignalAngle();
-    dezibot.display.println(String(angle));
+    int signalAngle = ecpSignalDetection.measureDezibotAngle();
+    dezibot.display.println("S: " + String(signalAngle));
+
+    int dezibotAngle = ecpSignalDetection.measureDezibotAngle();
+    dezibot.display.println("D: " + String(dezibotAngle));
 
     delay(500);
 }
