@@ -20,3 +20,12 @@ bool ECPChessField::operator==(const ECPChessField& rhs) const {
 bool ECPChessField::operator!=(const ECPChessField& rhs) const {
     return column != rhs.column && row != rhs.row;
 };
+
+String directionToString(ECPDirection direction) {
+    switch (direction) {
+        case NORTH: return "NORTH";
+        case EAST: return "EAST";
+        case SOUTH: return "SOUTH";
+        case WEST: return "WEST";
+    }
+};

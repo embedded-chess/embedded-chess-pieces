@@ -13,6 +13,8 @@
 #define ECPMovement_h
 
 #include <Dezibot.h>
+
+#include "ECPChessLogic/ECPChessField.h"
 #include <ECPColorDetection/ECPColorDetection.h>
 
 #define FORWARD_TIME 750
@@ -23,6 +25,8 @@
 #define DEFAULT_MOVEMENT_CALIBRATION 3900
 #define DEFAULT_ROTATION_TIME_LEFT 2650
 #define DEFAULT_ROTATION_TIME_RIGHT 2875
+
+#define ROTATION_CORRECTION_TIME 10000
 
 class ECPMovement {
 public:
@@ -51,14 +55,18 @@ public:
     /**
      * @brief Turn 90 degrees left.
      * 
+     * @param currentField Field of the dezibot
+     * @param intendedDirection Direction the dezibot should look at after rotation
      */
-    void turnLeft();
+    void turnLeft(ECPChessField currentField, ECPDirection intendedDirection);
 
     /**
      * @brief Turn 90 degrees right.
      * 
+     * @param currentField Field of the dezibot
+     * @param intendedDirection Direction the dezibot should look at after rotation
      */
-    void turnRight();
+    void turnRight(ECPChessField currentField, ECPDirection intendedDirection);
 
 protected:
     Dezibot &dezibot;
@@ -102,6 +110,19 @@ private:
      * is defined in MOVEMENT_TIME and MOVEMENT_BREAK.
      */
     void moveToNextField();
+
+    /**
+     * Print request to correct dezibot on the board after faulty rotation
+     * 
+     * The user has 10 seconds to correct the position and direction of the dezibot
+     * 
+     * @param currentField Field of the dezibot
+     * @param intendedDirection Direction the dezibot should look at after rotation
+     */
+    void displayRotionCorrectionRequest(
+        ECPChessField currentField, 
+        ECPDirection intendedDirection
+    );
 };
 
 #endif // ECPMovement_h

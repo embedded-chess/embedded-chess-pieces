@@ -32,7 +32,7 @@ void loop() {
 void iteration(bool isWhite) {
     dezibot.display.clear();
     const String color = isWhite ? "white" : "black";
-    dezibot.display.println("Prepare " + color +  "\nYou've got 10 seconds...");
+    dezibot.display.println("Prepare " + color +  "\nYou've got \n10 seconds...");
     delay(10000);
 
     const String prefix = isWhite ? "White" : "Black";
@@ -56,14 +56,16 @@ void moveQueen(bool isWhite) {
         { D, 6 }, { F, 4 }, { F, 4 }, initialField
     };
 
+    dezibot.display.clear();
     dezibot.display.print(initialField.toString() + " -> ");
     for (const ECPChessField field : fields) {
         dezibot.display.println(field.toString());
-        
-        queen.move(field);
         delay(3000);
-        dezibot.display.clear();
 
+        queen.drawFigureToDisplay();
+        queen.move(field);
+
+        dezibot.display.clear();
         dezibot.display.print(field.toString() + " -> ");
     }
 }

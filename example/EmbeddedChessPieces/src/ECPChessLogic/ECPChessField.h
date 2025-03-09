@@ -53,4 +53,29 @@ struct ECPChessField {
     bool operator!=(const ECPChessField& rhs) const;
 };
 
+/**
+ * @brief Relative direction in which the chess piece is facing.
+ * 
+ * - North means that the Dezibot is facing in the direction of increasing
+ *   row numbers, i.e. 1,2,3,...
+ * - East means that the Dezibot is facing in the direction of increasing
+ *   column numbers, i.e. A,B,C,...
+ * - South means that the Dezibot is facing in the direction of decreasing
+ *   row numbers, i.e. 8,7,6,...
+ * - West means that the Dezibot is facing in the direction of decreasing
+ *   column numbers, i.e. H,G,F,...
+ * 
+ */
+enum ECPDirection {
+    NORTH, EAST, SOUTH, WEST
+};
+
+/**
+ * @brief Return string representation of ECPDirection
+ * 
+ * @param direction ECPDirection
+ * @return String of given ECPDirection
+ */
+String directionToString(ECPDirection direction);
+
 #endif // ECPChessField_h

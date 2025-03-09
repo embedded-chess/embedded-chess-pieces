@@ -50,27 +50,41 @@ ECPChessField ECPChessPiece::getCurrentField() {
 };
 
 void ECPChessPiece::moveHorizontally(int fieldsToMove) {
-    const Direction newDirection = fieldsToMove > 0 ? WEST : EAST;
+    const ECPDirection newDirection = fieldsToMove > 0 ? WEST : EAST;
 
     // turn in the right direction if necessary
     switch (currentDirection) {
         case NORTH:
-            newDirection == WEST ? ecpMovement.turnLeft() : ecpMovement.turnRight();
+            if (newDirection == WEST) {
+                ecpMovement.turnLeft(currentField, WEST);
+            } else {
+                ecpMovement.turnRight(currentField, EAST);
+            }
+            drawFigureToDisplay();
             break;
         case EAST:
             if (newDirection == WEST) {
-                ecpMovement.turnLeft();
-                ecpMovement.turnLeft();
+                ecpMovement.turnLeft(currentField, NORTH);
+                drawFigureToDisplay();
+                ecpMovement.turnLeft(currentField, WEST);
+                drawFigureToDisplay();
             }
             break;
         case SOUTH:
-            newDirection == WEST ? ecpMovement.turnRight() : ecpMovement.turnLeft();
+            if (newDirection == WEST) {
+                ecpMovement.turnRight(currentField, WEST);
+            } else {
+                ecpMovement.turnLeft(currentField, EAST);
+            }
+            drawFigureToDisplay();
             break;
         case WEST:
             if (newDirection == EAST) {
                 // turn around
-                ecpMovement.turnLeft();
-                ecpMovement.turnLeft();
+                ecpMovement.turnLeft(currentField, SOUTH);
+                drawFigureToDisplay();
+                ecpMovement.turnLeft(currentField, EAST);
+                drawFigureToDisplay();
             }
     }
 
@@ -79,27 +93,41 @@ void ECPChessPiece::moveHorizontally(int fieldsToMove) {
 };
 
 void ECPChessPiece::moveVertically(int fieldsToMove) {
-    const Direction newDirection = fieldsToMove > 0 ? SOUTH : NORTH;
+    const ECPDirection newDirection = fieldsToMove > 0 ? SOUTH : NORTH;
 
     // turn in the right direction if necessary
     switch (currentDirection) {
         case NORTH:
             if (newDirection == SOUTH) {
-                ecpMovement.turnLeft();
-                ecpMovement.turnLeft();
+                ecpMovement.turnLeft(currentField, WEST);
+                drawFigureToDisplay();
+                ecpMovement.turnLeft(currentField, SOUTH);
+                drawFigureToDisplay();
             }
             break;
         case EAST:
-            newDirection == SOUTH ?  ecpMovement.turnRight() : ecpMovement.turnLeft();
+            if (newDirection == SOUTH) {
+                ecpMovement.turnRight(currentField, SOUTH);
+            } else {
+                ecpMovement.turnLeft(currentField, NORTH);
+            }
+            drawFigureToDisplay();
             break;
         case SOUTH:
             if (newDirection == NORTH) {
-                ecpMovement.turnLeft();
-                ecpMovement.turnLeft();
+                ecpMovement.turnLeft(currentField, EAST);
+                drawFigureToDisplay();
+                ecpMovement.turnLeft(currentField, NORTH);
+                drawFigureToDisplay();
             }
             break;
         case WEST:
-            newDirection == SOUTH ? ecpMovement.turnLeft() : ecpMovement.turnRight();
+            if (newDirection == SOUTH) {
+                ecpMovement.turnLeft(currentField, SOUTH);
+            } else {
+                ecpMovement.turnRight(currentField, NORTH);
+            }
+            drawFigureToDisplay();
     }
 
     currentDirection = newDirection;
@@ -110,21 +138,35 @@ void ECPChessPiece::turnBackToInitialDirection() {
     switch (currentDirection) {
         case NORTH:
             if (!isWhite) {
-                ecpMovement.turnLeft();
-                ecpMovement.turnLeft();
+                ecpMovement.turnLeft(currentField, WEST);
+                drawFigureToDisplay();
+                ecpMovement.turnLeft(currentField, SOUTH);
+                drawFigureToDisplay();
             }
             break;
         case EAST:
-            isWhite ? ecpMovement.turnLeft() : ecpMovement.turnRight();
+            if (isWhite) {
+                ecpMovement.turnLeft(currentField, NORTH);
+            } else {
+                ecpMovement.turnRight(currentField, SOUTH);
+            }
+            drawFigureToDisplay();
             break;
         case SOUTH:
             if (isWhite) {
-                ecpMovement.turnLeft();
-                ecpMovement.turnLeft();
+                ecpMovement.turnLeft(currentField, EAST);
+                drawFigureToDisplay();
+                ecpMovement.turnLeft(currentField, NORTH);
+                drawFigureToDisplay();
             }
             break;
         case WEST:
-            isWhite ? ecpMovement.turnRight() : ecpMovement.turnLeft();
+            if (isWhite) {
+                ecpMovement.turnRight(currentField, NORTH);
+            } else {
+                ecpMovement.turnLeft(currentField, SOUTH);
+            }
+            drawFigureToDisplay();
     }
 
     currentDirection = isWhite ? NORTH : SOUTH;
