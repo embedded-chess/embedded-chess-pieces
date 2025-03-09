@@ -17,6 +17,7 @@ int ECPSignalDetection::measureSignalAngle() {
         values[i] = normalizedValue;
     }
 
+    // check if at least one of the measurements is above the threshold
     bool hasSignal = std::any_of(
         values, values+4,
         [MIN_THRESHOLD_MEASUREMENTS](float value) {
@@ -24,8 +25,13 @@ int ECPSignalDetection::measureSignalAngle() {
         }
     );
 
+    // recurse if no significant signal could be measured
     if (!hasSignal) {
-        return -1.0f;
+        dezibot.display.clear();
+        dezibot.display.println("No IR signal!");
+        dezibot.display.println("Trying again...");
+        delay(1000);
+        return measureSignalAngle();
     }
 
     const float north = values[0];
@@ -38,11 +44,14 @@ int ECPSignalDetection::measureSignalAngle() {
 
     float angle = std::atan2(resultantEastWest, resultantNorthSouth);
     angle *= (180.0f / M_PI);   // convert from radian to degrees
-    
-    // normalize angle to [0, 360]
-    if (angle < 0) {
-        angle += 360.0f;
-    }
 
-    return std::round(angle);
+    int roundedAngle = std::round(angle);
+
+    // normalize angle to [0, 360]
+    if (roundedAngle < 0) {
+        roundedAngle += 360;
+    }
+    roundedAngle = roundedAngle % 360;
+
+    return roundedAngle;
 };

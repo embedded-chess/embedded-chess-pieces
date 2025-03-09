@@ -27,12 +27,8 @@ void setup() {
 void loop() {
     dezibot.display.clear();
 
-    float angle = ecpSignalDetection.measureSignalAngle();
-    if (angle == -1.0f) {
-        dezibot.display.println("no signal");
-    } else {
-        dezibot.display.println(String(angle));
-    }
+    int angle = ecpSignalDetection.measureSignalAngle();
+    dezibot.display.println(String(angle));
 
     delay(500);
 }

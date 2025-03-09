@@ -26,8 +26,14 @@ public:
     /**
      * @brief Measure infrared signal angle where 0° is equivalent to north.
      * 
-     * @return int Angle in degrees, i.e. [0, 360].
-     *             Returns -1 if no signal was detected or was too weak.
+     * If no signal could be detected, print a corresponding info text on the
+     * dezibot's display, wait for 1 second and try again.
+     * 
+     * @warning This function may <b>loop and never return</b> if no infrared
+     *          signal could be detected! Make sure to place a dezibot running
+     *          <tt>examples/ir_emitter.ino</tt> within reach.
+     * 
+     * @return int Angle in degrees, i.e. [0, 360], if signal was detected.
      */
     int measureSignalAngle();
 
