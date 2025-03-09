@@ -110,10 +110,10 @@ private:
      * 
      * This function uses an incremental approach. Based on the difference of
      * the two angles, incrementally rotate the bot toward the goal. Use
-     * the tolerance specified in `ROTATION_TOLERANCE`.
+     * the tolerance specified in \p ROTATION_TOLERANCE.
      * 
      * If the rotation could not be completed successfully after a certain
-     * amount of iterations (cf. `MAX_ROTATION_ITERATIONS`), print a statement
+     * amount of iterations (cf. \p MAX_ROTATION_ITERATIONS), print a statement
      * on the display to request manual correction within 10 seconds before
      * continuing.
      * 
@@ -121,15 +121,15 @@ private:
      * @param initialAngle Measured initial angle of the dezibot, in degrees.
      * 
      * @see calculateRotationTime() for details on how the rotation time is computed.
-     * @see rotateLeft() and rotateRight() for the actual rotation implementations.
-     * @see ecpSignalDetection.measureDezibotAngle() for how the current angle is measured.
+     * @see rotateLeft and \p rotateRight for the actual rotation implementations.
+     * @see EcpSignalDetection::measureDezibotAngle for how the current angle is measured.
      */
     void rotateToAngle(int goalAngle, int initialAngle);
 
     /**
      * @brief Rotate dezibot to the left for a specified duration.
      * 
-     * Use left motor of the dezibot (`dezibot.motion.left`).
+     * Use left motor of the dezibot (<tt>dezibot.motion.left<\tt>).
      * 
      * @param movementTime Duration for which the bot should rotate left, in
      *                     milliseconds.
@@ -143,7 +143,7 @@ private:
     /**
      * @brief Rotate dezibot to the right for a specified duration.
      * 
-     * Use left motor of the dezibot (`dezibot.motion.right`).
+     * Use left motor of the dezibot (<tt>dezibot.motion.right</tt>).
      * 
      * @param movementTime Duration for which the bot should rotate right, in
      *                     milliseconds.
@@ -173,7 +173,7 @@ private:
      *          Therefore, the angle is multiplied by 14 which approximates this
      *          assumption (180° * 28 = 5040 ms).
      * 
-     * @see rotateToAngle() for how this function is used in the context of
+     * @see rotateToAngle for how this function is used in the context of
      *      rotating the dezibot to a specific angle.
      * @see ROTATION_TIME_FACTOR for factor used to define linear relationship.
      */
@@ -185,12 +185,12 @@ private:
      * For example, if the initial infrared signal was 0°, then everything
      * in [-5°, 5°] will be accepted as an successful rotation.
      * 
-     * @see rotateToAngle() for usage.
+     * @see rotateToAngle for usage.
      */
     const int ROTATION_TOLERANCE = 5;
 
     /**
-     * @brief Maximum rotation iterations used in `turnLeft` and `turnRight`.
+     * @brief Maximum rotation iterations used in \p turnLeft` and \p turnRight.
      * 
      */
     const size_t MAX_ROTATION_ITERATIONS = 20;
@@ -198,7 +198,7 @@ private:
     /**
      * @brief Factor used to calculate rotation time.
      * 
-     * @see calculateRotationTime() for usage.
+     * @see calculateRotationTime for usage.
      * 
      */
     const float ROTATION_TIME_FACTOR = 28;
