@@ -51,7 +51,7 @@ int ECPSignalDetection::measureSignalAngle() {
     if (roundedAngle < 0) {
         roundedAngle += 360;
     }
-    roundedAngle = roundedAngle % 360;
+    roundedAngle = (roundedAngle + 180) % 360;
 
     return roundedAngle;
 };

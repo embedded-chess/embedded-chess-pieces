@@ -167,9 +167,9 @@ private:
      * @return uint Calculated rotation time (in milliseconds) rounded to the
      *              nearest integer.
      * 
-     * @details It is assumed that a 180° rotation takes about 2500 milliseconds
+     * @details It is assumed that a 180° rotation takes about 5000 milliseconds
      *          Therefore, the angle is multiplied by 14 which approximates this
-     *          assumption (180° * 14 = 2520 ms).
+     *          assumption (180° * 28 = 5040 ms).
      * 
      * @see rotateToAngle() for how this function is used in the context of
      *      rotating the dezibot to a specific angle.
@@ -181,11 +181,11 @@ private:
      * @brief Tolerance for a rotation to be accepted in degrees.
      * 
      * For example, if the initial infrared signal was 0°, then everything
-     * in [-10°, 10°] will be accepted as an successful rotation.
+     * in [-5°, 5°] will be accepted as an successful rotation.
      * 
      * @see rotateToAngle() for usage.
      */
-    const int ROTATION_TOLERANCE = 10;
+    const int ROTATION_TOLERANCE = 5;
 
     /**
      * @brief Maximum rotation iterations used in `turnLeft` and `turnRight`.
@@ -199,7 +199,7 @@ private:
      * @see calculateRotationTime() for usage.
      * 
      */
-    const float ROTATION_TIME_FACTOR = 14;
+    const float ROTATION_TIME_FACTOR = 28;
 };
 
 #endif // ECPMovement_h

@@ -16,11 +16,7 @@ Dezibot dezibot = Dezibot();
 ECPSignalDetection ecpSignalDetection = ECPSignalDetection(dezibot);
 
 void setup() {
-    Serial.begin(9600);
-
     dezibot.begin();
-    dezibot.display.flipOrientation();
-
     delay(100);
 }
 
