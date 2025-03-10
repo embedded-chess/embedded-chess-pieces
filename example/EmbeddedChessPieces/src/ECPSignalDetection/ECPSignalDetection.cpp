@@ -7,6 +7,7 @@ int ECPSignalDetection::measureSignalAngle() {
     const photoTransistors sensors[] = { IR_FRONT, IR_RIGHT, IR_BACK, IR_LEFT };
     float values[4] = {};
 
+    // measure all four IR signal values
     for (size_t i = 0; i < 4; i++) {
         const int irValue = dezibot.lightDetection.getAverageValue(
             sensors[i],
@@ -25,7 +26,7 @@ int ECPSignalDetection::measureSignalAngle() {
         }
     );
 
-    // recurse if no significant signal could be measured
+    // repeat if no sufficient signal could be measured
     if (!hasSignal) {
         dezibot.display.clear();
         dezibot.display.println("No IR signal!");
@@ -39,19 +40,17 @@ int ECPSignalDetection::measureSignalAngle() {
     const float south = values[2];
     const float west = values[3];
 
+    // calculate angle
     const float resultantNorthSouth = north - south;
     const float resultantEastWest = east - west;
-
     float angle = std::atan2(resultantEastWest, resultantNorthSouth);
     angle *= (180.0f / M_PI);   // convert from radian to degrees
 
     int roundedAngle = std::round(angle);
 
     // normalize angle to [0, 360]
-    roundedAngle = roundedAngle % 360;
-    if (roundedAngle < 0) {
-        roundedAngle += 360;
-    }
+    // add 360° before applying modulo to prevent negative values
+    roundedAngle = (roundedAngle + 360) % 360;
 
     return roundedAngle;
 };

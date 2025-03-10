@@ -1,7 +1,7 @@
 /**
  * @file ir_sensors.ino
  * @author Ines Rohrbach, Nico Schramm
- * @brief Test sketch for receiving IR light
+ * @brief Test sketch for measuring the angle of an IR signal
  * @version 0.1
  * @date 2025-01-21
  * 

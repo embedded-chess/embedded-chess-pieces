@@ -47,16 +47,24 @@ public:
     /**
      * @brief Turn 90 degrees left.
      * 
-     * @param currentField Field of the dezibot
-     * @param intendedDirection Direction the dezibot should look at after rotation
+     * @param currentField field of the dezibot
+     * @param intendedDirection direction the dezibot should look at after rotation
+     * 
+     * @details Uses \p ECPSignalDetection::measureDezibotAngle internally to
+     *          rotate dezibot to the correct angle. Make sure to place a
+     *          dezibot running <tt>examples/ir_emitter.ino</tt> within reach!
      */
     void turnLeft(ECPChessField currentField, ECPDirection intendedDirection);
 
     /**
      * @brief Turn 90 degrees right.
      * 
-     * @param currentField Field of the dezibot
-     * @param intendedDirection Direction the dezibot should look at after rotation
+     * @param currentField field of the dezibot
+     * @param intendedDirection direction the dezibot should look at after rotation
+     * 
+     * @details Uses \p ECPSignalDetection::measureDezibotAngle internally to
+     *          rotate dezibot to the correct angle. Make sure to place a
+     *          dezibot running <tt>examples/ir_emitter.ino</tt> within reach!
      */
     void turnRight(ECPChessField currentField, ECPDirection intendedDirection);
 
@@ -109,7 +117,7 @@ private:
      * @brief Rotate dezibot from measured initial angle to specified goal angle.
      * 
      * This function uses an incremental approach. Based on the difference of
-     * the two angles, incrementally rotate the bot toward the goal. Use
+     * the two angles, incrementally rotate the bot toward the goal, considering
      * the tolerance specified in \p ROTATION_TOLERANCE.
      * 
      * If the rotation could not be completed successfully after a certain
@@ -117,8 +125,9 @@ private:
      * on the display to request manual correction within 10 seconds before
      * continuing.
      * 
-     * @param goalAngle The target angle to which the dezibot is to rotated, in degrees.
-     * @param initialAngle Measured initial angle of the dezibot, in degrees.
+     * @param goalAngle The target angle to which the dezibot is to be rotated.
+     * @param initialAngle Measured initial angle of the dezibot, see
+     *                     \p EcpSignalDetection::measureDezibotAngle.
      * 
      * @see calculateRotationTime() for details on how the rotation time is computed.
      * @see rotateLeft and \p rotateRight for the actual rotation implementations.
@@ -127,30 +136,22 @@ private:
     void rotateToAngle(int goalAngle, int initialAngle);
 
     /**
-     * @brief Rotate dezibot to the left for a specified duration.
+     * @brief Rotate dezibot to the left (counter-clockwise) for a specified duration.
      * 
-     * Use left motor of the dezibot (<tt>dezibot.motion.left<\tt>).
-     * 
-     * @param movementTime Duration for which the bot should rotate left, in
+     * @param movementTime Duration for which the bot should rotate left in
      *                     milliseconds.
      * 
-     * @details This function is typically called as part of a larger rotation
-     *          mechanism, where the duration of the left rotation is calculated
-     *          based on the angle difference from the target position.
+     * @details Use right motor of the dezibot (<tt>dezibot.motion.right<\tt>).
      */
     void rotateLeft(uint movementTime);
 
     /**
-     * @brief Rotate dezibot to the right for a specified duration.
+     * @brief Rotate dezibot to the right (clockwise) for a specified duration.
      * 
-     * Use left motor of the dezibot (<tt>dezibot.motion.right</tt>).
-     * 
-     * @param movementTime Duration for which the bot should rotate right, in
+     * @param movementTime Duration for which the bot should rotate right in
      *                     milliseconds.
      * 
-     * @details This function is typically called as part of a larger rotation
-     *          mechanism, where the duration of the left rotation is calculated
-     *          based on the angle difference from the target position.
+     * @details Use left motor of the dezibot (<tt>dezibot.motion.left</tt>).
      */
     void rotateRight(uint movementTime);
 
@@ -159,9 +160,6 @@ private:
      * 
      * Compute the rotation time needed to adjust the dezibot's angle based on
      * the difference between the current angle and the target angle.
-     * The calculation normalizes the angle difference to ensure it falls within
-     * the range of 0 to 180 degrees, and then derives the rotation time using
-     * a linear relationship.
      *
      * @param angleDifference Difference in angle between the current and target
      *                        positions, in degrees.
@@ -169,8 +167,11 @@ private:
      * @return uint Calculated rotation time (in milliseconds) rounded to the
      *              nearest integer.
      * 
-     * @details It is assumed that a 180° rotation takes about 5000 milliseconds
-     *          Therefore, the angle is multiplied by 14 which approximates this
+     * @details The calculation normalizes the angle difference to ensure it
+     *          falls within the range of 0 to 180 degrees, and then derives the
+     *          rotation time using a linear relationship.
+     *          It is assumed that a 180° rotation takes about 5000 milliseconds
+     *          Therefore, the angle is multiplied by 28 which approximates this
      *          assumption (180° * 28 = 5040 ms).
      * 
      * @see rotateToAngle for how this function is used in the context of
@@ -183,17 +184,21 @@ private:
      * @brief Tolerance for a rotation to be accepted in degrees.
      * 
      * For example, if the initial infrared signal was 0°, then everything
-     * in [-5°, 5°] will be accepted as an successful rotation.
+     * in [-3°, 3°] will be accepted as an successful rotation.
+     * This is necessary to avoid unnecessary loops, e.g. if the infrared
+     * emitting dezibot is too far away.
      * 
      * @see rotateToAngle for usage.
      */
-    const int ROTATION_TOLERANCE = 5;
+    static const int ROTATION_TOLERANCE = 3;
 
     /**
-     * @brief Maximum rotation iterations used in \p turnLeft` and \p turnRight.
+     * @brief Maximum rotation iterations used in \p turnLeft and \p turnRight.
+     * 
+     * @see rotateToAngle for usage.
      * 
      */
-    const size_t MAX_ROTATION_ITERATIONS = 20;
+    static const size_t MAX_ROTATION_ITERATIONS = 20;
 
     /**
      * @brief Factor used to calculate rotation time.
@@ -201,7 +206,7 @@ private:
      * @see calculateRotationTime for usage.
      * 
      */
-    const float ROTATION_TIME_FACTOR = 28;
+    static constexpr float ROTATION_TIME_FACTOR = 28;
 };
 
 #endif // ECPMovement_h

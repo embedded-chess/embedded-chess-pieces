@@ -34,8 +34,8 @@ public:
      *          <tt>examples/ir_emitter.ino</tt> within reach.
      * 
      * @attention This function measures the angle from which the <b>signal</b>
-     *            is coming from, <b>not</b> where the dezibot is facing. For,
-     *            refer to \p measureDezibotAngle.
+     *            is coming from, <b>not</b> where the dezibot is facing. For
+     *            that, refer to \p measureDezibotAngle.
      * 
      * @return int Angle in degrees, i.e. [0, 360], if signal was detected.
      */
@@ -57,8 +57,29 @@ public:
     int measureDezibotAngle();
 
 private:
+    /**
+     * @brief How many infrared signals are averaged in \p measureSignalAngle.
+     * 
+     */
     static const int MEASUREMENT_COUNT = 3;
-    static const int TIME_BETWEEN_MEASUREMENTS = 1; // in ms
+
+    /**
+     * @brief Time between measurements that are averaged to one in
+     *        \p measureSignalAngle in milliseconds,
+     * 
+     */
+    static const int TIME_BETWEEN_MEASUREMENTS = 1;
+
+    /**
+     * @brief Minimal threshold necessary to be measured before being discarded
+     *        as too weak.
+     * 
+     * Prevent interpreting signals that are not emitted by the IR emitting
+     * dezibot, caused, for example, by environmental influences.
+     * 
+     * @see measureSignalAngle for usage.
+     * 
+     */
     static constexpr float MIN_THRESHOLD_MEASUREMENTS = 0.10f;
 };
 
