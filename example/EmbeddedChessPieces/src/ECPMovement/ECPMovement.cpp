@@ -14,20 +14,6 @@ void ECPMovement::move(uint numberOfFields) {
     }
 };
 
-void ECPMovement::displayRotionCorrectionRequest(
-    ECPChessField currentField, 
-    ECPDirection intendedDirection
-) {
-    String request = "Faulty rotation\nPlease correct\nmy position in\n" 
-        + String(ROTATION_CORRECTION_TIME/1000) + " seconds to\n\n> " 
-        + currentField.toString() + " " + directionToString(intendedDirection) 
-        + "\n\n Thank you!";
-    dezibot.display.clear();
-    dezibot.display.print(request);
-    delay(ROTATION_CORRECTION_TIME);
-    dezibot.display.clear();
-};
-
 void ECPMovement::turnLeft(
     ECPChessField currentField, 
     ECPDirection intendedDirection
@@ -88,6 +74,20 @@ void ECPMovement::moveToNextField() {
         moveForward(FORWARD_TIME, MOVEMENT_BREAK);
         isCurrentlyOnWhite = ecpColorDetection.isWhiteField();
     }
+};
+
+void ECPMovement::displayRotionCorrectionRequest(
+    ECPChessField currentField, 
+    ECPDirection intendedDirection
+) {
+    String request = "Faulty rotation\nPlease correct\nmy position in\n" 
+        + String(ROTATION_CORRECTION_TIME/1000) + " seconds to\n\n> " 
+        + currentField.toString() + " " + directionToString(intendedDirection) 
+        + "\n\n Thank you!";
+    dezibot.display.clear();
+    dezibot.display.print(request);
+    delay(ROTATION_CORRECTION_TIME);
+    dezibot.display.clear();
 };
 
 void ECPMovement::rotateToAngle(int goalAngle, int initialAngle) {
