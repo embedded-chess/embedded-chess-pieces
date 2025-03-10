@@ -122,7 +122,7 @@ private:
      * 
      * @see calculateRotationTime() for details on how the rotation time is computed.
      * @see rotateLeft() and rotateRight() for the actual rotation implementations.
-     * @see ecpSignalDetection.measureSignalAngle() for how the current angle is measured.
+     * @see ecpSignalDetection.measureDezibotAngle() for how the current angle is measured.
      */
     void rotateToAngle(int goalAngle, int initialAngle);
 
@@ -131,7 +131,8 @@ private:
      * 
      * Use left motor of the dezibot (`dezibot.motion.left`).
      * 
-     * @param movementTime Duration for which the bot should rotate left, in milliseconds.
+     * @param movementTime Duration for which the bot should rotate left, in
+     *                     milliseconds.
      * 
      * @details This function is typically called as part of a larger rotation
      *          mechanism, where the duration of the left rotation is calculated
@@ -144,7 +145,8 @@ private:
      * 
      * Use left motor of the dezibot (`dezibot.motion.right`).
      * 
-     * @param movementTime Duration for which the bot should rotate right, in milliseconds.
+     * @param movementTime Duration for which the bot should rotate right, in
+     *                     milliseconds.
      * 
      * @details This function is typically called as part of a larger rotation
      *          mechanism, where the duration of the left rotation is calculated

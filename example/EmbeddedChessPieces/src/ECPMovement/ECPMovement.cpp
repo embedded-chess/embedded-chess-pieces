@@ -34,7 +34,12 @@ void ECPMovement::turnLeft(
 ) {
     const bool hasStartedOnWhite = ecpColorDetection.isWhiteField();
     int initialAngle = ecpSignalDetection.measureSignalAngle();
-    int goalAngle = (initialAngle - 90) % 360;
+    
+    // if dezibot faces initially at 180°, subtract 90° to turn left, resulting
+    // in the dezibot facing 90°
+    // add 360 in parentheses to prevent negative values
+    int goalAngle = (initialAngle - 90 + 360) % 360;
+    
     rotateToAngle(goalAngle, initialAngle);
 
     delay(5); // for better measuring results
@@ -50,7 +55,11 @@ void ECPMovement::turnRight(
 ) {
     const bool hasStartedOnWhite = ecpColorDetection.isWhiteField();
     int initialAngle = ecpSignalDetection.measureSignalAngle();
+
+    // if dezibot faces initially at 180°, add 90° to turn left, resulting in
+    // the dezibot facing 270°
     int goalAngle = (initialAngle + 90) % 360;
+
     rotateToAngle(goalAngle, initialAngle);
 
     delay(5); // for better measuring results
@@ -90,7 +99,7 @@ void ECPMovement::rotateToAngle(int goalAngle, int initialAngle) {
         && currentIteration < MAX_ROTATION_ITERATIONS;
 
     while (shouldContinueRotation) {
-        int normalizedDifference = ((difference + 180) % 360) - 180;
+        int normalizedDifference = ((difference + 180 + 360) % 360) - 180;
         uint rotationTime = calculateRotationTime(normalizedDifference);
 
         if (normalizedDifference == 0 || normalizedDifference == -180) {
@@ -105,7 +114,7 @@ void ECPMovement::rotateToAngle(int goalAngle, int initialAngle) {
         // delay for better measuring results
         delay(5);
 
-        currentAngle = ecpSignalDetection.measureSignalAngle();
+        currentAngle = ecpSignalDetection.measureDezibotAngle();
         difference = goalAngle - currentAngle;
         currentIteration++;
 
@@ -125,15 +134,15 @@ void ECPMovement::rotateToAngle(int goalAngle, int initialAngle) {
 };
 
 void ECPMovement::rotateLeft(uint movementTime) {
-    dezibot.motion.left.setSpeed(ROTATION_SPEED);
-    delay(movementTime);
-    dezibot.motion.left.setSpeed(0);
-};
-
-void ECPMovement::rotateRight(uint movementTime) {
     dezibot.motion.right.setSpeed(ROTATION_SPEED);
     delay(movementTime);
     dezibot.motion.right.setSpeed(0);
+};
+
+void ECPMovement::rotateRight(uint movementTime) {
+    dezibot.motion.left.setSpeed(ROTATION_SPEED);
+    delay(movementTime);
+    dezibot.motion.left.setSpeed(0);
 };
 
 uint ECPMovement::calculateRotationTime(int angleDifference) {
