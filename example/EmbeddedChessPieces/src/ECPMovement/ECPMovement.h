@@ -116,7 +116,7 @@ private:
      * @param currentField Field of the dezibot
      * @param intendedDirection Direction the dezibot should look at after rotation
      */
-    void displayRotionCorrectionRequest(
+    void displayRotationCorrectionRequest(
         ECPChessField currentField, 
         ECPDirection intendedDirection
     );

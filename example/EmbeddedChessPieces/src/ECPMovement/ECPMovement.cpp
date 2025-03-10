@@ -18,7 +18,7 @@ void ECPMovement::turnLeft(
     ECPChessField currentField, 
     ECPDirection intendedDirection
 ) {
-    const bool hasStartedOnWhite = ecpColorDetection.isWhiteField();
+    const int startColor = ecpColorDetection.getFieldColor();
     const int initialAngle = ecpSignalDetection.measureDezibotAngle();
     
     // if dezibot initially faces 270°, subtract 90° to turn left, resulting
@@ -29,8 +29,8 @@ void ECPMovement::turnLeft(
     const bool wasRotationSuccessful = rotateToAngle(goalAngle, initialAngle);
 
     delay(MEASURING_DELAY); // for better measuring results
-    const bool isCurrentlyOnWhite = ecpColorDetection.isWhiteField();
-    if (isCurrentlyOnWhite != hasStartedOnWhite || !wasRotationSuccessful) {
+    const int currentColor = ecpColorDetection.getFieldColor();
+    if (currentColor != startColor || !wasRotationSuccessful) {
         displayRotionCorrectionRequest(currentField, intendedDirection);
     }
 };
@@ -39,7 +39,7 @@ void ECPMovement::turnRight(
     ECPChessField currentField, 
     ECPDirection intendedDirection
 ) {
-    const bool hasStartedOnWhite = ecpColorDetection.isWhiteField();
+    const int startColor = ecpColorDetection.getFieldColor();
     const int initialAngle = ecpSignalDetection.measureDezibotAngle();
 
     // if dezibot initially faces 180°, add 90° to turn left, resulting
@@ -49,8 +49,8 @@ void ECPMovement::turnRight(
     const bool wasRotationSuccessful = rotateToAngle(goalAngle, initialAngle);
 
     delay(MEASURING_DELAY); // for better measuring results
-    const bool isCurrentlyOnWhite = ecpColorDetection.isWhiteField();
-    if (isCurrentlyOnWhite != hasStartedOnWhite || !wasRotationSuccessful) {
+    const int currentColor = ecpColorDetection.getFieldColor();
+    if (currentColor != startColor || !wasRotationSuccessful) {
         displayRotionCorrectionRequest(currentField, intendedDirection);
     }
 };
@@ -86,7 +86,7 @@ void ECPMovement::moveToNextField() {
     }
 };
 
-void ECPMovement::displayRotionCorrectionRequest(
+void ECPMovement::displayRotationCorrectionRequest(
     ECPChessField currentField, 
     ECPDirection intendedDirection
 ) {
