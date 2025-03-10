@@ -32,6 +32,7 @@ int ECPSignalDetection::measureSignalAngle() {
         dezibot.display.println("No IR signal!");
         dezibot.display.println("Trying again...");
         delay(1000);
+        dezibot.display.clear();
         return measureSignalAngle();
     }
 
