@@ -15,16 +15,9 @@
 
 // change for a calibration fitting the specific dezibot
 #define MOVEMENT_CALIBRATION 3900
-#define ROTATION_TIME_LEFT 2750
-#define ROTATION_TIME_RIGHT 2550
 
 Dezibot dezibot = Dezibot();
-ECPMovement ecpMovement(
-  dezibot, 
-  MOVEMENT_CALIBRATION, 
-  ROTATION_TIME_LEFT, 
-  ROTATION_TIME_RIGHT
-);
+ECPMovement ecpMovement(dezibot, MOVEMENT_CALIBRATION);
 
 void setup() {
   Serial.begin(9600);
