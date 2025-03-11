@@ -19,17 +19,17 @@ void ECPMovement::turnLeft(
     ECPDirection intendedDirection
 ) {
     const bool hasStartedOnWhite = ecpColorDetection.isWhiteField();
-    int initialAngle = ecpSignalDetection.measureSignalAngle();
+    const int initialAngle = ecpSignalDetection.measureSignalAngle();
     
     // if dezibot initially faces 270°, subtract 90° to turn left, resulting
     // in the dezibot facing 180°
     // add 360 before applying modulo to prevent negative values
-    int goalAngle = (initialAngle - 90 + 360) % 360;
+    const int goalAngle = (initialAngle - 90 + 360) % 360;
     
     rotateToAngle(goalAngle, initialAngle);
 
     delay(5); // for better measuring results
-    bool isCurrentlyOnWhite = ecpColorDetection.isWhiteField();
+    const bool isCurrentlyOnWhite = ecpColorDetection.isWhiteField();
     if (isCurrentlyOnWhite != hasStartedOnWhite) {
         displayRotionCorrectionRequest(currentField, intendedDirection);
     }
@@ -40,16 +40,16 @@ void ECPMovement::turnRight(
     ECPDirection intendedDirection
 ) {
     const bool hasStartedOnWhite = ecpColorDetection.isWhiteField();
-    int initialAngle = ecpSignalDetection.measureSignalAngle();
+    const int initialAngle = ecpSignalDetection.measureSignalAngle();
 
     // if dezibot initially faces 180°, add 90° to turn left, resulting
     // in the dezibot facing 270°
-    int goalAngle = (initialAngle + 90) % 360;
+    const int goalAngle = (initialAngle + 90) % 360;
 
     rotateToAngle(goalAngle, initialAngle);
 
     delay(5); // for better measuring results
-    bool isCurrentlyOnWhite = ecpColorDetection.isWhiteField();
+    const bool isCurrentlyOnWhite = ecpColorDetection.isWhiteField();
     if (isCurrentlyOnWhite != hasStartedOnWhite) {
         displayRotionCorrectionRequest(currentField, intendedDirection);
     }
