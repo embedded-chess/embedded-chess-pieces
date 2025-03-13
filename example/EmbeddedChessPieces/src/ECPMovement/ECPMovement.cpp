@@ -8,9 +8,21 @@ ECPMovement::ECPMovement(
     ecpSignalDetection(ECPSignalDetection(dezibot)),
     movementCalibration(movementCalibration) {};
 
-void ECPMovement::move(uint numberOfFields) {
+void ECPMovement::move(
+    uint numberOfFields, 
+    ECPChessField intendedField, 
+    ECPDirection intendedDirection
+) {
     for (size_t i = 0; i < numberOfFields; i++) {
-        moveToNextField();
+        bool successfulMovement = moveToNextField();
+        
+        if (!successfulMovement) {
+            displayForwardMovementCorrectionRequest(
+                intendedField, 
+                intendedDirection
+            );
+            break;
+        }
     }
 };
 
@@ -31,7 +43,7 @@ void ECPMovement::turnLeft(
     delay(MEASURING_DELAY); // for better measuring results
     const int currentColor = ecpColorDetection.getFieldColor();
     if (currentColor != startColor || !wasRotationSuccessful) {
-        displayRotionCorrectionRequest(currentField, intendedDirection);
+        displayRotationCorrectionRequest(currentField, intendedDirection);
     }
 };
 
@@ -51,7 +63,7 @@ void ECPMovement::turnRight(
     delay(MEASURING_DELAY); // for better measuring results
     const int currentColor = ecpColorDetection.getFieldColor();
     if (currentColor != startColor || !wasRotationSuccessful) {
-        displayRotionCorrectionRequest(currentField, intendedDirection);
+        displayRotationCorrectionRequest(currentField, intendedDirection);
     }
 };
 
@@ -70,20 +82,33 @@ void ECPMovement::moveForward(int timeMovement, int timeBreak) {
     delay(timeBreak);
 };
 
-void ECPMovement::moveToNextField() {
+bool ECPMovement::moveToNextField() {
     const int startColor = ecpColorDetection.getFieldColor();
     const int wantedColor = startColor == 1 ? startColor + 1 : startColor -1;
     const int stopoverColor = wantedColor + 2;
     int currentColor = startColor;
+    int currentIteration = 0;
 
+    // reach middle of the next field with the front leg
     while (currentColor != stopoverColor) {
+        if (currentIteration == MAX_ITERATIONS) {
+            return false;
+        }
         moveForward(FORWARD_TIME, MOVEMENT_BREAK);
         currentColor = ecpColorDetection.getFieldColor();
+        currentIteration++;
     }
+
+    // move further to place the whole dezibot on the field
     while (currentColor != wantedColor) {
         moveForward(FORWARD_TIME, MOVEMENT_BREAK);
         currentColor = ecpColorDetection.getFieldColor();
+        if (currentColor == 4) { // unambiguous
+            return false;
+        }
     }
+
+    return true;
 };
 
 void ECPMovement::displayRotationCorrectionRequest(
@@ -91,12 +116,26 @@ void ECPMovement::displayRotationCorrectionRequest(
     ECPDirection intendedDirection
 ) {
     String request = "Faulty rotation\nPlease correct\nmy position in\n" 
-        + String(ROTATION_CORRECTION_TIME/1000) + " seconds to\n\n> " 
+        + String(MANUEL_CORRECTION_TIME/1000) + " seconds to\n\n> " 
         + currentField.toString() + " " + directionToString(intendedDirection) 
         + "\n\n Thank you!";
     dezibot.display.clear();
     dezibot.display.print(request);
-    delay(ROTATION_CORRECTION_TIME);
+    delay(MANUEL_CORRECTION_TIME);
+    dezibot.display.clear();
+};
+
+void ECPMovement::displayForwardMovementCorrectionRequest(
+    ECPChessField intendedField, 
+    ECPDirection intendedDirection
+) {
+    String request = "Faulty movement\nPlease correct\nmy position in\n" 
+        + String(MANUEL_CORRECTION_TIME/1000) + " seconds to\n\n> " 
+        + intendedField.toString() + " " + directionToString(intendedDirection) 
+        + "\n\n Thank you!";
+    dezibot.display.clear();
+    dezibot.display.print(request);
+    delay(MANUEL_CORRECTION_TIME);
     dezibot.display.clear();
 };
 
