@@ -26,11 +26,11 @@ void ECPMovement::turnLeft(
     // add 360 before applying modulo to prevent negative values
     const int goalAngle = (initialAngle - 90 + 360) % 360;
     
-    rotateToAngle(goalAngle, initialAngle);
+    const bool wasRotationSuccessful = rotateToAngle(goalAngle, initialAngle);
 
     delay(MEASURING_DELAY); // for better measuring results
     const bool isCurrentlyOnWhite = ecpColorDetection.isWhiteField();
-    if (isCurrentlyOnWhite != hasStartedOnWhite) {
+    if (isCurrentlyOnWhite != hasStartedOnWhite || !wasRotationSuccessful) {
         displayRotionCorrectionRequest(currentField, intendedDirection);
     }
 };
@@ -46,11 +46,11 @@ void ECPMovement::turnRight(
     // in the dezibot facing 270°
     const int goalAngle = (initialAngle + 90) % 360;
 
-    rotateToAngle(goalAngle, initialAngle);
+    const bool wasRotationSuccessful = rotateToAngle(goalAngle, initialAngle);
 
     delay(MEASURING_DELAY); // for better measuring results
     const bool isCurrentlyOnWhite = ecpColorDetection.isWhiteField();
-    if (isCurrentlyOnWhite != hasStartedOnWhite) {
+    if (isCurrentlyOnWhite != hasStartedOnWhite || !wasRotationSuccessful) {
         displayRotionCorrectionRequest(currentField, intendedDirection);
     }
 };
@@ -90,7 +90,7 @@ void ECPMovement::displayRotionCorrectionRequest(
     dezibot.display.clear();
 };
 
-void ECPMovement::rotateToAngle(int goalAngle, int initialAngle) {
+bool ECPMovement::rotateToAngle(int goalAngle, int initialAngle) {
     int currentAngle = initialAngle;
     int difference = goalAngle - currentAngle;
     size_t currentIteration = 0;
@@ -122,14 +122,12 @@ void ECPMovement::rotateToAngle(int goalAngle, int initialAngle) {
     }
 
     if (currentIteration == MAX_ROTATION_ITERATIONS) {
-        dezibot.display.clear();
-        dezibot.display.println("exceeded max iterations");
-        dezibot.display.println("please turn bot to face "
-            + String(currentAngle));
-        dezibot.display.println("waiting for 10 seconds...");
-        delay(10 * 1000);
-        dezibot.display.println("continuing...");
+        // rotation failed
+        return false;
     }
+
+    // rotation successful
+    return true;
 };
 
 void ECPMovement::rotateLeft(uint movementTime) {

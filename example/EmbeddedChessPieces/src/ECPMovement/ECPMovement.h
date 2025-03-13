@@ -122,19 +122,19 @@ private:
      * the tolerance specified in \p ROTATION_TOLERANCE.
      * 
      * If the rotation could not be completed successfully after a certain
-     * amount of iterations (cf. \p MAX_ROTATION_ITERATIONS), print a statement
-     * on the display to request manual correction within 10 seconds before
-     * continuing.
+     * amount of iterations (cf. \p MAX_ROTATION_ITERATIONS), return \p false.
      * 
      * @param goalAngle The target angle to which the dezibot is to be rotated.
      * @param initialAngle Measured initial angle of the dezibot, see
      *                     \p EcpSignalDetection::measureDezibotAngle.
      * 
+     * @return bool true if rotation was successful, false otherwise
+     * 
      * @see calculateRotationTime() for details on how the rotation time is computed.
      * @see rotateLeft and \p rotateRight for the actual rotation implementations.
      * @see EcpSignalDetection::measureDezibotAngle for how the current angle is measured.
      */
-    void rotateToAngle(int goalAngle, int initialAngle);
+    bool rotateToAngle(int goalAngle, int initialAngle);
 
     /**
      * @brief Rotate dezibot to the left (counter-clockwise) for a specified duration.
