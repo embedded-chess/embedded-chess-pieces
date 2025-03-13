@@ -28,7 +28,7 @@ void ECPMovement::turnLeft(
     
     rotateToAngle(goalAngle, initialAngle);
 
-    delay(5); // for better measuring results
+    delay(MEASURING_DELAY); // for better measuring results
     const bool isCurrentlyOnWhite = ecpColorDetection.isWhiteField();
     if (isCurrentlyOnWhite != hasStartedOnWhite) {
         displayRotionCorrectionRequest(currentField, intendedDirection);
@@ -48,7 +48,7 @@ void ECPMovement::turnRight(
 
     rotateToAngle(goalAngle, initialAngle);
 
-    delay(5); // for better measuring results
+    delay(MEASURING_DELAY); // for better measuring results
     const bool isCurrentlyOnWhite = ecpColorDetection.isWhiteField();
     if (isCurrentlyOnWhite != hasStartedOnWhite) {
         displayRotionCorrectionRequest(currentField, intendedDirection);
@@ -111,13 +111,12 @@ void ECPMovement::rotateToAngle(int goalAngle, int initialAngle) {
             rotateRight(rotationTime);
         }
 
-        // delay for better measuring results
-        delay(5);
-
+        delay(MEASURING_DELAY); // for better measuring results
         currentAngle = ecpSignalDetection.measureDezibotAngle();
-        difference = goalAngle - currentAngle;
-        currentIteration++;
 
+        difference = goalAngle - currentAngle;
+        
+        currentIteration++;
         shouldContinueRotation = std::abs(difference) > ROTATION_TOLERANCE
             && currentIteration < MAX_ROTATION_ITERATIONS;
     }
@@ -145,8 +144,7 @@ void ECPMovement::rotateRight(uint movementTime) {
     dezibot.motion.left.setSpeed(0);
 };
 
-uint ECPMovement::calculateRotationTime(int angleDifference) {
-    float normalizedDifference = ((angleDifference + 180) % 360) - 180;
-    float rotationTime = ROTATION_TIME_FACTOR * std::abs(normalizedDifference);
+uint ECPMovement::calculateRotationTime(int normalizedAngleDifference) {
+    float rotationTime = ROTATION_TIME_FACTOR * std::abs(normalizedAngleDifference);
     return std::round(rotationTime);
 };

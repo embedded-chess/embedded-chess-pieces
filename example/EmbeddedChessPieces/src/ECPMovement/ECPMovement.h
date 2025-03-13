@@ -23,6 +23,7 @@
 #define ROTATION_SPEED 8192
 #define ROTATION_CORRECTION_TIME 10000
 #define DEFAULT_MOVEMENT_CALIBRATION 3900
+#define MEASURING_DELAY 5
 
 class ECPMovement {
 public:
@@ -161,16 +162,14 @@ private:
      * Compute the rotation time needed to adjust the dezibot's angle based on
      * the difference between the current angle and the target angle.
      *
-     * @param angleDifference Difference in angle between the current and target
-     *                        positions, in degrees.
+     * @param normalizedAngleDifference Difference in angle between the current
+     *            and target positions, in degrees, normalized to [-180, 180].
      *
      * @return uint Calculated rotation time (in milliseconds) rounded to the
      *              nearest integer.
      * 
-     * @details The calculation normalizes the angle difference to ensure it
-     *          falls within the range of 0 to 180 degrees, and then derives the
-     *          rotation time using a linear relationship.
-     *          It is assumed that a 180° rotation takes about 5000 milliseconds
+     * @details The rotation time is derived using a linear relationship. It is
+     *          assumed that a 180° rotation takes about 5000 milliseconds
      *          Therefore, the angle is multiplied by 28 which approximates this
      *          assumption (180° * 28 = 5040 ms).
      * 
@@ -178,7 +177,7 @@ private:
      *      rotating the dezibot to a specific angle.
      * @see ROTATION_TIME_FACTOR for factor used to define linear relationship.
      */
-    uint calculateRotationTime(int angleDifference);
+    uint calculateRotationTime(int normalizedAngleDifference);
 
     /**
      * @brief Tolerance for a rotation to be accepted in degrees.
