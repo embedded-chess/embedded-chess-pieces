@@ -24,7 +24,7 @@ void setup() {
 void loop() {
     dezibot.display.clear();
 
-    int signalAngle = ecpSignalDetection.measureDezibotAngle();
+    int signalAngle = ecpSignalDetection.measureSignalAngle();
     dezibot.display.println("S: " + String(signalAngle));
 
     int dezibotAngle = ecpSignalDetection.measureDezibotAngle();
