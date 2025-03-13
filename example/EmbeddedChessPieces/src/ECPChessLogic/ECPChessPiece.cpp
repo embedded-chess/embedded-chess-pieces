@@ -91,7 +91,7 @@ void ECPChessPiece::moveHorizontally(int fieldsToMove) {
     currentDirection = newDirection;
     ecpMovement.move(
         abs(fieldsToMove), 
-        {(ECPBoardColumn) (currentField.column + fieldsToMove), currentField.row},
+        {(ECPBoardColumn) (currentField.column - fieldsToMove), currentField.row},
         currentDirection
     );
     drawFigureToDisplay();
@@ -138,7 +138,7 @@ void ECPChessPiece::moveVertically(int fieldsToMove) {
     currentDirection = newDirection;
     ecpMovement.move(
         abs(fieldsToMove),
-        {currentField.column, currentField.row + fieldsToMove},
+        {currentField.column, currentField.row - fieldsToMove},
         currentDirection
     );
     drawFigureToDisplay();
