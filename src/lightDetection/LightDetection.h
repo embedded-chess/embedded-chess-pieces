@@ -1,6 +1,6 @@
 /**
  * @file LightDetection.h
- * @author Hans Haupt (hans.haupt@dezibot.de)
+ * @author Hans Haupt (hans.haupt@dezibot.de), Ines Rohrbach, Nico Schramm
  * @brief Class for Reading the values of the different Phototransistors, both IR, and DaylightSensors are supported. 
  * @version 0.1
  * @date 2024-04-26
