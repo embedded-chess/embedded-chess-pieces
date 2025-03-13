@@ -14,6 +14,8 @@
 
 #include <Dezibot.h>
 
+#define DELAY_BEFORE_MEASURING 5
+
 #define COLOR_CORRECTION_LIGHT_R 43
 #define COLOR_CORRECTION_LIGHT_G 33
 #define COLOR_CORRECTION_LIGHT_B 35
@@ -55,9 +57,6 @@ public:
 
     /**
      * @brief Set value for shouldTurnOnColorCorrectionLight flag
-     * 
-     * Turn on color correction light if parameter turnOn is true and
-     * turn off color correction light if parameter is false
      * 
      * @param turnOn true if correction light should be turned on else false 
      */
@@ -130,6 +129,13 @@ private:
      * @return brightness as double 
      */
     double calibrateColor(bool isWhite);
+
+    /**
+     * @brief Measure brightness
+     * 
+     * @return brightness as double
+     */
+    double measureBrightness();
 };
 
 #endif // ECPColorDetection_h

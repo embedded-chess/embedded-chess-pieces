@@ -25,12 +25,7 @@ void ECPColorDetection::calibrateFieldColor() {
 };
 
 FieldColor ECPColorDetection::getFieldColor() {
-    const double ambient = dezibot.colorSensor.getNormalizedAmbientValue();
-    double red = dezibot.colorSensor.getNormalizedColorValue(ColorSensor::RED, ambient);
-    double green = dezibot.colorSensor.getNormalizedColorValue(ColorSensor::GREEN, ambient);
-    double blue = dezibot.colorSensor.getNormalizedColorValue(ColorSensor::BLUE, ambient);
-
-    const double brightness = dezibot.colorSensor.calculateBrightness(red, green, blue);
+    const double brightness = measureBrightness();
 
     if (isWhiteFieldTopThreshold <= brightness) {
         return UNAMBIGUOUS_BLACK_TO_WHITE;
@@ -49,7 +44,6 @@ FieldColor ECPColorDetection::getFieldColor() {
 
 void ECPColorDetection::setShouldTurnOnColorCorrectionLight(bool turnOn) {
     shouldTurnOnColorCorrectionLight = turnOn;
-    turnOn ? turnOnColorCorrectionLight() : turnOffColorCorrectionLight();
 }
 
 bool ECPColorDetection::getShouldTurnOnColorCorrectionLight() {
@@ -75,13 +69,23 @@ double ECPColorDetection::calibrateColor(bool isWhite) {
     dezibot.display.clear();
     dezibot.display.println(request);
     delay(CALIBRATION_TIME);
+    dezibot.display.clear();
 
-    double ambient = dezibot.colorSensor.getNormalizedAmbientValue();
+    return measureBrightness();
+};
+
+double ECPColorDetection::measureBrightness() {
+    if (shouldTurnOnColorCorrectionLight) {
+        turnOnColorCorrectionLight();
+        delay(DELAY_BEFORE_MEASURING);
+    }
+
+    const double ambient = dezibot.colorSensor.getNormalizedAmbientValue();
     double red = dezibot.colorSensor.getNormalizedColorValue(ColorSensor::RED, ambient);
     double green = dezibot.colorSensor.getNormalizedColorValue(ColorSensor::GREEN, ambient);
     double blue = dezibot.colorSensor.getNormalizedColorValue(ColorSensor::BLUE, ambient);
-    dezibot.display.clear();
 
-    double brightness = dezibot.colorSensor.calculateBrightness(red, green, blue);
-    return brightness;
+    turnOffColorCorrectionLight();
+
+    return dezibot.colorSensor.calculateBrightness(red, green, blue);
 };

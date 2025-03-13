@@ -188,9 +188,6 @@ void ECPChessPiece::setRedLight(bool shouldEnable) {
         dezibot.multiColorLight.setLed(BOTTOM, red);
     } else {
         dezibot.multiColorLight.turnOffLed(BOTTOM);
-        if (ecpMovement.getECPColorDetection()->getShouldTurnOnColorCorrectionLight()) {
-            ecpMovement.getECPColorDetection()->turnOnColorCorrectionLight();
-        }
     }
 };
 
@@ -200,8 +197,5 @@ void ECPChessPiece::setGreenLight(bool shouldEnable) {
         dezibot.multiColorLight.setLed(BOTTOM, green);
     } else {
         dezibot.multiColorLight.turnOffLed(BOTTOM);
-        if (ecpMovement.getECPColorDetection()->getShouldTurnOnColorCorrectionLight()) {
-            ecpMovement.getECPColorDetection()->turnOnColorCorrectionLight();
-        }
     }
 };
