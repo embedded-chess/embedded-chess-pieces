@@ -21,7 +21,7 @@ ECPMovement ecpMovement(dezibot, MOVEMENT_CALIBRATION);
 void setup() {
   dezibot.begin();
   dezibot.display.flipOrientation();
-  delay(500);
+  delay(5000);
 }
 
 void loop() {
