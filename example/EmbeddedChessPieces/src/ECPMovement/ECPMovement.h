@@ -23,7 +23,7 @@
 #define ROTATION_SPEED 8192
 #define ROTATION_CORRECTION_TIME 10000
 #define DEFAULT_MOVEMENT_CALIBRATION 3900
-#define MEASURING_DELAY 5
+#define MEASURING_DELAY 100
 
 class ECPMovement {
 public:
@@ -168,10 +168,7 @@ private:
      * @return uint Calculated rotation time (in milliseconds) rounded to the
      *              nearest integer.
      * 
-     * @details The rotation time is derived using a linear relationship. It is
-     *          assumed that a 180° rotation takes about 5000 milliseconds
-     *          Therefore, the angle is multiplied by 28 which approximates this
-     *          assumption (180° * 28 = 5040 ms).
+     * @details The rotation time is derived using a linear relationship.
      * 
      * @see rotateToAngle for how this function is used in the context of
      *      rotating the dezibot to a specific angle.
@@ -205,7 +202,7 @@ private:
      * @see calculateRotationTime for usage.
      * 
      */
-    static constexpr float ROTATION_TIME_FACTOR = 28;
+    static constexpr float ROTATION_TIME_FACTOR = 25;
 };
 
 #endif // ECPMovement_h
