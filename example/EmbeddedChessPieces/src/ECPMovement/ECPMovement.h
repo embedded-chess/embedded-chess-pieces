@@ -19,7 +19,7 @@
 #include <ECPSignalDetection/ECPSignalDetection.h>
 
 #define FORWARD_TIME 750
-#define MOVEMENT_BREAK 375
+#define MOVEMENT_BREAK 100
 #define ROTATION_SPEED 8192
 
 #define DEFAULT_MOVEMENT_CALIBRATION 3900

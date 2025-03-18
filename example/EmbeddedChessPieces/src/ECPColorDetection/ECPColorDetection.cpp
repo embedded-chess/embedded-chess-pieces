@@ -6,13 +6,13 @@ void ECPColorDetection::calibrateFieldColor() {
     double whiteBrightness = calibrateColor(true);
     double blackBrightness = calibrateColor(false);
 
-    double diff = whiteBrightness - blackBrightness;
-    double offset = diff * 0.025; // placeholder
+    double offsetWhite = whiteBrightness * 0.0075; // placeholder
+    double offsetBlack = blackBrightness * 0.075; // placeholder
 
-    isWhiteFieldTopThreshold = whiteBrightness + offset;
-    isWhiteFieldBottomThreshold = whiteBrightness - offset;
-    isBlackFieldTopThreshold = blackBrightness + offset;
-    isBlackFieldBottomThreshold = blackBrightness - offset;
+    isWhiteFieldTopThreshold = std::min(whiteBrightness + offsetWhite, 254.9);
+    isWhiteFieldBottomThreshold = whiteBrightness - 2*offsetWhite;
+    isBlackFieldTopThreshold = blackBrightness + 2*offsetBlack;
+    isBlackFieldBottomThreshold = std::max(blackBrightness - offsetBlack, 0.1);
     //debug
     dezibot.display.clear();
     dezibot.display.println(isWhiteFieldTopThreshold);
@@ -85,7 +85,7 @@ double ECPColorDetection::measureBrightness() {
     double green = dezibot.colorSensor.getNormalizedColorValue(ColorSensor::GREEN, ambient);
     double blue = dezibot.colorSensor.getNormalizedColorValue(ColorSensor::BLUE, ambient);
 
-    turnOffColorCorrectionLight();
+    // turnOffColorCorrectionLight();
 
     return dezibot.colorSensor.calculateBrightness(red, green, blue);
 };

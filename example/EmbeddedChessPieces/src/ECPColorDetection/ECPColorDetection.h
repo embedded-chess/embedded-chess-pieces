@@ -14,7 +14,7 @@
 
 #include <Dezibot.h>
 
-#define DELAY_BEFORE_MEASURING 5
+#define DELAY_BEFORE_MEASURING 20
 
 #define COLOR_CORRECTION_LIGHT_R 43
 #define COLOR_CORRECTION_LIGHT_G 33
@@ -29,7 +29,7 @@
 /**
  * @brief Color of field the dezibot is standing on.
  * 
- * Convertible to int, i.e. BLACK_FIELD == 0, WHITE_FIELD == 2
+ * Convertible to int, i.e. BLACK_FIELD == 0, WHITE_FIELD == 1
  * 
  */
 enum FieldColor {

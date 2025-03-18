@@ -30,7 +30,10 @@ void ECPMovement::turnLeft(
     ECPChessField currentField, 
     ECPDirection intendedDirection
 ) {
-    const int startColor = ecpColorDetection.getFieldColor();
+    FieldColor startColor = ecpColorDetection.getFieldColor();
+    if (startColor == 2 || startColor == 3) {
+        startColor = (FieldColor) (startColor - 2);
+    }
     const int initialAngle = ecpSignalDetection.measureDezibotAngle();
     
     // if dezibot initially faces 270°, subtract 90° to turn left, resulting
@@ -41,7 +44,10 @@ void ECPMovement::turnLeft(
     const bool wasRotationSuccessful = rotateToAngle(goalAngle, initialAngle);
 
     delay(MEASURING_DELAY); // for better measuring results
-    const int currentColor = ecpColorDetection.getFieldColor();
+    FieldColor currentColor = ecpColorDetection.getFieldColor();
+    if (currentColor == 2 || currentColor == 3) {
+        currentColor = (FieldColor) (currentColor - 2);
+    }
     if (currentColor != startColor || !wasRotationSuccessful) {
         displayRotationCorrectionRequest(currentField, intendedDirection);
     }
@@ -51,7 +57,10 @@ void ECPMovement::turnRight(
     ECPChessField currentField, 
     ECPDirection intendedDirection
 ) {
-    const int startColor = ecpColorDetection.getFieldColor();
+    FieldColor startColor = ecpColorDetection.getFieldColor();
+    if (startColor == 2 || startColor == 3) {
+        startColor = (FieldColor) (startColor - 2);
+    }
     const int initialAngle = ecpSignalDetection.measureDezibotAngle();
 
     // if dezibot initially faces 180°, add 90° to turn left, resulting
@@ -61,7 +70,10 @@ void ECPMovement::turnRight(
     const bool wasRotationSuccessful = rotateToAngle(goalAngle, initialAngle);
 
     delay(MEASURING_DELAY); // for better measuring results
-    const int currentColor = ecpColorDetection.getFieldColor();
+    FieldColor currentColor = ecpColorDetection.getFieldColor();
+    if (currentColor == 2 || currentColor == 3) {
+        currentColor = (FieldColor) (currentColor - 2);
+    }
     if (currentColor != startColor || !wasRotationSuccessful) {
         displayRotationCorrectionRequest(currentField, intendedDirection);
     }
@@ -83,10 +95,17 @@ void ECPMovement::moveForward(int timeMovement, int timeBreak) {
 };
 
 bool ECPMovement::moveToNextField() {
-    const int startColor = ecpColorDetection.getFieldColor();
-    const int wantedColor = startColor == 1 ? startColor + 1 : startColor -1;
-    const int stopoverColor = wantedColor + 2;
-    int currentColor = startColor;
+    FieldColor startColor = ecpColorDetection.getFieldColor();
+    if (startColor == 2 || startColor == 3) {
+        startColor = (FieldColor) (startColor - 2);
+    } else if (startColor == 4) {
+        return false;
+    }
+    
+    const FieldColor wantedColor = startColor == 0 ? 
+        (FieldColor) (startColor + 1) : (FieldColor) (startColor -1);
+    const FieldColor stopoverColor = (FieldColor) (wantedColor + 2);
+    FieldColor currentColor = startColor;
     int currentIteration = 0;
 
     // reach middle of the next field with the front leg
@@ -96,16 +115,19 @@ bool ECPMovement::moveToNextField() {
         }
         moveForward(FORWARD_TIME, MOVEMENT_BREAK);
         currentColor = ecpColorDetection.getFieldColor();
+        dezibot.display.println(currentColor);
         currentIteration++;
     }
+    currentIteration = MAX_ITERATIONS/2;
 
     // move further to place the whole dezibot on the field
     while (currentColor != wantedColor) {
-        moveForward(FORWARD_TIME, MOVEMENT_BREAK);
-        currentColor = ecpColorDetection.getFieldColor();
-        if (currentColor == 4) { // unambiguous
+        if (currentIteration == MAX_ITERATIONS) {
             return false;
         }
+        moveForward(FORWARD_TIME, MOVEMENT_BREAK);
+        currentColor = ecpColorDetection.getFieldColor();
+        currentIteration++;
     }
 
     return true;
