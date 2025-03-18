@@ -19,7 +19,7 @@ void ECPMovement::turnLeft(
     ECPDirection intendedDirection
 ) {
     const bool hasStartedOnWhite = ecpColorDetection.isWhiteField();
-    const int initialAngle = ecpSignalDetection.measureSignalAngle();
+    const int initialAngle = ecpSignalDetection.measureDezibotAngle();
     
     // if dezibot initially faces 270°, subtract 90° to turn left, resulting
     // in the dezibot facing 180°
@@ -40,7 +40,7 @@ void ECPMovement::turnRight(
     ECPDirection intendedDirection
 ) {
     const bool hasStartedOnWhite = ecpColorDetection.isWhiteField();
-    const int initialAngle = ecpSignalDetection.measureSignalAngle();
+    const int initialAngle = ecpSignalDetection.measureDezibotAngle();
 
     // if dezibot initially faces 180°, add 90° to turn left, resulting
     // in the dezibot facing 270°
