@@ -27,7 +27,7 @@
 
 #define MANUEL_CORRECTION_TIME 10000
 
-#define MAX_ITERATIONS 20
+#define MAX_ITERATIONS 30
 
 class ECPMovement {
 public:
@@ -80,11 +80,23 @@ public:
     void turnRight(ECPChessField currentField, ECPDirection intendedDirection);
 
     /**
-     * @brief Return pointer to ECPColorDetection instance
+     * @brief Set value for ECPColorDetection::shouldTurnOnColorCorrectionLight flag.
      * 
-     * @return ecpColorDetection
+     * @see ECPColorDetection::setShouldTurnOnColorCorrectionLight
      */
-    ECPColorDetection* getECPColorDetection();
+    void setShouldTurnOnColorCorrectionLight(bool turnOn);
+
+    /**
+     * @brief Calibrate threshold for white and black field.
+     * 
+     * Threshold is used to determine if the dezibot is standing on a white or black field
+     * 
+     * Needed to adapt to current light conditions
+     * Default values may compromise movement on the chess field
+     * 
+     * @see ECPColorDetection::calibrateFieldColor
+     */
+    void calibrateFieldColor();
 
 protected:
     Dezibot &dezibot;

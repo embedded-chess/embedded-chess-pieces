@@ -14,17 +14,9 @@
 
 #include <Dezibot.h>
 
-#define DELAY_BEFORE_MEASURING 20
-
 #define COLOR_CORRECTION_LIGHT_R 43
 #define COLOR_CORRECTION_LIGHT_G 33
 #define COLOR_CORRECTION_LIGHT_B 35
-
-#define CALIBRATION_TIME 5000
-#define DEFAULT_TOP_WHITE_THRESHOLD 248.0
-#define DEFAULT_BOTTOM_WHITE_THRESHOLD 245.0
-#define DEFAULT_TOP_BLACK_THRESHOLD 48.0
-#define DEFAULT_BOTTOM_BLACK_THRESHOLD 42.0
 
 /**
  * @brief Color of field the dezibot is standing on.
@@ -35,8 +27,6 @@
 enum FieldColor {
     BLACK_FIELD, 
     WHITE_FIELD,
-    UNAMBIGUOUS_WHITE_TO_BLACK, 
-    UNAMBIGUOUS_BLACK_TO_WHITE,
     UNAMBIGUOUS
 };
 
@@ -56,14 +46,26 @@ public:
     FieldColor getFieldColor();
 
     /**
-     * @brief Set value for shouldTurnOnColorCorrectionLight flag
+     * @brief Determine likely field color.
+     * 
+     * Usecase: the determined field color is unambiguous but a likely color is need
+     * 
+     * Determine if measured brightness is closer to the black or white field threshold
+     * In case the distance is identical black field is preferred
+     * 
+     * @return Likely fieldColor, only BLACK_FIELD and WHITE_FIELD possible
+     */
+    FieldColor getLikelyFieldColor();
+
+    /**
+     * @brief Set value for shouldTurnOnColorCorrectionLight flag.
      * 
      * @param turnOn true if correction light should be turned on else false 
      */
     void setShouldTurnOnColorCorrectionLight(bool turnOn);
 
     /**
-     * @brief Return value of shouldTurnOnColorCorrectionLight flag
+     * @brief Return value of shouldTurnOnColorCorrectionLight flag.
      * 
      * @return @see shouldTurnOnColorCorrectionLight
      */
@@ -83,7 +85,7 @@ public:
     void turnOffColorCorrectionLight();
 
     /**
-     * @brief Calibrate threshold for white and black field
+     * @brief Calibrate threshold for white and black field.
      * 
      */
     void calibrateFieldColor();
@@ -92,38 +94,26 @@ protected:
     Dezibot &dezibot;
 
     /**
-     * @brief Highest value for color to be recognised as white field
+     * @brief Lowest value for color to be recognised as white field.
      * 
      */
-    double isWhiteFieldTopThreshold = DEFAULT_TOP_WHITE_THRESHOLD;
+    double isWhiteFieldThreshold = DEFAULT_WHITE_THRESHOLD;
 
     /**
-     * @brief Lowest value for color to be recognised as white field
+     * @brief Highest value for color to be recognised as black field.
      * 
      */
-    double isWhiteFieldBottomThreshold = DEFAULT_BOTTOM_WHITE_THRESHOLD;
+    double isBlackFieldThreshold = DEFAULT_BLACK_THRESHOLD;
 
     /**
-     * @brief Highest value for color to be recognised as black field
-     * 
-     */
-    double isBlackFieldTopThreshold = DEFAULT_TOP_BLACK_THRESHOLD;
-
-    /**
-     * @brief Lowest value for color to be recognised as black field
-     * 
-     */
-    double isBlackFieldBottomThreshold = DEFAULT_BOTTOM_BLACK_THRESHOLD;
-
-    /**
-     * @brief Flag for setting of color correction light
+     * @brief Flag for setting of color correction light.
      * 
      */
     bool shouldTurnOnColorCorrectionLight = false;
 
 private:
     /**
-     * @brief Calibrate on white or black field
+     * @brief Calibrate on white or black field.
      * 
      * @param isWhite True if color to calibrate is white, false if black
      * @return brightness as double 
@@ -131,11 +121,54 @@ private:
     double calibrateColor(bool isWhite);
 
     /**
-     * @brief Measure brightness
+     * @brief Measure brightness.
      * 
      * @return brightness as double
      */
     double measureBrightness();
+
+    /**
+     * @brief Time between measurements of field colors in \p calibrateColor.
+     * 
+     */
+    const int CALIBRATION_TIME = 2000;
+
+    /**
+     * @brief How many fields are used to calibrate a field color in \p calibrateFieldColor.
+     * 
+     */
+    const int CALIBRATE_FIELD_COUNT = 5;
+
+    /**
+     * @brief How many measurements of current brightness are averaged in \p measureBrightness.
+     * 
+     */
+    const int MEASUREMENT_COUNT = 3;
+
+    /**
+     * @brief Time before brightness is measured in \p measureBrightness.
+     * 
+     */
+    const int DELAY_BEFORE_MEASURING = 250;
+
+    /**
+     * @brief Default value for \p isWhiteFieldThreshold.
+     * 
+     */
+    const double DEFAULT_WHITE_THRESHOLD = 220.0;
+
+    /**
+     * @brief Default value for \p isBlackFieldThreshold.
+     * 
+     */
+    const double DEFAULT_BLACK_THRESHOLD = 50.0;
+
+    /**
+     * @brief Factor to calculate threshold offset.
+     * 
+     * @see isWhiteFieldThreshold, isBlackFieldThreshold
+     */
+    const double THRESHOLD_OFFSET = 0.025;
 };
 
 #endif // ECPColorDetection_h

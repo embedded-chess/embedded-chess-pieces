@@ -3,52 +3,58 @@
 ECPColorDetection::ECPColorDetection(Dezibot &d) : dezibot(d) {};
 
 void ECPColorDetection::calibrateFieldColor() {
-    double whiteBrightness = calibrateColor(true);
-    double blackBrightness = calibrateColor(false);
+    double minWhiteBrightness = MAX_NORMALIZED_COLOR_VALUE;
+    double maxBlackBrightness = 0.0;
 
-    double offsetWhite = whiteBrightness * 0.0075; // placeholder
-    double offsetBlack = blackBrightness * 0.075; // placeholder
+    for (size_t i = 0; i < CALIBRATE_FIELD_COUNT; i++) {
+        const double whiteBrightness = calibrateColor(true);
+        const double blackBrightness = calibrateColor(false);
 
-    isWhiteFieldTopThreshold = std::min(whiteBrightness + offsetWhite, 254.9);
-    isWhiteFieldBottomThreshold = whiteBrightness - 2*offsetWhite;
-    isBlackFieldTopThreshold = blackBrightness + 2*offsetBlack;
-    isBlackFieldBottomThreshold = std::max(blackBrightness - offsetBlack, 0.1);
-    //debug
-    dezibot.display.clear();
-    dezibot.display.println(isWhiteFieldTopThreshold);
-    dezibot.display.println(whiteBrightness);
-    dezibot.display.println(isWhiteFieldBottomThreshold);
-    dezibot.display.println(isBlackFieldTopThreshold);
-    dezibot.display.println(blackBrightness);
-    dezibot.display.println(isBlackFieldBottomThreshold);
-    delay(7500);
+        if (whiteBrightness < minWhiteBrightness) {
+            minWhiteBrightness = whiteBrightness;
+        }
+        if (maxBlackBrightness < blackBrightness) {
+            maxBlackBrightness = blackBrightness;
+        }
+    }
+
+    double offsetWhite = minWhiteBrightness * THRESHOLD_OFFSET;
+    double offsetBlack = maxBlackBrightness * 2 * THRESHOLD_OFFSET; 
+
+    isWhiteFieldThreshold = minWhiteBrightness - offsetWhite;
+    isBlackFieldThreshold = maxBlackBrightness + offsetBlack;
 };
 
 FieldColor ECPColorDetection::getFieldColor() {
     const double brightness = measureBrightness();
 
-    if (isWhiteFieldTopThreshold <= brightness) {
-        return UNAMBIGUOUS_BLACK_TO_WHITE;
-    }
-    if ((isWhiteFieldBottomThreshold <= brightness) && ((brightness < isWhiteFieldTopThreshold))) {
+    if (isWhiteFieldThreshold <= brightness) {
         return WHITE_FIELD;
     }
-    if ((isBlackFieldBottomThreshold < brightness) && ((brightness <= isBlackFieldTopThreshold))) {
+    if (brightness <= isBlackFieldThreshold) {
         return BLACK_FIELD;
-    }
-    if (brightness <= isBlackFieldBottomThreshold) {
-        return UNAMBIGUOUS_WHITE_TO_BLACK;
     }
     return UNAMBIGUOUS;
 };
 
+FieldColor ECPColorDetection::getLikelyFieldColor() {
+    const double brightness = measureBrightness();
+
+    int diffToWhite = std::abs(isWhiteFieldThreshold - brightness);
+    int diffToBlack = std::abs(brightness - isBlackFieldThreshold);
+
+    int smaller = std::min(diffToWhite, diffToBlack);
+
+    return diffToBlack == smaller ? BLACK_FIELD : WHITE_FIELD;
+};
+
 void ECPColorDetection::setShouldTurnOnColorCorrectionLight(bool turnOn) {
     shouldTurnOnColorCorrectionLight = turnOn;
-}
+};
 
 bool ECPColorDetection::getShouldTurnOnColorCorrectionLight() {
     return shouldTurnOnColorCorrectionLight;
-}
+};
 
 void ECPColorDetection::turnOnColorCorrectionLight() {
     uint32_t colorCorrectionWhite = dezibot.multiColorLight.color(
@@ -65,7 +71,7 @@ void ECPColorDetection::turnOffColorCorrectionLight() {
 double ECPColorDetection::calibrateColor(bool isWhite) {
     String color = isWhite ? "white" : "black";
     String request = "Calibrate " + color + "\nPlease place on\n" + color + 
-        " field\nin " + String(CALIBRATION_TIME/1000) + " seconds";
+        " field\nin " + String(CALIBRATION_TIME / 1000) + " seconds";
     dezibot.display.clear();
     dezibot.display.println(request);
     delay(CALIBRATION_TIME);
@@ -77,15 +83,22 @@ double ECPColorDetection::calibrateColor(bool isWhite) {
 double ECPColorDetection::measureBrightness() {
     if (shouldTurnOnColorCorrectionLight) {
         turnOnColorCorrectionLight();
-        delay(DELAY_BEFORE_MEASURING);
     }
 
-    const double ambient = dezibot.colorSensor.getNormalizedAmbientValue();
-    double red = dezibot.colorSensor.getNormalizedColorValue(ColorSensor::RED, ambient);
-    double green = dezibot.colorSensor.getNormalizedColorValue(ColorSensor::GREEN, ambient);
-    double blue = dezibot.colorSensor.getNormalizedColorValue(ColorSensor::BLUE, ambient);
+    double cumulatedBrightness = 0.0;
 
-    // turnOffColorCorrectionLight();
+    for (size_t i = 0; i < MEASUREMENT_COUNT; i++) {
+        delay(DELAY_BEFORE_MEASURING);
 
-    return dezibot.colorSensor.calculateBrightness(red, green, blue);
+        const double ambient = dezibot.colorSensor.getNormalizedAmbientValue();
+        double red = dezibot.colorSensor.getNormalizedColorValue(ColorSensor::RED, ambient);
+        double green = dezibot.colorSensor.getNormalizedColorValue(ColorSensor::GREEN, ambient);
+        double blue = dezibot.colorSensor.getNormalizedColorValue(ColorSensor::BLUE, ambient);
+
+        cumulatedBrightness += dezibot.colorSensor.calculateBrightness(red, green, blue);
+    }
+    
+    turnOffColorCorrectionLight();
+
+    return cumulatedBrightness / ((double) MEASUREMENT_COUNT);
 };

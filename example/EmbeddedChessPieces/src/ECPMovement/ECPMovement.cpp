@@ -30,10 +30,7 @@ void ECPMovement::turnLeft(
     ECPChessField currentField, 
     ECPDirection intendedDirection
 ) {
-    FieldColor startColor = ecpColorDetection.getFieldColor();
-    if (startColor == 2 || startColor == 3) {
-        startColor = (FieldColor) (startColor - 2);
-    }
+    const FieldColor startColor = ecpColorDetection.getFieldColor();
     const int initialAngle = ecpSignalDetection.measureDezibotAngle();
     
     // if dezibot initially faces 270°, subtract 90° to turn left, resulting
@@ -44,10 +41,7 @@ void ECPMovement::turnLeft(
     const bool wasRotationSuccessful = rotateToAngle(goalAngle, initialAngle);
 
     delay(MEASURING_DELAY); // for better measuring results
-    FieldColor currentColor = ecpColorDetection.getFieldColor();
-    if (currentColor == 2 || currentColor == 3) {
-        currentColor = (FieldColor) (currentColor - 2);
-    }
+    const FieldColor currentColor = ecpColorDetection.getFieldColor();
     if (currentColor != startColor || !wasRotationSuccessful) {
         displayRotationCorrectionRequest(currentField, intendedDirection);
     }
@@ -57,10 +51,7 @@ void ECPMovement::turnRight(
     ECPChessField currentField, 
     ECPDirection intendedDirection
 ) {
-    FieldColor startColor = ecpColorDetection.getFieldColor();
-    if (startColor == 2 || startColor == 3) {
-        startColor = (FieldColor) (startColor - 2);
-    }
+    const FieldColor startColor = ecpColorDetection.getFieldColor();
     const int initialAngle = ecpSignalDetection.measureDezibotAngle();
 
     // if dezibot initially faces 180°, add 90° to turn left, resulting
@@ -70,10 +61,7 @@ void ECPMovement::turnRight(
     const bool wasRotationSuccessful = rotateToAngle(goalAngle, initialAngle);
 
     delay(MEASURING_DELAY); // for better measuring results
-    FieldColor currentColor = ecpColorDetection.getFieldColor();
-    if (currentColor == 2 || currentColor == 3) {
-        currentColor = (FieldColor) (currentColor - 2);
-    }
+    const FieldColor currentColor = ecpColorDetection.getFieldColor();
     if (currentColor != startColor || !wasRotationSuccessful) {
         displayRotationCorrectionRequest(currentField, intendedDirection);
     }
@@ -83,51 +71,40 @@ void ECPMovement::turnRight(
 // PRIVATE FUNCTIONS
 // -----------------------------------------------------------------------------
 
-ECPColorDetection* ECPMovement::getECPColorDetection() {
-    return &ecpColorDetection;
-}
+void ECPMovement::setShouldTurnOnColorCorrectionLight(bool turnOn) {
+    ecpColorDetection.setShouldTurnOnColorCorrectionLight(turnOn);
+};
+
+void ECPMovement::calibrateFieldColor() {
+    ecpColorDetection.calibrateFieldColor();
+};
 
 void ECPMovement::moveForward(int timeMovement, int timeBreak) {
-    dezibot.motion.move(0, movementCalibration);
+    dezibot.motion.right.setSpeed(movementCalibration);
+    dezibot.motion.left.setSpeed(movementCalibration);
     delay(timeMovement);
     dezibot.motion.stop();
-    delay(timeBreak);
 };
 
 bool ECPMovement::moveToNextField() {
     FieldColor startColor = ecpColorDetection.getFieldColor();
-    if (startColor == 2 || startColor == 3) {
-        startColor = (FieldColor) (startColor - 2);
-    } else if (startColor == 4) {
-        return false;
+    if (startColor == 2) {
+        startColor = ecpColorDetection.getLikelyFieldColor();
     }
     
     const FieldColor wantedColor = startColor == 0 ? 
         (FieldColor) (startColor + 1) : (FieldColor) (startColor -1);
-    const FieldColor stopoverColor = (FieldColor) (wantedColor + 2);
     FieldColor currentColor = startColor;
     int currentIteration = 0;
 
-    // reach middle of the next field with the front leg
-    while (currentColor != stopoverColor) {
-        if (currentIteration == MAX_ITERATIONS) {
-            return false;
-        }
-        moveForward(FORWARD_TIME, MOVEMENT_BREAK);
-        currentColor = ecpColorDetection.getFieldColor();
-        dezibot.display.println(currentColor);
-        currentIteration++;
-    }
-    currentIteration = MAX_ITERATIONS/2;
-
-    // move further to place the whole dezibot on the field
     while (currentColor != wantedColor) {
         if (currentIteration == MAX_ITERATIONS) {
             return false;
         }
+        currentIteration++;
+
         moveForward(FORWARD_TIME, MOVEMENT_BREAK);
         currentColor = ecpColorDetection.getFieldColor();
-        currentIteration++;
     }
 
     return true;

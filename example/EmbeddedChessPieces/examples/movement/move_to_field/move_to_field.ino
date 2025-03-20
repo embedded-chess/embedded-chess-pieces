@@ -24,9 +24,8 @@ void setup() {
     delay(500);
     
     dezibot.display.flipOrientation();
-    ecpMovement.getECPColorDetection()->setShouldTurnOnColorCorrectionLight(true);
-    ecpMovement.getECPColorDetection()->turnOnColorCorrectionLight();
-    ecpMovement.getECPColorDetection()->calibrateFieldColor();
+    ecpMovement.setShouldTurnOnColorCorrectionLight(true);
+    ecpMovement.calibrateFieldColor();
 }
 
 void loop() {

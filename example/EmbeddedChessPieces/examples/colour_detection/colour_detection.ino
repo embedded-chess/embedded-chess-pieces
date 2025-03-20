@@ -77,14 +77,6 @@ void printValue(double colorValue, char* prefix) {
 /**
  * @brief Print formatted info for field color.
  * 
- * \code{.cpp}
- * printIsWhiteField(true)
- * // "F W"
- * 
- * printIsWhiteField(false)
- * \endcode
- * ```
- * 
  * @param fieldColor Determined FieldColor
  */
 void printFieldColor(FieldColor fieldColor) {
@@ -100,12 +92,6 @@ void printFieldColor(FieldColor fieldColor) {
       break;
     case UNAMBIGUOUS:
       field = "u";
-      break;
-    case UNAMBIGUOUS_BLACK_TO_WHITE:
-      field = "bw";
-      break;
-    case UNAMBIGUOUS_WHITE_TO_BLACK:
-      field = "wb";
       break;
   }
   dezibot.display.println(field);
