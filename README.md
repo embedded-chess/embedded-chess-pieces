@@ -22,7 +22,7 @@ In [`example/EmbeddedChessPieces/examples`](./example/EmbeddedChessPieces/exampl
 
 | Context    | Description                                                                         |
 |------------|-------------------------------------------------------------------------------------|
-| Module     | C377.2 Prinzipien von Programmiersprachen                                           |
+| Module     | C999 Software Development for Embedded Systems                                      |
 | Lecturer   | Prof. Dr. rer. nat. Jens Wagner, M. Eng. Marian Ulbricht                            |
 | Institute  | Leipzig University of Applied Sciences                                              |
 | Semester   | Winter Semester 2024/25                                                             |

@@ -15,5 +15,6 @@
 #include "ECPColorDetection/ECPColorDetection.h"
 #include "ECPChessLogic/ECPChessLogic.h"
 #include "ECPMovement/ECPMovement.h"
+#include "ECPSignalDetection/ECPSignalDetection.h"
 
 #endif // EmbeddedChessPieces_h

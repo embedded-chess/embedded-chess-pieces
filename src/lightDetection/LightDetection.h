@@ -1,6 +1,6 @@
 /**
  * @file LightDetection.h
- * @author Hans Haupt (hans.haupt@dezibot.de)
+ * @author Hans Haupt (hans.haupt@dezibot.de), Ines Rohrbach, Nico Schramm
  * @brief Class for Reading the values of the different Phototransistors, both IR, and DaylightSensors are supported. 
  * @version 0.1
  * @date 2024-04-26
@@ -11,10 +11,9 @@
 
 #ifndef LightDetection_h
 #define LightDetection_h
+
 #include <stdint.h>
 #include <Arduino.h>
-
-
 
 enum photoTransistors{
     IR_LEFT,
@@ -37,14 +36,15 @@ enum ptType{
     IR,
     DAYLIGHT
 };
+
 static const photoTransistors allIRPTs[] = {IR_FRONT,IR_LEFT,IR_RIGHT,IR_BACK};
-    static const photoTransistors allDLPTs[] = {DL_BOTTOM,DL_FRONT};
+static const photoTransistors allDLPTs[] = {DL_BOTTOM,DL_FRONT};
 
 
 class LightDetection{
 public: 
     /**
-     * @brief initialize the Lightdetection Compnent, must be called before the other methods are used.  
+     * @brief initialize the lightDetection component, must be called before the other methods are used.
      * 
      */
     static void begin(void);
@@ -59,7 +59,7 @@ public:
 
     /**
      * @brief can be used to determine which sensor is exposed to the greatest amount of light
-     * Can distingish between IR and Daylight 
+     * Can distinguish between IR and Daylight 
      * 
      * @param type select which PTTransistors to compare
      * @return photoTransistors which sensor is exposed to the greatest amount of light, if all sensor read 0, the front sensor is returned
@@ -67,14 +67,24 @@ public:
     static photoTransistors getBrightest(ptType type);
 
     /**
-     * @brief Get the Average of multiple measurments of a single PT 
+     * @brief Get the Average of multiple measurements of a single PT 
      * 
      * @param sensor Which Phototransistor should be read
-     * @param measurments how many measurements should be taken
+     * @param measurements how many measurements should be taken
      * @param timeBetween which time should elapse between
-     * @return the average of all taken meaurments
+     * @return the average of all taken measurements
      */
-    static uint32_t getAverageValue(photoTransistors sensor, uint32_t measurments, uint32_t timeBetween);
+    static uint32_t getAverageValue(photoTransistors sensor, uint32_t measurements, uint32_t timeBetween);
+
+    /**
+     * @brief Get percentage of sensor value.
+     * 
+     * @param sensorValue raw value read by `getValue` or `getAverageValue`
+     * @param maxValue maximum value that can be reached; either configured or default (4095).
+     * @return float percentage of sensor value (0.0f to 1.0f)
+     */
+    static float normalizeValue(uint32_t sensorValue, uint32_t maxValue = MAX_SENSOR_VALUE);
+
 protected: 
     static const uint8_t IR_PT_FRONT_ADC = 3;
     static const uint8_t IR_PT_LEFT_ADC = 4;
@@ -86,6 +96,8 @@ protected:
 
     static const uint8_t DL_PT_ENABLE = 41;
     static const uint8_t IR_PT_ENABLE = 40;
+
+    static const uint16_t MAX_SENSOR_VALUE = 4095;
 
     
     static void beginInfrared(void);
