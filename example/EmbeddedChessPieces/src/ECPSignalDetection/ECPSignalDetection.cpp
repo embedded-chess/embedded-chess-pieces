@@ -42,9 +42,9 @@ int ECPSignalDetection::measureSignalAngle() {
     const float west = values[3];
 
     // calculate angle
-    const float resultantNorthSouth = north - south;
-    const float resultantEastWest = east - west;
-    float angle = std::atan2(resultantEastWest, resultantNorthSouth);
+    const float resultantX = east - west;
+    const float resultantY = north - south;
+    float angle = std::atan2(resultantX, resultantY);
     angle *= (180.0f / M_PI);   // convert from radian to degrees
 
     int roundedAngle = std::round(angle);

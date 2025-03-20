@@ -68,7 +68,7 @@ private:
      *        \p measureSignalAngle in milliseconds,
      * 
      */
-    static const int TIME_BETWEEN_MEASUREMENTS = 1;
+    static const int TIME_BETWEEN_MEASUREMENTS = 30;
 
     /**
      * @brief Minimal threshold necessary to be measured before being discarded
