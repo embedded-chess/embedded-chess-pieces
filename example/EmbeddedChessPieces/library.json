@@ -1,0 +1,27 @@
+{
+    "name": "EmbeddedChessPieces",
+    "version": "1.0",
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/nicosrm/24-emb-chess.git"
+    },
+    "authors": [
+        {
+            "name": "Ines Rohrbach",
+            "url": "https://github.com/irooori"
+        },
+        {
+            "name": "Nico Schramm",
+            "url": "https://github.com/nicosrm"
+        }
+    ],
+    "dependencies": [
+        {
+            "name": "Dezibot",
+            "version": "^0.0.3",
+            "url": "https://github.com/dezibot/dezibot",
+            "owner": "dezibot"
+        }
+    ],
+    "license": "GPL-3.0"
+}
