@@ -1,6 +1,6 @@
 # Embedded Chess Pieces
 
-This repository is a fork of [`dezibot/dezibot`](https://github.com/dezibot/dezibot). and contains our project for the module C999 "Software Development for Embedded Systems" lectured by [Prof. Dr. rer. nat. Jens Wagner](https://fim.htwk-leipzig.de/fakultaet/personen/professorinnen-und-professoren/jens-wagner/). We call it *Embedded Chess Pieces*.
+This repository is a fork of [`dezibot/dezibot`](https://github.com/dezibot/dezibot) and contains our project for the module C999 "Software Development for Embedded Systems" lectured by [Prof. Dr. rer. nat. Jens Wagner](https://fim.htwk-leipzig.de/fakultaet/personen/professorinnen-und-professoren/jens-wagner/). We call it *Embedded Chess Pieces*.
 
 > [!IMPORTANT]
 > The project is still under development. This note will be removed once the project is submitted.
@@ -20,7 +20,7 @@ An example sketch is provided under [`example/EmbeddedChessPieces/examples/playg
 
 This repository is a fork of [`dezibot/dezibot`](https://github.com/dezibot/dezibot). Changes to the `dezibot` library are made directly where necessary. Our main contribution, the `EmbeddedChessPieces` library, is stored in [`example/EmbeddedChessPieces/`](./example/EmbeddedChessPieces/). It includes project specific code that is not generally sensible to add to the `dezibot` library.
 
-In [`example/EmbeddedChessPieces/examples`](./example/EmbeddedChessPieces/examples/) you can find tests and example use cases for our project. This includes Arduino sketches we developed to test our library developments as well as the heart of this project – the code to run our project.
+In [`example/EmbeddedChessPieces/examples`](./example/EmbeddedChessPieces/examples/) you can find tests and example use cases for our project. This includes Arduino sketches we have developed to test our library as well as the heart of this project – the code to run our project. You can also find a [`showcase`](./example/EmbeddedChessPieces/examples/showcase/) directory which demonstrates the possibilities offered by this library. In [`examples/playground/playground.ino`](./example/EmbeddedChessPieces/examples/playground/playground.ino), a step by step guide is provided.
 
 
 ## Context
