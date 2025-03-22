@@ -18,7 +18,6 @@
 
 Dezibot dezibot = Dezibot();
 ECPMovement ecpMovement(dezibot, MOVEMENT_CALIBRATION);
-ECPColorDetection ecpColorDetection(dezibot);
 
 void setup() {
   Serial.begin(9600);
@@ -28,7 +27,14 @@ void setup() {
 
   // initial delay to mitigate faulty color sensor readings
   delay(1000);
-  ecpColorDetection.turnOnColorCorrectionLight();
+
+  // color sensor
+  // ecpMovement.setShouldTurnOnColorCorrectionLight(true);
+  // ecpMovement.calibrateFieldColor();
+  
+  // infrared
+  ecpMovement.setColorDetectionMode(true);
+  ecpMovement.calibrateIRFieldColor();
 }
 
 void loop() {
