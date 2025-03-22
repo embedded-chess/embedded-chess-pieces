@@ -1,6 +1,9 @@
 #include "ECPColorDetection.h"
 
-ECPColorDetection::ECPColorDetection(Dezibot &d) : dezibot(d) {};
+ECPColorDetection::ECPColorDetection(
+    Dezibot &d, 
+    ECPSignalDetection &ir
+) : dezibot(d), ecpSignalDetection(ir) {};
 
 void ECPColorDetection::calibrateFieldColor() {
     double minWhiteBrightness = MAX_NORMALIZED_COLOR_VALUE;
@@ -25,27 +28,39 @@ void ECPColorDetection::calibrateFieldColor() {
     isBlackFieldThreshold = maxBlackBrightness + offsetBlack;
 };
 
-FieldColor ECPColorDetection::getFieldColor() {
-    const double brightness = measureBrightness();
+void ECPColorDetection::calibrateIRFieldColor() {
+    const int irWhiteValue = calibrateIRColor(true);
+    const int irBlackValue = calibrateIRColor(false);
 
-    if (isWhiteFieldThreshold <= brightness) {
-        return WHITE_FIELD;
+    int diff =  irWhiteValue - irBlackValue;
+    double offset = ((double) diff) * THRESHOLD_OFFSET_IR;
+
+    isIRWhiteFieldThreshold = irWhiteValue - offset;
+    isIRBlackFieldThreshold = irBlackValue + offset;
+};
+
+FieldColor ECPColorDetection::getFieldColor() {
+    if (useInfraredColorDetection) {
+        return measureInfraredFieldColor();
     }
-    if (brightness <= isBlackFieldThreshold) {
-        return BLACK_FIELD;
-    }
-    return UNAMBIGUOUS;
+    
+    return measureFieldColor();
 };
 
 FieldColor ECPColorDetection::getLikelyFieldColor() {
-    const double brightness = measureBrightness();
+    if (useInfraredColorDetection) {
+        return calculateLikelyInfraredFieldColor();
+    }
+    
+    return calculateLikelyFieldColor();
+};
 
-    int diffToWhite = std::abs(isWhiteFieldThreshold - brightness);
-    int diffToBlack = std::abs(brightness - isBlackFieldThreshold);
+void ECPColorDetection::setColorDetectionMode(bool useIR) {
+    useInfraredColorDetection = useIR;
+};
 
-    int smaller = std::min(diffToWhite, diffToBlack);
-
-    return diffToBlack == smaller ? BLACK_FIELD : WHITE_FIELD;
+bool ECPColorDetection::getColorDetectionMode() {
+    return useInfraredColorDetection;
 };
 
 void ECPColorDetection::setShouldTurnOnColorCorrectionLight(bool turnOn) {
@@ -60,7 +75,8 @@ void ECPColorDetection::turnOnColorCorrectionLight() {
     uint32_t colorCorrectionWhite = dezibot.multiColorLight.color(
         COLOR_CORRECTION_LIGHT_R,
         COLOR_CORRECTION_LIGHT_G,
-        COLOR_CORRECTION_LIGHT_B);
+        COLOR_CORRECTION_LIGHT_B
+    );
     dezibot.multiColorLight.setLed(BOTTOM, colorCorrectionWhite);
 };
 
@@ -68,16 +84,39 @@ void ECPColorDetection::turnOffColorCorrectionLight() {
     dezibot.multiColorLight.turnOffLed(BOTTOM);
 };
 
+// -----------------------------------------------------------------------------
+// PRIVATE FUNCTIONS
+// -----------------------------------------------------------------------------
+
 double ECPColorDetection::calibrateColor(bool isWhite) {
-    String color = isWhite ? "white" : "black";
-    String request = "Calibrate " + color + "\nPlease place on\n" + color + 
-        " field\nin " + String(CALIBRATION_TIME / 1000) + " seconds";
+    const String color = isWhite ? "white" : "black";
+    const String request = "Calibrate " + color + "\nPlease place on\n" + color 
+        + " field\nin " + String(CALIBRATION_TIME / 1000) + " seconds";
     dezibot.display.clear();
     dezibot.display.println(request);
     delay(CALIBRATION_TIME);
     dezibot.display.clear();
 
     return measureBrightness();
+};
+
+int ECPColorDetection::calibrateIRColor(bool isWhite) {
+    const String color = isWhite ? "white" : "black";
+    const String request = "Calibrate " + color + "\nPlease place on\n" + color
+        + " field\nin " + String((CALIBRATION_TIME + 1000) / 1000) + " seconds"; // TODO: use constant
+    dezibot.display.clear();
+    dezibot.display.println(request);
+    delay(CALIBRATION_TIME + 1000);
+    
+    dezibot.infraredLight.bottom.turnOn();
+    delay(1000); // delay for infrared
+
+    const int irValue = ecpSignalDetection.cumulateInfraredValues();
+
+    dezibot.infraredLight.bottom.turnOff();
+    dezibot.display.clear();
+
+    return irValue;
 };
 
 double ECPColorDetection::measureBrightness() {
@@ -91,14 +130,89 @@ double ECPColorDetection::measureBrightness() {
         delay(DELAY_BEFORE_MEASURING);
 
         const double ambient = dezibot.colorSensor.getNormalizedAmbientValue();
-        double red = dezibot.colorSensor.getNormalizedColorValue(ColorSensor::RED, ambient);
-        double green = dezibot.colorSensor.getNormalizedColorValue(ColorSensor::GREEN, ambient);
-        double blue = dezibot.colorSensor.getNormalizedColorValue(ColorSensor::BLUE, ambient);
+        double red = dezibot.colorSensor.getNormalizedColorValue(
+            ColorSensor::RED, 
+            ambient
+        );
+        double green = dezibot.colorSensor.getNormalizedColorValue(
+            ColorSensor::GREEN, 
+            ambient
+        );
+        double blue = dezibot.colorSensor.getNormalizedColorValue(
+            ColorSensor::BLUE, 
+            ambient
+        );
 
-        cumulatedBrightness += dezibot.colorSensor.calculateBrightness(red, green, blue);
+        cumulatedBrightness += dezibot.colorSensor.calculateBrightness(
+            red, 
+            green, 
+            blue
+        );
     }
     
     turnOffColorCorrectionLight();
 
     return cumulatedBrightness / ((double) MEASUREMENT_COUNT);
+};
+
+FieldColor ECPColorDetection::measureFieldColor() {
+    const double brightness = measureBrightness();
+
+    if (isWhiteFieldThreshold <= brightness) {
+        return WHITE_FIELD;
+    }
+    if (brightness <= isBlackFieldThreshold) {
+        return BLACK_FIELD;
+    }
+    return UNAMBIGUOUS;
+};
+
+FieldColor ECPColorDetection::calculateLikelyFieldColor() {
+    const double brightness = measureBrightness();
+
+    int diffToWhite = std::abs(isWhiteFieldThreshold - brightness);
+    int diffToBlack = std::abs(brightness - isBlackFieldThreshold);
+
+    int smaller = std::min(diffToWhite, diffToBlack);
+
+    return diffToBlack == smaller ? BLACK_FIELD : WHITE_FIELD;
+};
+
+FieldColor ECPColorDetection::measureInfraredFieldColor() {
+    // TODO: test if it works with 500, and make delays constants
+    delay(1000); // delay for infrared
+
+    dezibot.infraredLight.bottom.turnOn();
+    delay(1000); // delay for infrared
+
+    const int irValue = ecpSignalDetection.cumulateInfraredValues();
+
+    dezibot.infraredLight.bottom.turnOff();
+
+    if (isIRWhiteFieldThreshold < irValue) {
+        return WHITE_FIELD;
+    }
+    if (irValue < isIRBlackFieldThreshold) {
+        return BLACK_FIELD;
+    }
+
+    return UNAMBIGUOUS;
+};
+
+FieldColor ECPColorDetection::calculateLikelyInfraredFieldColor() {
+    delay(1000); // delay for infrared
+
+    dezibot.infraredLight.bottom.turnOn();
+    delay(1000); // delay for infrared
+
+    const int irValue = ecpSignalDetection.cumulateInfraredValues();
+
+    dezibot.infraredLight.bottom.turnOff();
+
+    int diffToWhite = std::abs(isIRWhiteFieldThreshold - irValue);
+    int diffToBlack = std::abs(irValue - isBlackFieldThreshold);
+
+    int smaller = std::min(diffToWhite, diffToBlack);
+
+    return diffToBlack == smaller ? BLACK_FIELD : WHITE_FIELD;
 };

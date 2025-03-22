@@ -14,15 +14,14 @@
 #include <Wire.h>
 
 Dezibot dezibot = Dezibot();
-ECPColorDetection ecpColorDetection(dezibot);
+ECPSignalDetection ecpSignalDetection = ECPSignalDetection(dezibot);
+ECPColorDetection ecpColorDetection = ECPColorDetection(dezibot, ecpSignalDetection);
 
 void setup() {
   Serial.begin(9600);
   Serial.println("Started");
   dezibot.begin();
   Serial.println("Initialised");
-  
-  // ecpColorDetection.turnOnColorCorrectionLight();
 
   delay(3000);
   ecpColorDetection.calibrateFieldColor();

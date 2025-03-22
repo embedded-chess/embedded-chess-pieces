@@ -24,8 +24,14 @@ void setup() {
     delay(500);
     
     dezibot.display.flipOrientation();
-    ecpMovement.setShouldTurnOnColorCorrectionLight(true);
-    ecpMovement.calibrateFieldColor();
+
+    // color sensor
+    // ecpMovement.setShouldTurnOnColorCorrectionLight(true);
+    // ecpMovement.calibrateFieldColor();
+
+    // infrared
+    ecpMovement.setColorDetectionMode(true);
+    ecpMovement.calibrateIRFieldColor();
 }
 
 void loop() {

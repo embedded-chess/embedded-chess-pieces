@@ -56,6 +56,13 @@ public:
      */
     int measureDezibotAngle();
 
+    /**
+     * @brief Measure infrared values and cumulate them.
+     * 
+     * @return cumulated infrared values as int.
+     */
+    int cumulateInfraredValues();
+
 private:
     /**
      * @brief How many infrared signals are averaged in \p measureSignalAngle.
@@ -65,7 +72,7 @@ private:
 
     /**
      * @brief Time between measurements that are averaged to one in
-     *        \p measureSignalAngle in milliseconds,
+     *        \p measureSignalAngle and \p cumulateInfraredValues in ms.
      * 
      */
     static const int TIME_BETWEEN_MEASUREMENTS = 30;

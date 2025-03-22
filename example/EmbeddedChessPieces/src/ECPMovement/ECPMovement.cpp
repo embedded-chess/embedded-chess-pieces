@@ -4,8 +4,8 @@ ECPMovement::ECPMovement(
     Dezibot &dezibot,
     uint movementCalibration
 ) : dezibot(dezibot),
-    ecpColorDetection(ECPColorDetection(dezibot)),
     ecpSignalDetection(ECPSignalDetection(dezibot)),
+    ecpColorDetection(ECPColorDetection(dezibot, ecpSignalDetection)),
     movementCalibration(movementCalibration) {};
 
 void ECPMovement::move(
@@ -14,13 +14,16 @@ void ECPMovement::move(
     ECPDirection intendedDirection
 ) {
     for (size_t i = 0; i < numberOfFields; i++) {
-        bool successfulMovement = moveToNextField();
+        bool wasSuccessfulMovement = moveToNextField();
         
-        if (!successfulMovement) {
+        if (!wasSuccessfulMovement) {
+            // request position to the final destination 
             displayForwardMovementCorrectionRequest(
                 intendedField, 
                 intendedDirection
             );
+
+            // end further movement
             break;
         }
     }
@@ -67,20 +70,28 @@ void ECPMovement::turnRight(
     }
 };
 
-// -----------------------------------------------------------------------------
-// PRIVATE FUNCTIONS
-// -----------------------------------------------------------------------------
+void ECPMovement::calibrateFieldColor() {
+    ecpColorDetection.calibrateFieldColor();
+};
+
+void ECPMovement::calibrateIRFieldColor() {
+    ecpColorDetection.calibrateIRFieldColor();
+};
+
+void ECPMovement::setColorDetectionMode(bool useIR) {
+    ecpColorDetection.setColorDetectionMode(useIR);
+};
 
 void ECPMovement::setShouldTurnOnColorCorrectionLight(bool turnOn) {
     ecpColorDetection.setShouldTurnOnColorCorrectionLight(turnOn);
 };
 
-void ECPMovement::calibrateFieldColor() {
-    ecpColorDetection.calibrateFieldColor();
-};
+// -----------------------------------------------------------------------------
+// PRIVATE FUNCTIONS
+// -----------------------------------------------------------------------------
 
-void ECPMovement::moveForward(int timeMovement, int timeBreak) {
-    dezibot.motion.right.setSpeed(movementCalibration);
+void ECPMovement::moveForward(int timeMovement) {
+    dezibot.motion.right.setSpeed(movementCalibration + 100);
     dezibot.motion.left.setSpeed(movementCalibration);
     delay(timeMovement);
     dezibot.motion.stop();
@@ -103,7 +114,7 @@ bool ECPMovement::moveToNextField() {
         }
         currentIteration++;
 
-        moveForward(FORWARD_TIME, MOVEMENT_BREAK);
+        moveForward(FORWARD_TIME);
         currentColor = ecpColorDetection.getFieldColor();
     }
 

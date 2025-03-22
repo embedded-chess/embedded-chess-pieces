@@ -19,7 +19,6 @@
 #include <ECPSignalDetection/ECPSignalDetection.h>
 
 #define FORWARD_TIME 750
-#define MOVEMENT_BREAK 100
 #define ROTATION_SPEED 8192
 
 #define DEFAULT_MOVEMENT_CALIBRATION 3900
@@ -80,14 +79,7 @@ public:
     void turnRight(ECPChessField currentField, ECPDirection intendedDirection);
 
     /**
-     * @brief Set value for ECPColorDetection::shouldTurnOnColorCorrectionLight flag.
-     * 
-     * @see ECPColorDetection::setShouldTurnOnColorCorrectionLight
-     */
-    void setShouldTurnOnColorCorrectionLight(bool turnOn);
-
-    /**
-     * @brief Calibrate threshold for white and black field.
+     * @brief Calibrate threshold for white and black field using color sensor.
      * 
      * Threshold is used to determine if the dezibot is standing on a white or black field
      * 
@@ -98,10 +90,36 @@ public:
      */
     void calibrateFieldColor();
 
+    /**
+     * @brief Calibrate threshold for white and black field using infrared.
+     * 
+     * Threshold is used to determine if the dezibot is standing on a white or black field
+     * 
+     * Needed to adapt to current light conditions
+     * Default values may compromise movement on the chess field
+     * 
+     * @see ECPColorDetection::calibrateIRFieldColor
+     */
+    void calibrateIRFieldColor();
+
+    /**
+     * @brief Set value for \p ECPColorDetection::useInfraredColorDetection flag.
+     * 
+     * @param useIR true if infrared color detection should be used, false otherwise
+     */
+    void setColorDetectionMode(bool useIR);
+
+    /**
+     * @brief Set value for \p ECPColorDetection::shouldTurnOnColorCorrectionLight flag.
+     * 
+     * @param turnOn true if correction light should be turned on, false otherwise
+     */
+    void setShouldTurnOnColorCorrectionLight(bool turnOn);
+
 protected:
     Dezibot &dezibot;
-    ECPColorDetection ecpColorDetection;
     ECPSignalDetection ecpSignalDetection;
+    ECPColorDetection ecpColorDetection;
 
     /**
      * @brief Value to calibrate movement.
@@ -118,9 +136,8 @@ private:
      * To minimize drift, a break is implemented after each movement.
      * 
      * @param timeMovement in ms - how long the dezibot should move.
-     * @param timeBreak in ms - how long the dezibot should pause.
      */
-    void moveForward(int timeMovement, int timeBreak);
+    void moveForward(int timeMovement);
 
     /**
      * @brief Move straight to the next field.
@@ -134,7 +151,7 @@ private:
     bool moveToNextField();
 
     /**
-     * Print request to correct dezibot on the board after faulty rotation
+     * Print request to correct dezibot on the board after faulty rotation.
      * 
      * The user has 10 seconds to correct the position and direction of the dezibot
      * 
@@ -147,7 +164,7 @@ private:
     );
 
     /**
-     * Print request to correct dezibot on the board after faulty forward movement
+     * Print request to correct dezibot on the board after faulty forward movement.
      * 
      * The user has 10 seconds to correct the position and direction of the dezibot
      * 

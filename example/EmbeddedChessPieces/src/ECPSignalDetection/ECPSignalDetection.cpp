@@ -59,4 +59,21 @@ int ECPSignalDetection::measureSignalAngle() {
 int ECPSignalDetection::measureDezibotAngle() {
     int signalAngle = measureSignalAngle();
     return (360 - signalAngle) % 360;
-}
+};
+
+int ECPSignalDetection::cumulateInfraredValues() {
+    // TODO: use normalized values?
+    const photoTransistors sensors[] = { IR_FRONT, IR_RIGHT, IR_BACK, IR_LEFT };
+    int cumulatedValues = 0;
+
+    // measure all four IR signal values
+    for (size_t i = 0; i < 4; i++) {
+        cumulatedValues += dezibot.lightDetection.getAverageValue(
+            sensors[i],
+            MEASUREMENT_COUNT,
+            TIME_BETWEEN_MEASUREMENTS
+        );
+    }
+
+    return cumulatedValues;
+};
