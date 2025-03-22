@@ -61,8 +61,13 @@ int ECPSignalDetection::measureDezibotAngle() {
     return (360 - signalAngle) % 360;
 };
 
-int ECPSignalDetection::cumulateInfraredValues() {
-    // TODO: use normalized values?
+int ECPSignalDetection::cumulateInfraredValues(bool turnOnIRLight) {
+    if (turnOnIRLight) {
+        delay(DELAY_BEFORE_ACTION);
+        dezibot.infraredLight.bottom.turnOn();
+        delay(DELAY_AFTER_ACTION);
+    }
+
     const photoTransistors sensors[] = { IR_FRONT, IR_RIGHT, IR_BACK, IR_LEFT };
     int cumulatedValues = 0;
 
@@ -73,6 +78,11 @@ int ECPSignalDetection::cumulateInfraredValues() {
             MEASUREMENT_COUNT,
             TIME_BETWEEN_MEASUREMENTS
         );
+    }
+
+    if (turnOnIRLight) {
+        dezibot.infraredLight.bottom.turnOff();
+        delay(DELAY_AFTER_ACTION);
     }
 
     return cumulatedValues;

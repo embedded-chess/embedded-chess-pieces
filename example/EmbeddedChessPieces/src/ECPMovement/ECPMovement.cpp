@@ -91,8 +91,7 @@ void ECPMovement::setShouldTurnOnColorCorrectionLight(bool turnOn) {
 // -----------------------------------------------------------------------------
 
 void ECPMovement::moveForward(int timeMovement) {
-    dezibot.motion.right.setSpeed(movementCalibration + 100);
-    dezibot.motion.left.setSpeed(movementCalibration);
+    dezibot.motion.move(0, movementCalibration);
     delay(timeMovement);
     dezibot.motion.stop();
 };

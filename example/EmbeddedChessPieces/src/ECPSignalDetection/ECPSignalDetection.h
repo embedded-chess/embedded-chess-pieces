@@ -59,9 +59,11 @@ public:
     /**
      * @brief Measure infrared values and cumulate them.
      * 
-     * @return cumulated infrared values as int.
+     * @param turnOnIRLight, true if bottom IR LED should be turned on 
+     *        while measuring, default is true
+     * @return cumulated infrared values as int (not normalized).
      */
-    int cumulateInfraredValues();
+    int cumulateInfraredValues(bool turnOnIRLight = true);
 
 private:
     /**
@@ -88,6 +90,20 @@ private:
      * 
      */
     static constexpr float MIN_THRESHOLD_MEASUREMENTS = 0.10f;
+
+    /**
+     * @brief Delay before turning on infrared LED in \p cumulateInfraredValues.
+     * 
+     * Needed for reliable infrared light when turned on.
+     */
+    static const int DELAY_BEFORE_ACTION = 500;
+
+    /**
+     * @brief Delay after turning on infrared LED in \p cumulateInfraredValues.
+     * 
+     * Needed for reliable infrared light when turned on.
+     */
+    static const int DELAY_AFTER_ACTION = 1000;
 };
 
 #endif // ECPSignalDetection_H

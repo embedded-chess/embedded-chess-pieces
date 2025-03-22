@@ -26,7 +26,7 @@
 
 #define MANUEL_CORRECTION_TIME 10000
 
-#define MAX_ITERATIONS 30
+#define MAX_ITERATIONS 10
 
 class ECPMovement {
 public:

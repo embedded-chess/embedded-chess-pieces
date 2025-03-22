@@ -103,17 +103,14 @@ double ECPColorDetection::calibrateColor(bool isWhite) {
 int ECPColorDetection::calibrateIRColor(bool isWhite) {
     const String color = isWhite ? "white" : "black";
     const String request = "Calibrate " + color + "\nPlease place on\n" + color
-        + " field\nin " + String((CALIBRATION_TIME + 1000) / 1000) + " seconds"; // TODO: use constant
+        + " field\nin " + String((CALIBRATION_TIME) / 1000) + " seconds"; // TODO: use constant
     dezibot.display.clear();
     dezibot.display.println(request);
-    delay(CALIBRATION_TIME + 1000);
+    delay(CALIBRATION_TIME);
     
-    dezibot.infraredLight.bottom.turnOn();
-    delay(1000); // delay for infrared
-
     const int irValue = ecpSignalDetection.cumulateInfraredValues();
 
-    dezibot.infraredLight.bottom.turnOff();
+    // clear display after measuring irValue
     dezibot.display.clear();
 
     return irValue;
@@ -179,15 +176,7 @@ FieldColor ECPColorDetection::calculateLikelyFieldColor() {
 };
 
 FieldColor ECPColorDetection::measureInfraredFieldColor() {
-    // TODO: test if it works with 500, and make delays constants
-    delay(1000); // delay for infrared
-
-    dezibot.infraredLight.bottom.turnOn();
-    delay(1000); // delay for infrared
-
     const int irValue = ecpSignalDetection.cumulateInfraredValues();
-
-    dezibot.infraredLight.bottom.turnOff();
 
     if (isIRWhiteFieldThreshold < irValue) {
         return WHITE_FIELD;
@@ -200,14 +189,7 @@ FieldColor ECPColorDetection::measureInfraredFieldColor() {
 };
 
 FieldColor ECPColorDetection::calculateLikelyInfraredFieldColor() {
-    delay(1000); // delay for infrared
-
-    dezibot.infraredLight.bottom.turnOn();
-    delay(1000); // delay for infrared
-
     const int irValue = ecpSignalDetection.cumulateInfraredValues();
-
-    dezibot.infraredLight.bottom.turnOff();
 
     int diffToWhite = std::abs(isIRWhiteFieldThreshold - irValue);
     int diffToBlack = std::abs(irValue - isBlackFieldThreshold);
