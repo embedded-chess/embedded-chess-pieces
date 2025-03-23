@@ -92,18 +92,12 @@ private:
     static constexpr float MIN_THRESHOLD_MEASUREMENTS = 0.10f;
 
     /**
-     * @brief Delay before turning on infrared LED in \p cumulateInfraredValues.
+     * @brief Delay after turning infrared LED in \p cumulateInfraredValues 
+     *        on or off.
      * 
-     * Needed for reliable infrared light when turned on.
+     * Needed for reliable infrared light.
      */
-    static const int DELAY_BEFORE_ACTION = 500;
-
-    /**
-     * @brief Delay after turning on infrared LED in \p cumulateInfraredValues.
-     * 
-     * Needed for reliable infrared light when turned on.
-     */
-    static const int DELAY_AFTER_ACTION = 1000;
+    static const int DELAY_IR_INTERACTION = 1000;
 };
 
 #endif // ECPSignalDetection_H

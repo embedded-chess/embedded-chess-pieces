@@ -63,9 +63,8 @@ int ECPSignalDetection::measureDezibotAngle() {
 
 int ECPSignalDetection::cumulateInfraredValues(bool turnOnIRLight) {
     if (turnOnIRLight) {
-        delay(DELAY_BEFORE_ACTION);
         dezibot.infraredLight.bottom.turnOn();
-        delay(DELAY_AFTER_ACTION);
+        delay(DELAY_IR_INTERACTION);
     }
 
     const photoTransistors sensors[] = { IR_FRONT, IR_RIGHT, IR_BACK, IR_LEFT };
@@ -82,7 +81,7 @@ int ECPSignalDetection::cumulateInfraredValues(bool turnOnIRLight) {
 
     if (turnOnIRLight) {
         dezibot.infraredLight.bottom.turnOff();
-        delay(DELAY_AFTER_ACTION);
+        delay(DELAY_IR_INTERACTION);
     }
 
     return cumulatedValues;
