@@ -30,7 +30,7 @@ void setup() {
     // ecpMovement.calibrateFieldColor();
 
     // infrared
-    ecpMovement.setColorDetectionMode(true);
+    ecpMovement.setUseInfraredColorDetection(true);
     ecpMovement.calibrateIRFieldColor();
 }
 

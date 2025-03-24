@@ -13,21 +13,18 @@
 #include <EmbeddedChessPieces.h>
 #include <Wire.h>
 
-#define BAUD_RATE 9600
-
 Dezibot dezibot = Dezibot();
 ECPSignalDetection ecpSignalDetection = ECPSignalDetection(dezibot);
 ECPColorDetection ecpColorDetection = ECPColorDetection(dezibot, ecpSignalDetection);
 
 void setup() {
-   Serial.begin(BAUD_RATE);
    dezibot.begin();
    delay(500);
 
    dezibot.display.flipOrientation();
 
    // select infrared as color detection mode
-   ecpColorDetection.setColorDetectionMode(true);
+   ecpColorDetection.setUseInfraredColorDetection(true);
    ecpColorDetection.calibrateIRFieldColor();
 }
 

@@ -55,9 +55,10 @@ public:
      *          Default is color detection using color sensor.
      *
      * Note that the field color detection should be calibrated for selected mode.
+     * 
      * @see calibrateFieldColor, calibrateIRFieldColor
      * 
-     * @return Determined field color
+     * @return FieldColor determined field color
      */
     FieldColor getFieldColor();
 
@@ -72,7 +73,7 @@ public:
      * Determine if measured value is closer to the black or white field threshold
      * In case the distance is identical black field is preferred
      * 
-     * @return Likely fieldColor, only BLACK_FIELD and WHITE_FIELD possible
+     * @return FieldColor likely field color, only BLACK_FIELD and WHITE_FIELD possible
      */
     FieldColor getLikelyFieldColor();
 
@@ -81,14 +82,14 @@ public:
      * 
      * @param useIR true if infrared color detection should be used, false otherwise
      */
-    void setColorDetectionMode(bool useIR);
+    void setUseInfraredColorDetection(bool useIR);
 
     /**
      * @brief Return value of \p useInfraredColorDetection flag.
      * 
-     * @return @see useInfraredColorDetection
+     * @return Bool value of useInfraredColorDetection.
      */
-    bool getColorDetectionMode();
+    bool getUseInfraredColorDetection();
 
     /**
      * @brief Set value for \p shouldTurnOnColorCorrectionLight flag.
@@ -100,7 +101,7 @@ public:
     /**
      * @brief Return value of \p shouldTurnOnColorCorrectionLight flag.
      * 
-     * @return @see shouldTurnOnColorCorrectionLight
+     * @return Bool value of shouldTurnOnColorCorrectionLight.
      */
     bool getShouldTurnOnColorCorrectionLight();
 
@@ -121,58 +122,26 @@ protected:
     Dezibot &dezibot;
     ECPSignalDetection &ecpSignalDetection;
 
-    /**
-     * @brief Lowest value for color to be recognised as white field.
-     * 
-     */
-    double isWhiteFieldThreshold = DEFAULT_WHITE_THRESHOLD;
-
-    /**
-     * @brief Highest value for color to be recognised as black field.
-     * 
-     */
-    double isBlackFieldThreshold = DEFAULT_BLACK_THRESHOLD;
-
-    /**
-     * @brief Lowest cumulated infrared value to be recognised as white field.
-     * 
-     */
-    float isIRWhiteFieldThreshold = DEFAULT_IR_WHITE_THRESHOLD;
-
-    /**
-     * @brief Highest cumulated infrared value to be recognised as black field.
-     * 
-     */
-    float isIRBlackFieldThreshold = DEFAULT_IR_BLACK_THRESHOLD;
-
-    /**
-     * @brief Flag for setting mode of color detection
-     * 
-     */
-    bool useInfraredColorDetection = false;
-
-    /**
-     * @brief Flag for setting of color correction light.
-     * 
-     */
-    bool shouldTurnOnColorCorrectionLight = false;
-
 private:
     /**
      * @brief Calibrate on white or black field.
      * 
+     * Print information to calibrate on the display and measure color.
+     * 
      * @param isWhite True if color to calibrate is white, false if black
      * @return brightness as double 
      */
-    double calibrateColor(bool isWhite);
+    double calibrateAndMeasureColor(bool isWhite);
 
     /**
      * @brief Calibrate infrared on white or black field.
      * 
+     * Print information to calibrate on the display and measure color.
+     * 
      * @param isWhite True if color to calibrate is white, false if black
      * @return cumulatedInfraredValues as float 
      */
-    float calibrateIRColor(bool isWhite);
+    float calibrateAndMeasureIRColor(bool isWhite);
 
     /**
      * @brief Measure brightness.
@@ -186,9 +155,10 @@ private:
      *        a white or black chess field.
      *
      * Note that the field color detection should be calibrated.
+     * 
      * @see calibrateFieldColor
      * 
-     * @return Determined field color
+     * @return FieldColor determined field color
      */
     FieldColor measureFieldColor();
 
@@ -201,7 +171,7 @@ private:
      * Calculate if measured brightness is closer to the black or white field threshold
      * In case the distance is identical black field is preferred
      * 
-     * @return Likely fieldColor, only BLACK_FIELD and WHITE_FIELD possible
+     * @return FieldColor likely field color, only BLACK_FIELD and WHITE_FIELD possible
      */
     FieldColor calculateLikelyFieldColor();
 
@@ -209,9 +179,10 @@ private:
      * @brief Determine if infrared values represents a white or black chess field.
      * 
      * Note that the field color detection using infrared should be calibrated.
-     * @see calibrateIRFieldColor() 
      * 
-     * @return Determined field color
+     * @see calibrateIRFieldColor
+     * 
+     * @return FieldColor determined field color
      */
     FieldColor measureInfraredFieldColor();
 
@@ -224,9 +195,21 @@ private:
      * Calculate if measured brightness is closer to the black or white field threshold
      * In case the distance is identical black field is preferred
      * 
-     * @return Likely fieldColor, only BLACK_FIELD and WHITE_FIELD possible
+     * @return FieldColor likely field color, only BLACK_FIELD and WHITE_FIELD possible
      */
     FieldColor calculateLikelyInfraredFieldColor();
+
+    /**
+     * @brief Flag for setting mode of color detection
+     * 
+     */
+    bool useInfraredColorDetection = false;
+
+    /**
+     * @brief Flag for setting of color correction light.
+     * 
+     */
+    bool shouldTurnOnColorCorrectionLight = false;    
 
     /**
      * @brief Time between measurements of field colors in \p calibrateColor.
@@ -251,27 +234,51 @@ private:
      * 
      */
     const int DELAY_BEFORE_MEASURING = 250;
+    
+    /**
+     * @brief Lowest value for color to be recognised as white field.
+     * 
+     */
+    double thresholdIsWhiteField = DEFAULT_WHITE_THRESHOLD;
 
     /**
-     * @brief Default value for \p isWhiteFieldThreshold.
+     * @brief Highest value for color to be recognised as black field.
+     * 
+     */
+    double thresholdIsBlackField = DEFAULT_BLACK_THRESHOLD;
+
+    /**
+     * @brief Lowest cumulated infrared value to be recognised as white field.
+     * 
+     */
+    float thresholdIsIRWhiteField = DEFAULT_IR_WHITE_THRESHOLD;
+
+    /**
+     * @brief Highest cumulated infrared value to be recognised as black field.
+     * 
+     */
+    float thresholdIsIRBlackField = DEFAULT_IR_BLACK_THRESHOLD;
+
+    /**
+     * @brief Default value for \p thresholdIsWhiteField.
      * 
      */
     const double DEFAULT_WHITE_THRESHOLD = 220.0;
 
     /**
-     * @brief Default value for \p isBlackFieldThreshold.
+     * @brief Default value for \p thresholdIsBlackField.
      * 
      */
     const double DEFAULT_BLACK_THRESHOLD = 50.0;
 
     /**
-     * @brief Default value for \p isIRWhiteFieldThreshold.
+     * @brief Default value for \p thresholdIsIRWhiteField.
      * 
      */
     const float DEFAULT_IR_WHITE_THRESHOLD = 1.0;
 
     /**
-     * @brief Default value for \p isIRBlackFieldThreshold.
+     * @brief Default value for \p thresholdIsIRBlackField.
      * 
      */
     const float DEFAULT_IR_BLACK_THRESHOLD = 0.5;
@@ -279,7 +286,7 @@ private:
     /**
      * @brief Factor to calculate threshold offset.
      * 
-     * @see isWhiteFieldThreshold, isBlackFieldThreshold
+     * @see thresholdIsWhiteField, thresholdIsBlackField
      */
     const double THRESHOLD_OFFSET = 0.025;
 
@@ -291,7 +298,7 @@ private:
      * 
      * Note that reducing the offset may result in difficulties for movement. 
      * 
-     * @see isIRWhiteFieldThreshold, isIRBlackFieldThreshold
+     * @see thresholdIsIRWhiteField, thresholdIsIRBlackField
      */
     const float THRESHOLD_OFFSET_IR = 0.2;
 };

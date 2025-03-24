@@ -107,7 +107,7 @@ public:
      * 
      * @param useIR true if infrared color detection should be used, false otherwise
      */
-    void setColorDetectionMode(bool useIR);
+    void setUseInfraredColorDetection(bool useIR);
 
     /**
      * @brief Set value for \p ECPColorDetection::shouldTurnOnColorCorrectionLight flag.

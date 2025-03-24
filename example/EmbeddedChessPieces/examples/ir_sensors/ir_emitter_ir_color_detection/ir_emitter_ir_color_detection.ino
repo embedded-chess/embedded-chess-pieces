@@ -21,26 +21,26 @@ void setup() {
     delay(100);
 }
 
-bool turnedOn = false;
+bool isIRTurnedOn = false;
 
 void loop() {
     const float irValue = dezibot.lightDetection.normalizeValue(
         dezibot.lightDetection.getAverageValue(IR_FRONT, 3, 50)
     );
 
-    if ((irValue > 0.1f)) {
-        if (turnedOn) {
+    if (irValue > 0.1f) {
+        if (isIRTurnedOn) {
             dezibot.infraredLight.front.turnOff();
-            turnedOn = false;
+            isIRTurnedOn = false;
 
             dezibot.display.clear();
             dezibot.display.println("IR turned off");
             delay(500);
         }
     } else {
-        if (!turnedOn) {
+        if (!isIRTurnedOn) {
             dezibot.infraredLight.front.turnOn();
-            turnedOn = true;
+            isIRTurnedOn = true;
 
             dezibot.display.clear();
             dezibot.display.println("IR turned on");

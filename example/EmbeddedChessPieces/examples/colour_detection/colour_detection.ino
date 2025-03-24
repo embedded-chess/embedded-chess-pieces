@@ -81,7 +81,7 @@ void printValue(double colorValue, char* prefix) {
 void printFieldColor(FieldColor fieldColor) {
   dezibot.display.print("F ");
   Serial.print("F ");
-  String field = "";
+  String field;
   switch(fieldColor) {
     case WHITE_FIELD:
       field = "w";

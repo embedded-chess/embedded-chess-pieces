@@ -78,8 +78,8 @@ void ECPMovement::calibrateIRFieldColor() {
     ecpColorDetection.calibrateIRFieldColor();
 };
 
-void ECPMovement::setColorDetectionMode(bool useIR) {
-    ecpColorDetection.setColorDetectionMode(useIR);
+void ECPMovement::setUseInfraredColorDetection(bool useIR) {
+    ecpColorDetection.setUseInfraredColorDetection(useIR);
 };
 
 void ECPMovement::setShouldTurnOnColorCorrectionLight(bool turnOn) {
@@ -98,12 +98,12 @@ void ECPMovement::moveForward(int timeMovement) {
 
 bool ECPMovement::moveToNextField() {
     FieldColor startColor = ecpColorDetection.getFieldColor();
-    if (startColor == 2) {
+    if (startColor == UNAMBIGUOUS) {
         startColor = ecpColorDetection.getLikelyFieldColor();
     }
     
-    const FieldColor wantedColor = startColor == 0 ? 
-        (FieldColor) (startColor + 1) : (FieldColor) (startColor - 1);
+    const FieldColor wantedColor = startColor == BLACK_FIELD ? 
+        WHITE_FIELD : BLACK_FIELD;
     FieldColor currentColor = startColor;
     int currentIteration = 0;
 

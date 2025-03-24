@@ -10,8 +10,8 @@ void ECPColorDetection::calibrateFieldColor() {
     double maxBlackBrightness = 0.0;
 
     for (size_t i = 0; i < CALIBRATE_FIELD_COUNT; i++) {
-        const double whiteBrightness = calibrateColor(true);
-        const double blackBrightness = calibrateColor(false);
+        const double whiteBrightness = calibrateAndMeasureColor(true);
+        const double blackBrightness = calibrateAndMeasureColor(false);
 
         if (whiteBrightness < minWhiteBrightness) {
             minWhiteBrightness = whiteBrightness;
@@ -24,19 +24,19 @@ void ECPColorDetection::calibrateFieldColor() {
     double offsetWhite = minWhiteBrightness * THRESHOLD_OFFSET;
     double offsetBlack = maxBlackBrightness * 2 * THRESHOLD_OFFSET; 
 
-    isWhiteFieldThreshold = minWhiteBrightness - offsetWhite;
-    isBlackFieldThreshold = maxBlackBrightness + offsetBlack;
+    thresholdIsWhiteField = minWhiteBrightness - offsetWhite;
+    thresholdIsBlackField = maxBlackBrightness + offsetBlack;
 };
 
 void ECPColorDetection::calibrateIRFieldColor() {
-    const float irWhiteValue = calibrateIRColor(true);
-    const float irBlackValue = calibrateIRColor(false);
+    const float irWhiteValue = calibrateAndMeasureIRColor(true);
+    const float irBlackValue = calibrateAndMeasureIRColor(false);
 
     float diff =  irWhiteValue - irBlackValue;
     float offset = diff * THRESHOLD_OFFSET_IR;
 
-    isIRWhiteFieldThreshold = irWhiteValue - offset;
-    isIRBlackFieldThreshold = irBlackValue + offset;
+    thresholdIsIRWhiteField = irWhiteValue - offset;
+    thresholdIsIRBlackField = irBlackValue + offset;
 };
 
 FieldColor ECPColorDetection::getFieldColor() {
@@ -55,11 +55,11 @@ FieldColor ECPColorDetection::getLikelyFieldColor() {
     return calculateLikelyFieldColor();
 };
 
-void ECPColorDetection::setColorDetectionMode(bool useIR) {
+void ECPColorDetection::setUseInfraredColorDetection(bool useIR) {
     useInfraredColorDetection = useIR;
 };
 
-bool ECPColorDetection::getColorDetectionMode() {
+bool ECPColorDetection::getUseInfraredColorDetection() {
     return useInfraredColorDetection;
 };
 
@@ -88,7 +88,7 @@ void ECPColorDetection::turnOffColorCorrectionLight() {
 // PRIVATE FUNCTIONS
 // -----------------------------------------------------------------------------
 
-double ECPColorDetection::calibrateColor(bool isWhite) {
+double ECPColorDetection::calibrateAndMeasureColor(bool isWhite) {
     const String color = isWhite ? "white" : "black";
     const String request = "Calibrate " + color + "\nPlease place on\n" + color 
         + " field\nin " + String(CALIBRATION_TIME / 1000) + " seconds";
@@ -100,10 +100,10 @@ double ECPColorDetection::calibrateColor(bool isWhite) {
     return measureBrightness();
 };
 
-float ECPColorDetection::calibrateIRColor(bool isWhite) {
+float ECPColorDetection::calibrateAndMeasureIRColor(bool isWhite) {
     const String color = isWhite ? "white" : "black";
     const String request = "Calibrate " + color + "\nPlease place on\n" + color
-        + " field\nin " + String((CALIBRATION_TIME) / 1000) + " seconds"; // TODO: use constant
+        + " field\nin " + String((CALIBRATION_TIME) / 1000) + " seconds";
     dezibot.display.clear();
     dezibot.display.println(request);
     delay(CALIBRATION_TIME);
@@ -155,10 +155,10 @@ double ECPColorDetection::measureBrightness() {
 FieldColor ECPColorDetection::measureFieldColor() {
     const double brightness = measureBrightness();
 
-    if (isWhiteFieldThreshold <= brightness) {
+    if (thresholdIsWhiteField <= brightness) {
         return WHITE_FIELD;
     }
-    if (brightness <= isBlackFieldThreshold) {
+    if (brightness <= thresholdIsBlackField) {
         return BLACK_FIELD;
     }
     return UNAMBIGUOUS;
@@ -167,21 +167,19 @@ FieldColor ECPColorDetection::measureFieldColor() {
 FieldColor ECPColorDetection::calculateLikelyFieldColor() {
     const double brightness = measureBrightness();
 
-    int diffToWhite = std::abs(isWhiteFieldThreshold - brightness);
-    int diffToBlack = std::abs(brightness - isBlackFieldThreshold);
+    int diffToWhite = std::abs(thresholdIsWhiteField - brightness);
+    int diffToBlack = std::abs(brightness - thresholdIsBlackField);
 
-    int smaller = std::min(diffToWhite, diffToBlack);
-
-    return diffToBlack == smaller ? BLACK_FIELD : WHITE_FIELD;
+    return diffToWhite < diffToBlack ? WHITE_FIELD : BLACK_FIELD;
 };
 
 FieldColor ECPColorDetection::measureInfraredFieldColor() {
     const float irValue = ecpSignalDetection.cumulateInfraredValues();
 
-    if (isIRWhiteFieldThreshold < irValue) {
+    if (thresholdIsIRWhiteField < irValue) {
         return WHITE_FIELD;
     }
-    if (irValue < isIRBlackFieldThreshold) {
+    if (irValue < thresholdIsIRBlackField) {
         return BLACK_FIELD;
     }
 
@@ -191,10 +189,8 @@ FieldColor ECPColorDetection::measureInfraredFieldColor() {
 FieldColor ECPColorDetection::calculateLikelyInfraredFieldColor() {
     const float irValue = ecpSignalDetection.cumulateInfraredValues();
 
-    float diffToWhite = std::abs(isIRWhiteFieldThreshold - irValue);
-    float diffToBlack = std::abs(irValue - isBlackFieldThreshold);
+    float diffToWhite = std::abs(thresholdIsIRWhiteField - irValue);
+    float diffToBlack = std::abs(irValue - thresholdIsIRBlackField);
 
-    float smaller = std::min(diffToWhite, diffToBlack);
-
-    return diffToBlack == smaller ? BLACK_FIELD : WHITE_FIELD;
+    return diffToWhite < diffToBlack ? WHITE_FIELD : BLACK_FIELD;
 };
