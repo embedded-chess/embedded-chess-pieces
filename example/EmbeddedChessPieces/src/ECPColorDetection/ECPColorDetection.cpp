@@ -29,11 +29,11 @@ void ECPColorDetection::calibrateFieldColor() {
 };
 
 void ECPColorDetection::calibrateIRFieldColor() {
-    const int irWhiteValue = calibrateIRColor(true);
-    const int irBlackValue = calibrateIRColor(false);
+    const float irWhiteValue = calibrateIRColor(true);
+    const float irBlackValue = calibrateIRColor(false);
 
-    int diff =  irWhiteValue - irBlackValue;
-    double offset = ((double) diff) * THRESHOLD_OFFSET_IR;
+    float diff =  irWhiteValue - irBlackValue;
+    float offset = diff * THRESHOLD_OFFSET_IR;
 
     isIRWhiteFieldThreshold = irWhiteValue - offset;
     isIRBlackFieldThreshold = irBlackValue + offset;
@@ -100,7 +100,7 @@ double ECPColorDetection::calibrateColor(bool isWhite) {
     return measureBrightness();
 };
 
-int ECPColorDetection::calibrateIRColor(bool isWhite) {
+float ECPColorDetection::calibrateIRColor(bool isWhite) {
     const String color = isWhite ? "white" : "black";
     const String request = "Calibrate " + color + "\nPlease place on\n" + color
         + " field\nin " + String((CALIBRATION_TIME) / 1000) + " seconds"; // TODO: use constant
@@ -108,7 +108,7 @@ int ECPColorDetection::calibrateIRColor(bool isWhite) {
     dezibot.display.println(request);
     delay(CALIBRATION_TIME);
     
-    const int irValue = ecpSignalDetection.cumulateInfraredValues();
+    const float irValue = ecpSignalDetection.cumulateInfraredValues();
 
     // clear display after measuring irValue
     dezibot.display.clear();
@@ -176,7 +176,7 @@ FieldColor ECPColorDetection::calculateLikelyFieldColor() {
 };
 
 FieldColor ECPColorDetection::measureInfraredFieldColor() {
-    const int irValue = ecpSignalDetection.cumulateInfraredValues();
+    const float irValue = ecpSignalDetection.cumulateInfraredValues();
 
     if (isIRWhiteFieldThreshold < irValue) {
         return WHITE_FIELD;
@@ -189,12 +189,12 @@ FieldColor ECPColorDetection::measureInfraredFieldColor() {
 };
 
 FieldColor ECPColorDetection::calculateLikelyInfraredFieldColor() {
-    const int irValue = ecpSignalDetection.cumulateInfraredValues();
+    const float irValue = ecpSignalDetection.cumulateInfraredValues();
 
-    int diffToWhite = std::abs(isIRWhiteFieldThreshold - irValue);
-    int diffToBlack = std::abs(irValue - isBlackFieldThreshold);
+    float diffToWhite = std::abs(isIRWhiteFieldThreshold - irValue);
+    float diffToBlack = std::abs(irValue - isBlackFieldThreshold);
 
-    int smaller = std::min(diffToWhite, diffToBlack);
+    float smaller = std::min(diffToWhite, diffToBlack);
 
     return diffToBlack == smaller ? BLACK_FIELD : WHITE_FIELD;
 };

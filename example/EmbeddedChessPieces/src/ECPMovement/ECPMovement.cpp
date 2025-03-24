@@ -103,7 +103,7 @@ bool ECPMovement::moveToNextField() {
     }
     
     const FieldColor wantedColor = startColor == 0 ? 
-        (FieldColor) (startColor + 1) : (FieldColor) (startColor -1);
+        (FieldColor) (startColor + 1) : (FieldColor) (startColor - 1);
     FieldColor currentColor = startColor;
     int currentIteration = 0;
 
@@ -125,12 +125,12 @@ void ECPMovement::displayRotationCorrectionRequest(
     ECPDirection intendedDirection
 ) {
     String request = "Faulty rotation\nPlease correct\nmy position in\n" 
-        + String(MANUEL_CORRECTION_TIME/1000) + " seconds to\n\n> " 
+        + String(MANUAL_CORRECTION_TIME / 1000) + " seconds to\n\n> " 
         + currentField.toString() + " " + directionToString(intendedDirection) 
         + "\n\n Thank you!";
     dezibot.display.clear();
     dezibot.display.print(request);
-    delay(MANUEL_CORRECTION_TIME);
+    delay(MANUAL_CORRECTION_TIME);
     dezibot.display.clear();
 };
 
@@ -139,12 +139,12 @@ void ECPMovement::displayForwardMovementCorrectionRequest(
     ECPDirection intendedDirection
 ) {
     String request = "Faulty movement\nPlease correct\nmy position in\n" 
-        + String(MANUEL_CORRECTION_TIME/1000) + " seconds to\n\n> " 
+        + String(MANUAL_CORRECTION_TIME / 1000) + " seconds to\n\n> " 
         + intendedField.toString() + " " + directionToString(intendedDirection) 
         + "\n\n Thank you!";
     dezibot.display.clear();
     dezibot.display.print(request);
-    delay(MANUEL_CORRECTION_TIME);
+    delay(MANUAL_CORRECTION_TIME);
     dezibot.display.clear();
 };
 

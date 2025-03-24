@@ -137,13 +137,13 @@ protected:
      * @brief Lowest cumulated infrared value to be recognised as white field.
      * 
      */
-    int isIRWhiteFieldThreshold = DEFAULT_IR_WHITE_THRESHOLD;
+    float isIRWhiteFieldThreshold = DEFAULT_IR_WHITE_THRESHOLD;
 
     /**
      * @brief Highest cumulated infrared value to be recognised as black field.
      * 
      */
-    int isIRBlackFieldThreshold = DEFAULT_IR_BLACK_THRESHOLD;
+    float isIRBlackFieldThreshold = DEFAULT_IR_BLACK_THRESHOLD;
 
     /**
      * @brief Flag for setting mode of color detection
@@ -170,9 +170,9 @@ private:
      * @brief Calibrate infrared on white or black field.
      * 
      * @param isWhite True if color to calibrate is white, false if black
-     * @return cumulatedInfraredValues as int 
+     * @return cumulatedInfraredValues as float 
      */
-    int calibrateIRColor(bool isWhite);
+    float calibrateIRColor(bool isWhite);
 
     /**
      * @brief Measure brightness.
@@ -268,13 +268,13 @@ private:
      * @brief Default value for \p isIRWhiteFieldThreshold.
      * 
      */
-    const int DEFAULT_IR_WHITE_THRESHOLD = 6800;
+    const float DEFAULT_IR_WHITE_THRESHOLD = 1.0;
 
     /**
      * @brief Default value for \p isIRBlackFieldThreshold.
      * 
      */
-    const int DEFAULT_IR_BLACK_THRESHOLD = 3300;
+    const float DEFAULT_IR_BLACK_THRESHOLD = 0.5;
 
     /**
      * @brief Factor to calculate threshold offset.
@@ -293,7 +293,7 @@ private:
      * 
      * @see isIRWhiteFieldThreshold, isIRBlackFieldThreshold
      */
-    const double THRESHOLD_OFFSET_IR = 0.2;
+    const float THRESHOLD_OFFSET_IR = 0.2;
 };
 
 #endif // ECPColorDetection_h

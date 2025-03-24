@@ -4,46 +4,21 @@ ECPSignalDetection::ECPSignalDetection(Dezibot &dezibot)
     : dezibot(dezibot) {};
 
 int ECPSignalDetection::measureSignalAngle() {
-    const photoTransistors sensors[] = { IR_FRONT, IR_RIGHT, IR_BACK, IR_LEFT };
-    float values[4] = {};
-
-    // measure all four IR signal values
-    for (size_t i = 0; i < 4; i++) {
-        const int irValue = dezibot.lightDetection.getAverageValue(
-            sensors[i],
-            MEASUREMENT_COUNT,
-            TIME_BETWEEN_MEASUREMENTS
-        );
-        const float normalizedValue = dezibot.lightDetection.normalizeValue(irValue);
-        values[i] = normalizedValue;
-    }
-
-    // check if at least one of the measurements is above the threshold
-    bool hasSignal = std::any_of(
-        values, values+4,
-        [MIN_THRESHOLD_MEASUREMENTS](float value) {
-            return value > MIN_THRESHOLD_MEASUREMENTS;
-        }
-    );
+    IRMeasurements measurements = measureIR();
 
     // repeat if no sufficient signal could be measured
-    if (!hasSignal) {
+    if (!measurements.hasSignal()) {
         dezibot.display.clear();
         dezibot.display.println("No IR signal!");
         dezibot.display.println("Trying again...");
-        delay(1000);
+        delay(500);
         dezibot.display.clear();
         return measureSignalAngle();
     }
 
-    const float north = values[0];
-    const float east = values[1];
-    const float south = values[2];
-    const float west = values[3];
-
     // calculate angle
-    const float resultantX = east - west;
-    const float resultantY = north - south;
+    const float resultantX = measurements.east - measurements.west;
+    const float resultantY = measurements.north - measurements.south;
     float angle = std::atan2(resultantX, resultantY);
     angle *= (180.0f / M_PI);   // convert from radian to degrees
 
@@ -61,28 +36,50 @@ int ECPSignalDetection::measureDezibotAngle() {
     return (360 - signalAngle) % 360;
 };
 
-int ECPSignalDetection::cumulateInfraredValues(bool turnOnIRLight) {
+float ECPSignalDetection::cumulateInfraredValues(bool turnOnIRLight) {
+    // check for interfering infrared signal
+    IRMeasurements measurements = measureIR();
+
+    // repeat if interfering signal was measured
+    if (measurements.hasSignal()) {
+        dezibot.display.clear();
+        dezibot.display.println("Interfering IR\nsignal!");
+        dezibot.display.println("Trying again...");
+        delay(500);
+        dezibot.display.clear();
+        return cumulateInfraredValues(turnOnIRLight);
+    }
+
     if (turnOnIRLight) {
         dezibot.infraredLight.bottom.turnOn();
         delay(DELAY_IR_INTERACTION);
+
+        IRMeasurements measurements = measureIR();
+
+        dezibot.infraredLight.bottom.turnOff();
+        delay(DELAY_IR_INTERACTION);
+
+        return measurements.getSum();
     }
 
+    return measurements.getSum();
+};
+
+IRMeasurements ECPSignalDetection::measureIR() {
     const photoTransistors sensors[] = { IR_FRONT, IR_RIGHT, IR_BACK, IR_LEFT };
-    int cumulatedValues = 0;
+    float values[4] = {};
 
     // measure all four IR signal values
     for (size_t i = 0; i < 4; i++) {
-        cumulatedValues += dezibot.lightDetection.getAverageValue(
+        const int irValue = dezibot.lightDetection.getAverageValue(
             sensors[i],
             MEASUREMENT_COUNT,
             TIME_BETWEEN_MEASUREMENTS
         );
+        const float normalizedValue = dezibot.lightDetection.normalizeValue(irValue);
+        values[i] = normalizedValue;
     }
-
-    if (turnOnIRLight) {
-        dezibot.infraredLight.bottom.turnOff();
-        delay(DELAY_IR_INTERACTION);
-    }
-
-    return cumulatedValues;
+    
+    IRMeasurements measurements = { values[0], values[1], values[2], values[3] };
+    return measurements;
 };
