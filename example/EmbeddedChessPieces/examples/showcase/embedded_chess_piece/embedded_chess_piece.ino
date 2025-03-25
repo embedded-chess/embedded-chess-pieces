@@ -19,6 +19,8 @@ void setup() {
     dezibot.begin();
     delay(100);
 
+    dezibot.display.flipOrientation();
+
     // use IR based approach for field color detection
     ecpMovement.setUseInfraredColorDetection(true);
     ecpMovement.calibrateIRFieldColor();
@@ -26,6 +28,8 @@ void setup() {
     moveWhitePawn();
     delay(5000);
 
+    dezibot.display.flipOrientation();
+    
     blackQueen();
     delay(5000);
 
@@ -52,6 +56,7 @@ void moveWhitePawn() {
         pawn.move(field);
         delay(2000);
     }
+    dezibot.display.clear();
 }
 
 /**
@@ -72,4 +77,5 @@ void blackQueen() {
         queen.move(field);
         delay(2000);
     }
+    dezibot.display.clear();
 }

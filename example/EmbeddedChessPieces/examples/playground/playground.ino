@@ -64,7 +64,7 @@ void moveChessPiece() {
 
     // print request to user to position 
     const String request = "Position to\n> " + initialField.toString()
-        + isWhitePiece ? " NORTH" : "SOUTH";
+        + (isWhitePiece ? " NORTH" : "SOUTH");
     dezibot.display.println(request);
     delay(5000);
 
@@ -82,4 +82,5 @@ void moveChessPiece() {
         chessPiece.move(field);
         delay(3000);
     }
+    dezibot.display.clear();
 }
