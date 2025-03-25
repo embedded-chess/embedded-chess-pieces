@@ -11,7 +11,6 @@
 
 #include <Dezibot.h>
 #include <EmbeddedChessPieces.h>
-#include <Wire.h>
 
 Dezibot dezibot = Dezibot();
 ECPSignalDetection ecpSignalDetection = ECPSignalDetection(dezibot);

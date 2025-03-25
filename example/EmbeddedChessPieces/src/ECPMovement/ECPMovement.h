@@ -48,7 +48,7 @@ public:
      */
     void move(
         uint numberOfFields, 
-        ECPChessField intendedField, 
+        ECPChessField intendedField,
         ECPDirection intendedDirection
     );
 
@@ -157,7 +157,7 @@ private:
      * @param intendedDirection Direction the dezibot should look at after rotation
      */
     void displayRotationCorrectionRequest(
-        ECPChessField currentField, 
+        ECPChessField currentField,
         ECPDirection intendedDirection
     );
 
@@ -170,7 +170,7 @@ private:
      * @param intendedDirection Direction the dezibot should look at after movement
      */
     void displayForwardMovementCorrectionRequest(
-        ECPChessField intendedField, 
+        ECPChessField intendedField,
         ECPDirection intendedDirection
     );
 

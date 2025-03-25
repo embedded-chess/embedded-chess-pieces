@@ -22,7 +22,7 @@ void ECPColorDetection::calibrateFieldColor() {
     }
 
     double offsetWhite = minWhiteBrightness * THRESHOLD_OFFSET;
-    double offsetBlack = maxBlackBrightness * 2 * THRESHOLD_OFFSET; 
+    double offsetBlack = maxBlackBrightness * 2 * THRESHOLD_OFFSET;
 
     thresholdIsWhiteField = minWhiteBrightness - offsetWhite;
     thresholdIsBlackField = maxBlackBrightness + offsetBlack;
@@ -43,7 +43,7 @@ FieldColor ECPColorDetection::getFieldColor() {
     if (useInfraredColorDetection) {
         return measureInfraredFieldColor();
     }
-    
+
     return measureFieldColor();
 };
 
@@ -51,7 +51,7 @@ FieldColor ECPColorDetection::getLikelyFieldColor() {
     if (useInfraredColorDetection) {
         return calculateLikelyInfraredFieldColor();
     }
-    
+
     return calculateLikelyFieldColor();
 };
 

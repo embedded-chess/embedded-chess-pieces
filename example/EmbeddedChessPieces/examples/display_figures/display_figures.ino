@@ -12,7 +12,6 @@
 
 #include <Dezibot.h>
 #include <EmbeddedChessPieces.h>
-#include <Wire.h>
 
 #define DISPLAY_TIME 1200
 
@@ -20,10 +19,7 @@ Dezibot dezibot = Dezibot();
 ECPMovement ecpMovement = ECPMovement(dezibot);
 
 void setup() {
-  Serial.begin(9600);
-  Serial.println("Started");
   dezibot.begin();
-  Serial.println("Initialised");
   delay(500);
 }
 

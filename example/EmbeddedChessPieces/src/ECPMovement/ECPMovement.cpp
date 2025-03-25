@@ -17,9 +17,9 @@ void ECPMovement::move(
         bool wasSuccessfulMovement = moveToNextField();
         
         if (!wasSuccessfulMovement) {
-            // request position to the final destination 
+            // request position to the final destination
             displayForwardMovementCorrectionRequest(
-                intendedField, 
+                intendedField,
                 intendedDirection
             );
 

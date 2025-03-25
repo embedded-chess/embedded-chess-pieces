@@ -11,15 +11,11 @@
 
 #include <Dezibot.h>
 #include <EmbeddedChessPieces.h>
-#include <Wire.h>
-
-#define BAUD_RATE 9600
 
 Dezibot dezibot = Dezibot();
 ECPMovement ecpMovement = ECPMovement(dezibot);
 
 void setup() {
-    Serial.begin(BAUD_RATE);
     dezibot.begin();
     delay(500);
     

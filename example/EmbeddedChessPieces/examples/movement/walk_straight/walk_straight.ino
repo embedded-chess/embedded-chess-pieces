@@ -11,7 +11,6 @@
 
 #include <Dezibot.h>
 #include <EmbeddedChessPieces.h>
-#include <Wire.h>
 
 // change for a calibration fitting the specific dezibot
 #define MOVEMENT_CALIBRATION 3900
@@ -20,10 +19,7 @@ Dezibot dezibot = Dezibot();
 ECPMovement ecpMovement(dezibot, MOVEMENT_CALIBRATION);
 
 void setup() {
-  Serial.begin(9600);
-  Serial.println("Started");
   dezibot.begin();
-  Serial.println("Initialised");
 
   // initial delay to mitigate faulty color sensor readings
   delay(1000);

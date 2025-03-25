@@ -209,7 +209,7 @@ private:
      * @brief Flag for setting of color correction light.
      * 
      */
-    bool shouldTurnOnColorCorrectionLight = false;    
+    bool shouldTurnOnColorCorrectionLight = false;
 
     /**
      * @brief Time between measurements of field colors in \p calibrateColor.
