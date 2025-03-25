@@ -33,6 +33,7 @@ void setup() {
     blackQueen();
     delay(5000);
 
+    dezibot.display.clear();
     dezibot.display.println("Done");
 }
 
@@ -46,6 +47,7 @@ void moveWhitePawn() {
     const ECPChessField initialField = { D, 2 };
 
     const String request = "Position to\n> " + initialField.toString() + " NORTH";
+    dezibot.display.clear();
     dezibot.display.println(request);
     delay(3000);
 
@@ -56,7 +58,6 @@ void moveWhitePawn() {
         pawn.move(field);
         delay(2000);
     }
-    dezibot.display.clear();
 }
 
 /**
@@ -67,6 +68,7 @@ void blackQueen() {
     const ECPChessField initialField = { D, 8 };
 
     const String request = "Position to\n> " + initialField.toString() + " SOUTH";
+    dezibot.display.clear();
     dezibot.display.println(request);
     delay(3000);
 
@@ -77,5 +79,4 @@ void blackQueen() {
         queen.move(field);
         delay(2000);
     }
-    dezibot.display.clear();
 }
