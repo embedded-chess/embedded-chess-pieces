@@ -16,10 +16,43 @@
 
 #include <Dezibot.h>
 
-class ECPSignalDetection{
-protected:
-    Dezibot &dezibot;
+/**
+ * @brief Convenience struct for infrared measurements.
+ * 
+ */
+struct IRMeasurements {
+    const float north, east, south, west;
 
+    IRMeasurements(float north, float east, float south, float west);
+
+    /**
+     * @brief Check if at least one measurement is above 
+     *        \p MIN_THRESHOLD_MEASUREMENTS.
+     * 
+     * @return true if at least one measurement is above threshold.
+     * @return false otherwise.
+     */
+    bool hasSignal();
+
+    /**
+     * @brief Get sum of IR measurements.
+     * 
+     * @return cumulated infrared values as float.
+     */
+    float getSum();
+
+    /**
+     * @brief Minimal threshold necessary to be measured before being discarded
+     *        as too weak.
+     * 
+     * Prevent interpreting signals that are not emitted by the IR emitting
+     * dezibot, caused, for example, by environmental influences.
+     * 
+     */
+    static constexpr float MIN_THRESHOLD_MEASUREMENTS = 0.10f;
+};
+
+class ECPSignalDetection{
 public:
     ECPSignalDetection(Dezibot &dezibot);
 
@@ -56,7 +89,29 @@ public:
      */
     int measureDezibotAngle();
 
+    /**
+     * @brief Measure infrared values and cumulate them.
+     * 
+     * @warning This function may <b>loop and never return</b> if an infrared 
+     *          signal is detected and not removed!
+     * 
+     * @param turnOnIRLight, true if bottom IR LED should be turned on 
+     *        while measuring, default is true
+     * @return cumulated infrared values as float (normalized).
+     */
+    float cumulateInfraredValues(bool turnOnIRLight = true);
+
+protected:
+    Dezibot &dezibot;
+
 private:
+    /**
+     * @brief Measure infrared signals from lateral sensors.
+     * 
+     * @return IRMeasurements measurements.
+     */
+    IRMeasurements measureIR();
+
     /**
      * @brief How many infrared signals are averaged in \p measureSignalAngle.
      * 
@@ -65,22 +120,18 @@ private:
 
     /**
      * @brief Time between measurements that are averaged to one in
-     *        \p measureSignalAngle in milliseconds,
+     *        \p measureSignalAngle and \p cumulateInfraredValues in ms.
      * 
      */
     static const int TIME_BETWEEN_MEASUREMENTS = 30;
 
     /**
-     * @brief Minimal threshold necessary to be measured before being discarded
-     *        as too weak.
+     * @brief Delay after turning infrared LED in \p cumulateInfraredValues 
+     *        on or off.
      * 
-     * Prevent interpreting signals that are not emitted by the IR emitting
-     * dezibot, caused, for example, by environmental influences.
-     * 
-     * @see measureSignalAngle for usage.
-     * 
+     * Needed for reliable infrared light.
      */
-    static constexpr float MIN_THRESHOLD_MEASUREMENTS = 0.10f;
+    static const int DELAY_IR_INTERACTION = 1000;
 };
 
 #endif // ECPSignalDetection_H

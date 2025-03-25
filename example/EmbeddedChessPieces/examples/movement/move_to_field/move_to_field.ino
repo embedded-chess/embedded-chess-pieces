@@ -11,17 +11,23 @@
 
 #include <Dezibot.h>
 #include <EmbeddedChessPieces.h>
-#include <Wire.h>
-
-#define BAUD_RATE 9600
 
 Dezibot dezibot = Dezibot();
 ECPMovement ecpMovement = ECPMovement(dezibot);
 
 void setup() {
-    Serial.begin(BAUD_RATE);
     dezibot.begin();
     delay(500);
+    
+    dezibot.display.flipOrientation();
+
+    // color sensor
+    // ecpMovement.setShouldTurnOnColorCorrectionLight(true);
+    // ecpMovement.calibrateFieldColor();
+
+    // infrared
+    ecpMovement.setUseInfraredColorDetection(true);
+    ecpMovement.calibrateIRFieldColor();
 }
 
 void loop() {
@@ -32,8 +38,8 @@ void loop() {
 void iteration(bool isWhite) {
     dezibot.display.clear();
     const String color = isWhite ? "white" : "black";
-    dezibot.display.println("Prepare " + color +  "\nYou've got \n10 seconds...");
-    delay(10000);
+    dezibot.display.println("Prepare " + color +  "\nYou've got \n5 seconds...");
+    delay(5000);
 
     const String prefix = isWhite ? "White" : "Black";
     dezibot.display.println(prefix + " queen...");

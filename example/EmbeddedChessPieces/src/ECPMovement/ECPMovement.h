@@ -14,16 +14,17 @@
 
 #include <Dezibot.h>
 
-#include "ECPChessLogic/ECPChessField.h"
+#include <ECPChessLogic/ECPChessField.h>
 #include <ECPColorDetection/ECPColorDetection.h>
 #include <ECPSignalDetection/ECPSignalDetection.h>
 
 #define FORWARD_TIME 750
-#define MOVEMENT_BREAK 375
 #define ROTATION_SPEED 8192
-#define ROTATION_CORRECTION_TIME 10000
+
 #define DEFAULT_MOVEMENT_CALIBRATION 3900
 #define MEASURING_DELAY 100
+
+#define MANUAL_CORRECTION_TIME 10000
 
 class ECPMovement {
 public:
@@ -42,8 +43,14 @@ public:
      * @brief Move chess piece given number of fields forward.
      * 
      * @param numberOfFields Number of fields the dezibot should move forward
+     * @param intendedField Field of the dezibot
+     * @param intendedDirection Direction the dezibot should look at after movement
      */
-    void move(uint numberOfFields);
+    void move(
+        uint numberOfFields, 
+        ECPChessField intendedField,
+        ECPDirection intendedDirection
+    );
 
     /**
      * @brief Turn 90 degrees left.
@@ -69,10 +76,48 @@ public:
      */
     void turnRight(ECPChessField currentField, ECPDirection intendedDirection);
 
+    /**
+     * @brief Calibrate threshold for white and black field using color sensor.
+     * 
+     * Threshold is used to determine if the dezibot is standing on a white or black field
+     * 
+     * Needed to adapt to current light conditions
+     * Default values may compromise movement on the chess field
+     * 
+     * @see ECPColorDetection::calibrateFieldColor
+     */
+    void calibrateFieldColor();
+
+    /**
+     * @brief Calibrate threshold for white and black field using infrared.
+     * 
+     * Threshold is used to determine if the dezibot is standing on a white or black field
+     * 
+     * Needed to adapt to current light conditions
+     * Default values may compromise movement on the chess field
+     * 
+     * @see ECPColorDetection::calibrateIRFieldColor
+     */
+    void calibrateIRFieldColor();
+
+    /**
+     * @brief Set value for \p ECPColorDetection::useInfraredColorDetection flag.
+     * 
+     * @param useIR true if infrared color detection should be used, false otherwise
+     */
+    void setUseInfraredColorDetection(bool useIR);
+
+    /**
+     * @brief Set value for \p ECPColorDetection::shouldTurnOnColorCorrectionLight flag.
+     * 
+     * @param turnOn true if correction light should be turned on, false otherwise
+     */
+    void setShouldTurnOnColorCorrectionLight(bool turnOn);
+
 protected:
     Dezibot &dezibot;
-    ECPColorDetection ecpColorDetection;
     ECPSignalDetection ecpSignalDetection;
+    ECPColorDetection ecpColorDetection;
 
     /**
      * @brief Value to calibrate movement.
@@ -89,28 +134,43 @@ private:
      * To minimize drift, a break is implemented after each movement.
      * 
      * @param timeMovement in ms - how long the dezibot should move.
-     * @param timeBreak in ms - how long the dezibot should pause.
      */
-    void moveForward(int timeMovement, int timeBreak);
+    void moveForward(int timeMovement);
 
     /**
      * @brief Move straight to the next field.
      * 
      * Default interval of movement before checking the field color
      * is defined in MOVEMENT_TIME and MOVEMENT_BREAK.
+     * 
+     * @return true if fieldColors indicate successful movement
+     * @return false if fieldColors indicate faulty movement
      */
-    void moveToNextField();
+    bool moveToNextField();
 
     /**
-     * Print request to correct dezibot on the board after faulty rotation
+     * Print request to correct dezibot on the board after faulty rotation.
      * 
      * The user has 10 seconds to correct the position and direction of the dezibot
      * 
      * @param currentField Field of the dezibot
      * @param intendedDirection Direction the dezibot should look at after rotation
      */
-    void displayRotionCorrectionRequest(
-        ECPChessField currentField, 
+    void displayRotationCorrectionRequest(
+        ECPChessField currentField,
+        ECPDirection intendedDirection
+    );
+
+    /**
+     * Print request to correct dezibot on the board after faulty forward movement.
+     * 
+     * The user has 10 seconds to correct the position and direction of the dezibot
+     * 
+     * @param intendedField Field of the dezibot
+     * @param intendedDirection Direction the dezibot should look at after movement
+     */
+    void displayForwardMovementCorrectionRequest(
+        ECPChessField intendedField,
         ECPDirection intendedDirection
     );
 
@@ -122,7 +182,7 @@ private:
      * the tolerance specified in \p ROTATION_TOLERANCE.
      * 
      * If the rotation could not be completed successfully after a certain
-     * amount of iterations (cf. \p MAX_ROTATION_ITERATIONS), return \p false.
+     * amount of iterations (cf. \p MAX_ITERATIONS), return \p false.
      * 
      * @param goalAngle The target angle to which the dezibot is to be rotated.
      * @param initialAngle Measured initial angle of the dezibot, see
@@ -189,12 +249,11 @@ private:
     static const int ROTATION_TOLERANCE = 3;
 
     /**
-     * @brief Maximum rotation iterations used in \p turnLeft and \p turnRight.
-     * 
-     * @see rotateToAngle for usage.
+     * @brief Maximum iterations for movement used in \p turnLeft, \p turnRight
+     *        and \p moveToNextField.
      * 
      */
-    static const size_t MAX_ROTATION_ITERATIONS = 20;
+    static const size_t MAX_ITERATIONS = 10;
 
     /**
      * @brief Factor used to calculate rotation time.

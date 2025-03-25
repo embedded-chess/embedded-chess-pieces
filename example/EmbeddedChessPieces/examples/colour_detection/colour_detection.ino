@@ -11,25 +11,16 @@
 
 #include <Dezibot.h>
 #include <EmbeddedChessPieces.h>
-#include <Wire.h>
 
 Dezibot dezibot = Dezibot();
-ECPColorDetection ecpColorDetection(dezibot);
+ECPSignalDetection ecpSignalDetection = ECPSignalDetection(dezibot);
+ECPColorDetection ecpColorDetection = ECPColorDetection(dezibot, ecpSignalDetection);
 
 void setup() {
-  Serial.begin(9600);
-  Serial.println("Started");
   dezibot.begin();
-  Serial.println("Initialised");
+  delay(500);
 
-  bool hasStartedSuccessfully = dezibot.colorSensor.begin();
-  if(!hasStartedSuccessfully) {
-    Serial.println("ERROR: couldn't detect the sensor");
-    while(1) {}
-  }
-  delay(3000);
-  
-  ecpColorDetection.turnOnColorCorrectionLight();
+  ecpColorDetection.calibrateFieldColor();
 }
 
 void loop() {
@@ -42,9 +33,8 @@ void loop() {
   // double cct = dezibot.colorSensor.getCCT();
 
   double brightness = dezibot.colorSensor.calculateBrightness(red, green, blue);
-  bool isWhite = ecpColorDetection.isWhiteField();
+  FieldColor color = ecpColorDetection.getFieldColor();
 
-  Serial.println("");
   dezibot.display.clear();
 
   printValue(red, "R");
@@ -55,13 +45,13 @@ void loop() {
   // printValue(cct, "C");
   printValue(ambient, "A");
   printValue(brightness, "H");
-  printIsWhiteField(isWhite);
+  printFieldColor(color);
 
   delay(500);
 }
 
 /**
- * @brief Print passed color value to dezibot display and serial monitor.
+ * @brief Print passed color value to dezibot display.
  * 
  * For example, `printValue(100, "R")` will result in `R 100`.
  * 
@@ -72,29 +62,26 @@ void printValue(double colorValue, char* prefix) {
   dezibot.display.print(prefix);
   dezibot.display.print(" ");
   dezibot.display.println(String(colorValue, 4));
-
-  Serial.print(prefix);
-  Serial.print(" ");
-  Serial.println(colorValue);
 }
 
 /**
- * @brief Print formatted info for isWhiteField.
+ * @brief Print formatted info for field color.
  * 
- * \code{.cpp}
- * printIsWhiteField(true)
- * // "F W"
- * 
- * printIsWhiteField(false)
- * \endcode
- * ```
- * 
- * @param isWhiteField true if is white, false otherwise
+ * @param fieldColor Determined FieldColor
  */
-void printIsWhiteField(bool isWhiteField) {
+void printFieldColor(FieldColor fieldColor) {
   dezibot.display.print("F ");
-  Serial.print("F ");
-  String field = isWhiteField ? "W" : "B";
+  String field;
+  switch(fieldColor) {
+    case WHITE_FIELD:
+      field = "w";
+      break;
+    case BLACK_FIELD:
+      field = "b";
+      break;
+    case AMBIGUOUS:
+      field = "a";
+      break;
+  }
   dezibot.display.println(field);
-  Serial.println(field);
 }

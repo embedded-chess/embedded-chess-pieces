@@ -1,7 +1,9 @@
 #include "ECPChessField.h"
 
-ECPChessField::ECPChessField(ECPBoardColumn column,
-                             unsigned int row) : column(column), row(row) {
+ECPChessField::ECPChessField(
+    ECPBoardColumn column,
+    unsigned int row
+) : column(column), row(row) {
     if (row < 1 || row > 8) {
         throw std::runtime_error("Row must be valid, i.e. in [1, 8]");
     }
