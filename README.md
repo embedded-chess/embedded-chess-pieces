@@ -2,9 +2,6 @@
 
 This repository is a fork of [`dezibot/dezibot`](https://github.com/dezibot/dezibot) and contains our project for the module C999 "Software Development for Embedded Systems" lectured by [Prof. Dr. rer. nat. Jens Wagner](https://fim.htwk-leipzig.de/fakultaet/personen/professorinnen-und-professoren/jens-wagner/). We call it *Embedded Chess Pieces*.
 
-> [!IMPORTANT]
-> The project is still under development. This note will be removed once the project is submitted.
-
 
 ## Idea
 
