@@ -5,12 +5,12 @@ This repository is a fork of [`dezibot/dezibot`](https://github.com/dezibot/dezi
 
 ## Idea
 
-The idea is to place a Dezibot 4 on a chess board and assign a chess piece to it. The user can select which piece the robot represents and how it should move. The selected figure shall be displayed on the built-in display and the move shall be validated first. The result should be shown via the built-in LEDs.
+The idea is to place a Dezibot4 on a chess board and assign a chess piece to it. The user can select which piece the robot represents and how it should move. The selected figure shall be displayed on the built-in display and the move shall be validated first. The result should be shown via the built-in LEDs.
 
 
 ## Usage
 
-An example sketch is provided under [`example/EmbeddedChessPieces/examples/playground/playground.ino`](./example/EmbeddedChessPieces/examples/playground/playground.ino). This can be loaded on the Dezibot that will simulate the chess piece. On an additional Dezibot (*beacon*), the [`beacon.ino`](./example/EmbeddedChessPieces/examples/showcase/beacon/beacon.ino) sketch needs to be installed, to guide the simulating Dezibot's rotations. The beacon has to be placed next to the field, facing approximately the middle of the chess board. For more information, see the [documentation](https://github.com/embedded-chess/doc/releases) (German only).
+Example sketches are provided under [`example/EmbeddedChessPieces/examples/playground/playground.ino`](./example/EmbeddedChessPieces/examples/playground/playground.ino) to demonstrate the library, while a showcase sketch can be found under [/example/EmbeddedChessPieces/examples/showcase/embedded_chess_piece/embedded_chess_piece.ino`](./example/EmbeddedChessPieces/examples/showcase/embedded_chess_piece/embedded_chess_piece.ino). They can be loaded on the Dezibot that will simulate the chess piece. On an additional Dezibot (*beacon*), the [`beacon/beacon.ino`](./example/EmbeddedChessPieces/examples/beacon/beacon.ino) sketch needs to be installed, to guide the simulating Dezibot's rotations. The beacon has to be placed next to the field, facing approximately the middle of the chess board. For more information, see the [documentation](https://github.com/embedded-chess/doc/releases) (German only).
 
 
 ## Repository Structure
@@ -34,7 +34,7 @@ In [`example/EmbeddedChessPieces/examples`](./example/EmbeddedChessPieces/exampl
 
 - Install [Arduino IDE 2](https://github.com/arduino/arduino-ide)
 - Add [`esp32`](https://github.com/espressif/arduino-esp32/releases/tag/2.0.15) board manager by Espressif Systems (version 2.0.15)
-- Install all necessary libraries mentioned under [Licence](#licence)
+- Install all necessary libraries mentioned under [License](#license)
 - Create a symbolic link from this repository and the `EmbeddedChessPieces` library to the Arduino library directory on your machine
 
 ```sh
@@ -50,13 +50,13 @@ ln -s path/to/repository/example/EmbeddedChessPieces EmbeddedChessPieces
 - [@nicosrm](https://github.com/nicosrm)
 
 
-## Licence
+## License
 
-This repository is licenced under the GNU General Public License ([GPL-3.0](./LICENSE)).
+This repository is licensed under the GNU General Public License ([GPL-3.0](./LICENSE.txt)).
 
-We also require using the following (third-party) libraries that are licenced as follows:
+We also require using the following (third-party) libraries that are licensed as follows:
 
-| Library                                                               | Version | Author       | Licence      |
+| Library                                                               | Version | Author       | License      |
 |-----------------------------------------------------------------------|---------|--------------|--------------|
 | [`Adafruit NeoPixel`](https://github.com/adafruit/Adafruit_NeoPixel)* | 1.12.3  | Adafruit     | LGPL-3.0     |
 | [`ArduinoJson`](https://github.com/bblanchon/ArduinoJson)*            | 7.2.0   | bblanchon    | MIT          |

@@ -5,12 +5,12 @@ This is a library for the [Dezibot](https://github.com/dezibot/dezibot) providin
 
 ## Idea
 
-The idea is to place a Dezibot 4 on a chess board and assign a chess piece to it. The user can select which piece the robot represents and how it should move. The selected figure shall be displayed on the built-in display and the move shall be validated first. The result should be shown via the built-in LEDs.
+The idea is to place a Dezibot4 on a chess board and assign a chess piece to it. The user can select which piece the robot represents and how it should move. The selected figure shall be displayed on the built-in display and the move shall be validated first. The result should be shown via the built-in LEDs.
 
 
 ## Usage
 
-An example sketch is provided under [`examples/playground/playground.ino`](./examples/playground/playground.ino). This can be loaded on the Dezibot that will simulate the chess piece. On an additional Dezibot (*beacon*), the [`beacon.ino`](./examples/showcase/beacon/beacon.ino) sketch needs to be installed, to guide the simulating Dezibot's rotations. The beacon has to be placed next to the field, facing approximately the middle of the chess board. For more information, see the [documentation](https://github.com/embedded-chess/doc/releases) (German only).
+Example sketches are provided under [`examples/playground/playground.ino`](./examples/playground/playground.ino) to demonstrate the library, while a showcase sketch can be found under [`examples/showcase/embedded_chess_piece/embedded_chess_piece.ino`](./examples/showcase/embedded_chess_piece/embedded_chess_piece.ino) to illustrate the movements. They can be loaded on the Dezibot that will simulate the chess piece. On an additional Dezibot (*beacon*), the [`beacon/beacon.ino`](./examples/beacon/beacon.ino) sketch needs to be installed, to guide the simulating Dezibot's rotations. The beacon has to be placed next to the field, facing approximately the middle of the chess board. For more information, see the [documentation](https://github.com/embedded-chess/doc/releases) (German only).
 
 
 ## Library Structure
@@ -47,6 +47,6 @@ ln -s path/to/repository/example/EmbeddedChessPieces EmbeddedChessPieces
 - [@nicosrm](https://github.com/nicosrm)
 
 
-## Licence
+## License
 
 This library was written by [@irooori](https://github.com/irooori) and [@nicosrm](https://github.com/nicosrm). It is available under the GNU General Public License ([GPL-3.0](./LICENSE)).
