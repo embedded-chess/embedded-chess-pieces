@@ -18,12 +18,9 @@ ECPSignalDetection ecpSignalDetection = ECPSignalDetection(dezibot);
 ECPColorDetection ecpColorDetection = ECPColorDetection(dezibot, ecpSignalDetection);
 
 void setup() {
-  Serial.begin(9600);
-  Serial.println("Started");
   dezibot.begin();
-  Serial.println("Initialised");
+  delay(500);
 
-  delay(3000);
   ecpColorDetection.calibrateFieldColor();
 }
 
@@ -39,7 +36,6 @@ void loop() {
   double brightness = dezibot.colorSensor.calculateBrightness(red, green, blue);
   FieldColor color = ecpColorDetection.getFieldColor();
 
-  Serial.println("");
   dezibot.display.clear();
 
   printValue(red, "R");
@@ -56,7 +52,7 @@ void loop() {
 }
 
 /**
- * @brief Print passed color value to dezibot display and serial monitor.
+ * @brief Print passed color value to dezibot display.
  * 
  * For example, `printValue(100, "R")` will result in `R 100`.
  * 
@@ -67,10 +63,6 @@ void printValue(double colorValue, char* prefix) {
   dezibot.display.print(prefix);
   dezibot.display.print(" ");
   dezibot.display.println(String(colorValue, 4));
-
-  Serial.print(prefix);
-  Serial.print(" ");
-  Serial.println(colorValue);
 }
 
 /**
@@ -80,7 +72,6 @@ void printValue(double colorValue, char* prefix) {
  */
 void printFieldColor(FieldColor fieldColor) {
   dezibot.display.print("F ");
-  Serial.print("F ");
   String field;
   switch(fieldColor) {
     case WHITE_FIELD:
@@ -94,5 +85,4 @@ void printFieldColor(FieldColor fieldColor) {
       break;
   }
   dezibot.display.println(field);
-  Serial.println(field);
 }
