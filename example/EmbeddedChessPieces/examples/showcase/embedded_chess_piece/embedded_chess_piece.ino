@@ -72,7 +72,7 @@ void blackQueen() {
 
     ECPQueen queen = ECPQueen(dezibot, ecpMovement, initialField, false);
 
-    const ECPChessField fields[] = {{ F, 6 }, { E, 4 }, { E, 6 }};
+    const ECPChessField fields[] = {{ F, 6 }, { E, 8 }, { E, 6 }};
     for (const ECPChessField field : fields) {
         queen.move(field);
         delay(2000);
