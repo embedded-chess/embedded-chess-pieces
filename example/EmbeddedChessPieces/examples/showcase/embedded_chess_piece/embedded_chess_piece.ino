@@ -43,7 +43,7 @@ void loop() {}
  * 
  */
 void moveWhitePawn() {
-    const ECPChessField initialField = { E, 2 };
+    const ECPChessField initialField = { D, 2 };
 
     const String request = "Position to\n> " + initialField.toString() + " NORTH";
     dezibot.display.println(request);
@@ -51,7 +51,7 @@ void moveWhitePawn() {
 
     ECPPawn pawn = ECPPawn(dezibot, ecpMovement, initialField, true);
 
-    const ECPChessField fields[] = {{ E, 4 }, { E, 6 }, { E, 5 }};
+    const ECPChessField fields[] = {{ D, 4 }, { D, 6 }, { D, 5 }};
     for (const ECPChessField field : fields) {
         pawn.move(field);
         delay(2000);
@@ -64,7 +64,7 @@ void moveWhitePawn() {
  * 
  */
 void blackQueen() {
-    const ECPChessField initialField = { E, 8 };
+    const ECPChessField initialField = { D, 8 };
 
     const String request = "Position to\n> " + initialField.toString() + " SOUTH";
     dezibot.display.println(request);
@@ -72,7 +72,7 @@ void blackQueen() {
 
     ECPQueen queen = ECPQueen(dezibot, ecpMovement, initialField, false);
 
-    const ECPChessField fields[] = {{ G, 6 }, { F, 4 }, { G, 8 }};
+    const ECPChessField fields[] = {{ F, 6 }, { E, 4 }, { E, 6 }};
     for (const ECPChessField field : fields) {
         queen.move(field);
         delay(2000);
