@@ -19,7 +19,9 @@ void setup() {
     dezibot.begin();
     delay(100);
 
-    // TODO: calibrate
+    // use IR based approach for field color detection
+    ecpMovement.setUseInfraredColorDetection(true);
+    ecpMovement.calibrateIRFieldColor();
 
     moveWhitePawn();
     delay(5000);
@@ -41,14 +43,14 @@ void moveWhitePawn() {
 
     const String request = "Position to\n> " + initialField.toString() + " NORTH";
     dezibot.display.println(request);
-    delay(5000);
+    delay(3000);
 
     ECPPawn pawn = ECPPawn(dezibot, ecpMovement, initialField, true);
 
     const ECPChessField fields[] = {{ E, 4 }, { E, 6 }, { E, 5 }};
     for (const ECPChessField field : fields) {
         pawn.move(field);
-        delay(3000);
+        delay(2000);
     }
 }
 
@@ -61,13 +63,13 @@ void blackQueen() {
 
     const String request = "Position to\n> " + initialField.toString() + " SOUTH";
     dezibot.display.println(request);
-    delay(5000);
+    delay(3000);
 
     ECPQueen queen = ECPQueen(dezibot, ecpMovement, initialField, false);
 
     const ECPChessField fields[] = {{ G, 6 }, { F, 4 }, { G, 8 }};
     for (const ECPChessField field : fields) {
         queen.move(field);
-        delay(3000);
+        delay(2000);
     }
 }
