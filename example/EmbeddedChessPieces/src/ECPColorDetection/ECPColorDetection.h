@@ -87,7 +87,7 @@ public:
     /**
      * @brief Return value of \p useInfraredColorDetection flag.
      * 
-     * @return Bool value of useInfraredColorDetection.
+     * @return bool value of useInfraredColorDetection.
      */
     bool getUseInfraredColorDetection();
 
@@ -101,7 +101,7 @@ public:
     /**
      * @brief Return value of \p shouldTurnOnColorCorrectionLight flag.
      * 
-     * @return Bool value of shouldTurnOnColorCorrectionLight.
+     * @return bool value of shouldTurnOnColorCorrectionLight.
      */
     bool getShouldTurnOnColorCorrectionLight();
 
