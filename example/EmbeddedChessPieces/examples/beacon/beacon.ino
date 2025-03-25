@@ -15,7 +15,7 @@ Dezibot dezibot = Dezibot();
 
 void setup() {
     dezibot.begin();
-    delay(10);
+    delay(500);
 
     dezibot.infraredLight.front.turnOn();
     dezibot.display.println("IR turned on");
