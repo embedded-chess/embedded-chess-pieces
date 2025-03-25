@@ -80,8 +80,8 @@ void printFieldColor(FieldColor fieldColor) {
     case BLACK_FIELD:
       field = "b";
       break;
-    case UNAMBIGUOUS:
-      field = "u";
+    case AMBIGUOUS:
+      field = "a";
       break;
   }
   dezibot.display.println(field);

@@ -98,7 +98,7 @@ void ECPMovement::moveForward(int timeMovement) {
 
 bool ECPMovement::moveToNextField() {
     FieldColor startColor = ecpColorDetection.getFieldColor();
-    if (startColor == UNAMBIGUOUS) {
+    if (startColor == AMBIGUOUS) {
         startColor = ecpColorDetection.getLikelyFieldColor();
     }
     
@@ -124,8 +124,8 @@ void ECPMovement::displayRotationCorrectionRequest(
     ECPChessField currentField, 
     ECPDirection intendedDirection
 ) {
-    String request = "Faulty rotation\nPlease correct\nmy position in\n" 
-        + String(MANUAL_CORRECTION_TIME / 1000) + " seconds to\n\n> " 
+    String request = "Faulty rotation\nPlease correct\nmy position\nwithin " 
+        + String(MANUAL_CORRECTION_TIME / 1000) + "s to\n\n> " 
         + currentField.toString() + " " + directionToString(intendedDirection) 
         + "\n\n Thank you!";
     dezibot.display.clear();
@@ -138,8 +138,8 @@ void ECPMovement::displayForwardMovementCorrectionRequest(
     ECPChessField intendedField, 
     ECPDirection intendedDirection
 ) {
-    String request = "Faulty movement\nPlease correct\nmy position in\n" 
-        + String(MANUAL_CORRECTION_TIME / 1000) + " seconds to\n\n> " 
+    String request = "Faulty movement\nPlease correct\nmy position\nwithin " 
+        + String(MANUAL_CORRECTION_TIME / 1000) + "s to\n\n> " 
         + intendedField.toString() + " " + directionToString(intendedDirection) 
         + "\n\n Thank you!";
     dezibot.display.clear();
@@ -154,7 +154,7 @@ bool ECPMovement::rotateToAngle(int goalAngle, int initialAngle) {
     size_t currentIteration = 0;
 
     bool shouldContinueRotation = std::abs(difference) > ROTATION_TOLERANCE
-        && currentIteration < MAX_ROTATION_ITERATIONS;
+        && currentIteration < MAX_ITERATIONS;
 
     while (shouldContinueRotation) {
         int normalizedDifference = ((difference + 180 + 360) % 360) - 180;
@@ -176,10 +176,10 @@ bool ECPMovement::rotateToAngle(int goalAngle, int initialAngle) {
         
         currentIteration++;
         shouldContinueRotation = std::abs(difference) > ROTATION_TOLERANCE
-            && currentIteration < MAX_ROTATION_ITERATIONS;
+            && currentIteration < MAX_ITERATIONS;
     }
 
-    if (currentIteration == MAX_ROTATION_ITERATIONS) {
+    if (currentIteration == MAX_ITERATIONS) {
         // rotation failed
         return false;
     }

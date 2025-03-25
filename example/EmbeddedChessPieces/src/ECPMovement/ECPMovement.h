@@ -26,8 +26,6 @@
 
 #define MANUAL_CORRECTION_TIME 10000
 
-#define MAX_ITERATIONS 10
-
 class ECPMovement {
 public:
     /**
@@ -184,7 +182,7 @@ private:
      * the tolerance specified in \p ROTATION_TOLERANCE.
      * 
      * If the rotation could not be completed successfully after a certain
-     * amount of iterations (cf. \p MAX_ROTATION_ITERATIONS), return \p false.
+     * amount of iterations (cf. \p MAX_ITERATIONS), return \p false.
      * 
      * @param goalAngle The target angle to which the dezibot is to be rotated.
      * @param initialAngle Measured initial angle of the dezibot, see
@@ -251,12 +249,11 @@ private:
     static const int ROTATION_TOLERANCE = 3;
 
     /**
-     * @brief Maximum rotation iterations used in \p turnLeft and \p turnRight.
-     * 
-     * @see rotateToAngle for usage.
+     * @brief Maximum iterations for movement used in \p turnLeft, \p turnRight
+     *        and \p moveToNextField.
      * 
      */
-    static const size_t MAX_ROTATION_ITERATIONS = 20;
+    static const size_t MAX_ITERATIONS = 10;
 
     /**
      * @brief Factor used to calculate rotation time.

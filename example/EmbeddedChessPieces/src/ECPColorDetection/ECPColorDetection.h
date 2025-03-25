@@ -28,7 +28,7 @@
 enum FieldColor {
     BLACK_FIELD, 
     WHITE_FIELD,
-    UNAMBIGUOUS
+    AMBIGUOUS
 };
 
 class ECPColorDetection {
@@ -68,7 +68,7 @@ public:
      * @details Uses color detection mode of \p useInfraredColorDetection flag.
      *          Default is color detection using color sensor.
      * 
-     * Usecase: the determined field color is unambiguous but a likely color is need
+     * Usecase: the determined field color is ambiguous but a likely color is need
      * 
      * Determine if measured value is closer to the black or white field threshold
      * In case the distance is identical black field is preferred
@@ -166,7 +166,7 @@ private:
      * @brief Calculate likely field color using color sensor.
      * 
      * Usecase: determined field color with \p measureFieldColor is 
-     * unambiguous but a likely color is needed.
+     * ambiguous but a likely color is needed.
      * 
      * Calculate if measured brightness is closer to the black or white field threshold
      * In case the distance is identical black field is preferred
@@ -190,7 +190,7 @@ private:
      * @brief Calculate likely field color using IR signal detection.
      * 
      * Usecase: determined field color with \p measureInfraredFieldColor is 
-     * unambiguous but a likely color is needed.
+     * ambiguous but a likely color is needed.
      * 
      * Calculate if measured brightness is closer to the black or white field threshold
      * In case the distance is identical black field is preferred

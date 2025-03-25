@@ -91,7 +91,7 @@ void ECPColorDetection::turnOffColorCorrectionLight() {
 double ECPColorDetection::calibrateAndMeasureColor(bool isWhite) {
     const String color = isWhite ? "white" : "black";
     const String request = "Calibrate " + color + "\nPlease place on\n" + color 
-        + " field\nin " + String(CALIBRATION_TIME / 1000) + " seconds";
+        + " field\nwithin " + String(CALIBRATION_TIME / 1000) + "s";
     dezibot.display.clear();
     dezibot.display.println(request);
     delay(CALIBRATION_TIME);
@@ -103,7 +103,7 @@ double ECPColorDetection::calibrateAndMeasureColor(bool isWhite) {
 float ECPColorDetection::calibrateAndMeasureIRColor(bool isWhite) {
     const String color = isWhite ? "white" : "black";
     const String request = "Calibrate " + color + "\nPlease place on\n" + color
-        + " field\nin " + String((CALIBRATION_TIME) / 1000) + " seconds";
+        + " field\nwithin " + String((CALIBRATION_TIME) / 1000) + "s";
     dezibot.display.clear();
     dezibot.display.println(request);
     delay(CALIBRATION_TIME);
@@ -161,7 +161,7 @@ FieldColor ECPColorDetection::measureFieldColor() {
     if (brightness <= thresholdIsBlackField) {
         return BLACK_FIELD;
     }
-    return UNAMBIGUOUS;
+    return AMBIGUOUS;
 };
 
 FieldColor ECPColorDetection::calculateLikelyFieldColor() {
@@ -183,7 +183,7 @@ FieldColor ECPColorDetection::measureInfraredFieldColor() {
         return BLACK_FIELD;
     }
 
-    return UNAMBIGUOUS;
+    return AMBIGUOUS;
 };
 
 FieldColor ECPColorDetection::calculateLikelyInfraredFieldColor() {
